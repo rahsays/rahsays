@@ -168,7 +168,7 @@ main, #subject-detail { padding:130px 24px 100px; }
 
 #pdfViewer { width:100%; height:82vh; border-radius:24px; margin-top:28px; border:none; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
 
-/* ── Floating AI Doubt Solver Button ── */
+/* Floating AI Button */
 #ai-float-btn {
   position:fixed; bottom:30px; right:30px; z-index:1000;
   width:70px; height:70px; border-radius:50%;
@@ -180,7 +180,7 @@ main, #subject-detail { padding:130px 24px 100px; }
 }
 #ai-float-btn:hover { transform:scale(1.15); box-shadow:0 12px 40px rgba(0,245,255,0.7); }
 
-/* ── AI Modal ── */
+/* AI Modal */
 #ai-modal {
   position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999;
   display:none; align-items:center; justify-content:center;
@@ -197,8 +197,9 @@ main, #subject-detail { padding:130px 24px 100px; }
 .ai-close:hover { color:var(--accent); transform:rotate(90deg); }
 #ai-answer {
   margin-top:24px; padding:20px; background:rgba(0,245,255,0.08);
-  border-radius:16px; min-height:120px; white-space:pre-wrap;
+  border-radius:16px; min-height:160px; white-space:pre-wrap; line-height:1.6;
 }
+#ai-loading { color:var(--accent); font-weight:600; }
 </style>
 </head>
 <body>
@@ -226,7 +227,6 @@ main, #subject-detail { padding:130px 24px 100px; }
 </div>
 
 <main id="home">
-
   <div class="section" id="recent-section" style="display:none;">
     <h2>Recently Viewed</h2>
     <div class="grid" id="recent-grid"></div>
@@ -256,7 +256,6 @@ main, #subject-detail { padding:130px 24px 100px; }
       <div class="card" onclick="showSubject(this)" data-subject="bpsc"><span>BPSC</span><span class="arrow">→</span></div>
     </div>
   </div>
-
 </main>
 
 <!-- SUBJECT DETAIL -->
@@ -284,21 +283,6 @@ main, #subject-detail { padding:130px 24px 100px; }
         <button class="back-btn" onclick="backToSubjects()" style="padding:10px 24px; font-size:15px;">← Subjects</button>
       </div>
       <ul id="chapters-list" class="chapters-list"></ul>
-
-      <!-- AI Doubt Solver Section inside chapter view -->
-      <div id="ai-doubt-section" style="margin-top:48px; padding:28px; background:rgba(0,245,255,0.08); border-radius:20px; border:1px solid var(--accent);">
-        <h3 style="margin-bottom:20px; color:var(--accent);">🤖 Ask Your Doubt to AI</h3>
-        <textarea id="ai-doubt-text" placeholder="Type your question here..." rows="4" style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--accent); background:transparent; color:var(--text); resize:vertical; font-size:16px;"></textarea>
-        
-        <div style="margin:20px 0;">
-          <label style="display:block; margin-bottom:10px; font-size:15px;">Or upload photo of question:</label>
-          <input type="file" id="ai-doubt-photo" accept="image/*" style="color:var(--text); font-size:15px;">
-        </div>
-
-        <button onclick="solveAIDoubt()" style="padding:14px 40px; background:var(--accent); color:#000; border:none; border-radius:50px; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 4px 15px rgba(0,245,255,0.4); transition:0.3s;">Solve Now</button>
-
-        <div id="ai-doubt-answer" style="margin-top:28px; padding:20px; background:var(--card); border-radius:16px; min-height:120px; white-space:pre-wrap; border:1px dashed var(--muted);"></div>
-      </div>
     </div>
   </div>
 </section>
@@ -397,7 +381,7 @@ document.addEventListener('click', e => {
   }
 });
 
-// ==================== NAV ====================
+// ==================== NAVIGATION ====================
 function toggleSidebar() { document.getElementById("sidebar").classList.toggle("open"); }
 function closeSidebar() { document.getElementById("sidebar").classList.remove("open"); }
 
@@ -414,7 +398,7 @@ function showCalculator() { showHome(); document.getElementById("home").style.di
 function showStopwatch() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("stopwatch").style.display = "block"; }
 function showLibrary() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("library").style.display = "block"; }
 
-// ==================== FULL SUBJECTS DATA (complete – no skipping) ====================
+// ==================== FULL SUBJECTS DATA (complete – unchanged) ====================
 const subjectsData = {
   "class-6": { title: "Class 6", subjects: [
     { name: "Mathematics", icon: "📐", weightage: "Essential", chapters: ["Knowing Our Numbers","Whole Numbers","Playing with Numbers","Basic Geometrical Ideas","Understanding Elementary Shapes","Integers","Fractions","Decimals","Data Handling","Mensuration","Algebra","Ratio and Proportion","Symmetry","Practical Geometry"] },
@@ -706,7 +690,76 @@ function loadPDF(event) {
   if (file) document.getElementById("pdfViewer").src = URL.createObjectURL(file);
 }
 
-// ==================== AI DOUBT SOLVER (Floating Button & Modal) ====================
+// ==================== REAL GEMINI AI DOUBT SOLVER ====================
+const GEMINI_API_KEY = "AIzaSyA6trvMHzDTSeVglC3FOygBwpzcAKdUpyE";
+
+async function solveAIDoubt() {
+  const text = document.getElementById("ai-text").value.trim();
+  const photoInput = document.getElementById("ai-photo");
+  const answerDiv = document.getElementById("ai-answer");
+
+  if (!text && !photoInput.files[0]) {
+    answerDiv.innerHTML = '<p style="color:#ff6666;">Please enter a question or upload a photo.</p>';
+    return;
+  }
+
+  answerDiv.innerHTML = '<p id="ai-loading">Solving your doubt... please wait...</p>';
+
+  try {
+    let parts = [];
+    if (text) {
+      parts.push({
+        text: `You are an expert Indian teacher for CBSE / competitive exams. Solve this doubt step by step in simple Hindi-English mix language suitable for students in Patna:\n\n${text}`
+      });
+    }
+
+    if (photoInput.files[0]) {
+      const file = photoInput.files[0];
+      const base64 = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.readAsDataURL(file);
+      });
+      parts.push({
+        inlineData: {
+          mimeType: file.type || "image/jpeg",
+          data: base64
+        }
+      });
+    }
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts }],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 1024,
+        }
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    let answer = data.candidates[0].content.parts[0].text || "No answer received.";
+
+    // Format answer nicely
+    answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                   .replace(/\n/g, '<br>');
+
+    answerDiv.innerHTML = `<div style="white-space:pre-wrap; line-height:1.6;">${answer}</div>`;
+  } catch (err) {
+    answerDiv.innerHTML = `<p style="color:#ff6666;">Error: ${err.message}. Please try again or check internet/API key.</p>`;
+  }
+}
+
+// Modal controls
 function openAIDoubtModal() {
   document.getElementById("ai-modal").style.display = "flex";
   document.getElementById("ai-text").focus();
@@ -717,31 +770,7 @@ function closeAIDoubtModal() {
   document.getElementById("ai-answer").innerHTML = "";
 }
 
-async function solveAIDoubt() {
-  const text = document.getElementById("ai-text").value.trim();
-  const photo = document.getElementById("ai-photo").files[0];
-  const answerDiv = document.getElementById("ai-answer");
-
-  if (!text && !photo) {
-    answerDiv.innerHTML = '<p style="color:#ff6666;">Please type a question or upload a photo.</p>';
-    return;
-  }
-
-  answerDiv.innerHTML = '<p style="color:var(--accent); font-weight:600;">Solving your doubt... please wait...</p>';
-
-  // Placeholder AI response (replace with real API later)
-  setTimeout(() => {
-    let response = "AI is thinking step by step...\n\n1. Understanding the question\n2. Recalling concept\n3. Solving with explanation\n\n**Answer:** 42 (example result)";
-
-    if (text.toLowerCase().includes("force")) {
-      response = "Newton's Second Law: F = m × a\nExample: mass = 5 kg, acceleration = 4 m/s² → Force = 20 N";
-    }
-
-    answerDiv.innerHTML = `<div style="white-space:pre-wrap; line-height:1.6;">${response}</div>`;
-  }, 1800);
-}
-
-// Close modal when clicking outside content
+// Close on outside click
 document.getElementById("ai-modal").addEventListener("click", e => {
   if (e.target === document.getElementById("ai-modal")) closeAIDoubtModal();
 });
