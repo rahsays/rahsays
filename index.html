@@ -22,6 +22,7 @@ footer{text-align:center;padding:20px;font-size:13px;color:#555;border-top:1px s
 .popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:25px;border-radius:15px;border:1px solid #333;display:none;z-index:1000;}
 .popup input{display:block;margin:10px 0;padding:8px;width:200px;background:#000;border:1px solid #333;color:#fff;}
 .overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.8);top:0;left:0;display:none;z-index:999;}
+.hidden{display:none;}
 </style>
 </head>
 
@@ -29,7 +30,7 @@ footer{text-align:center;padding:20px;font-size:13px;color:#555;border-top:1px s
 
 <header>rahsays</header>
 
-<nav>
+<nav id="navMenu">
 <a onclick="location.reload()">Home</a>
 <a onclick="showLogin()">Login</a>
 </nav>
@@ -39,6 +40,25 @@ footer{text-align:center;padding:20px;font-size:13px;color:#555;border-top:1px s
 <input type="text" class="search" placeholder="Search..." onkeyup="searchFunction(this.value)">
 </section>
 
+<section class="section hidden" id="contentSection">
+<h3>Welcome to rahsays Learning Portal</h3>
+<div class="grid">
+<div class="card">Class 6</div>
+<div class="card">Class 7</div>
+<div class="card">Class 8</div>
+<div class="card">Class 9</div>
+<div class="card">Class 10</div>
+<div class="card">Class 11</div>
+<div class="card">Class 12</div>
+<div class="card">IIT / JEE</div>
+<div class="card">NEET</div>
+<div class="card">UPSC</div>
+<div class="card">SSC</div>
+<div class="card">BPSC</div>
+<div class="card">State PCS</div>
+</div>
+</section>
+
 <footer>© 2026 rahsays</footer>
 
 <div class="overlay" onclick="closePopup()"></div>
@@ -46,17 +66,22 @@ footer{text-align:center;padding:20px;font-size:13px;color:#555;border-top:1px s
 <div class="popup" id="loginPopup">
 <h3>Login / Signup</h3>
 <input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
+<input type="password" id="password" placeholder="Password (min 6 chars)">
 <button class="btn" onclick="signup()">Signup</button>
 <button class="btn" onclick="login()">Login</button>
 </div>
 
-<!-- 🔥 FIREBASE MODULE VERSION (Corrected) -->
+<!-- FIREBASE -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD3euxtGl2YO-Blp0jkXCT7PY_OnRlQzSg",
@@ -71,46 +96,78 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// SIGNUP
 window.signup = function() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!email.includes("@")) {
+    alert("Enter valid email.");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters.");
+    return;
+  }
 
   createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
       alert("Signup Successful!");
       closePopup();
     })
-    .catch((error) => alert(error.message));
+    .catch(error => alert(error.message));
 }
 
+// LOGIN
 window.login = function() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
       alert("Login Successful!");
       closePopup();
     })
-    .catch((error) => alert(error.message));
+    .catch(error => alert(error.message));
 }
 
+// AUTH STATE
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("contentSection").classList.remove("hidden");
+    document.getElementById("navMenu").innerHTML = `
+      <a onclick="location.reload()">Home</a>
+      <a onclick="logout()">Logout</a>
+    `;
+  }
+});
+
+// LOGOUT
+window.logout = function() {
+  signOut(auth).then(() => {
+    alert("Logged out");
+    location.reload();
+  });
+}
+
+// UI FUNCTIONS
 window.showLogin = function(){
-document.querySelector('.overlay').style.display="block";
-document.getElementById('loginPopup').style.display="block";
+  document.querySelector('.overlay').style.display="block";
+  document.getElementById('loginPopup').style.display="block";
 }
 
 window.closePopup = function(){
-document.querySelector('.overlay').style.display="none";
-document.getElementById('loginPopup').style.display="none";
+  document.querySelector('.overlay').style.display="none";
+  document.getElementById('loginPopup').style.display="none";
 }
 
 window.searchFunction = function(value){
-let cards=document.querySelectorAll(".card");
-value=value.toLowerCase();
-cards.forEach(card=>{
-card.style.display = card.innerText.toLowerCase().includes(value) ? "block" : "none";
-});
+  let cards=document.querySelectorAll(".card");
+  value=value.toLowerCase();
+  cards.forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(value) ? "block" : "none";
+  });
 }
 
 </script>
