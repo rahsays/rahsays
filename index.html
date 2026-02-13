@@ -1,520 +1,526 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RahSays Elite</title>
+<title>rahsays – Elite Education Platform</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* =========================
-   CORE RESET
-========================= */
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+/* ============================
+   ROOT THEME SYSTEM
+============================ */
+
+:root {
+  --bg: #000;
+  --card: #111;
+  --text: #fff;
+  --muted: #aaa;
+  --accent: #ffb800;
+  --glow: 0 0 20px rgba(255,255,255,0.4);
 }
 
-body{
-background:#000;
-color:#fff;
-overflow-x:hidden;
-transition:.4s ease;
+.light-mode {
+  --bg: #f4f6f8;
+  --card: #fff;
+  --text: #111;
+  --muted: #555;
+  --accent: #ff9500;
+  --glow: none;
 }
 
-/* =========================
-   MODE TOGGLE
-========================= */
-.mode-toggle{
-position:fixed;
-top:20px;
-right:25px;
-z-index:3000;
-cursor:pointer;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
-.toggle-track{
-width:85px;
-height:42px;
-border-radius:40px;
-background:#1a1a1a;
-display:flex;
-align-items:center;
-padding:6px;
-box-shadow:0 0 12px rgba(255,255,255,.2);
-transition:.4s;
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.4s ease;
+  overflow-x: hidden;
 }
 
-.toggle-thumb{
-width:30px;
-height:30px;
-border-radius:50%;
-background:#fff;
-transition:.4s;
+/* ============================
+   INFINITY LOADER
+============================ */
+
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-.light-mode{
-background:#fff;
-color:#000;
+.infinity-svg {
+  width: 260px;
+  height: 120px;
 }
 
-.light-mode .toggle-track{
-background:#ddd;
+.infinity-path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 16;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: drawInfinity 2.5s ease forwards;
+  filter: drop-shadow(0 0 20px white);
 }
 
-.light-mode .toggle-thumb{
-transform:translateX(40px);
-background:#000;
+@keyframes drawInfinity {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
-/* =========================
+/* ============================
+   HEADER
+============================ */
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 18px;
+}
+
+.menu-btn {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.mode-toggle {
+  width: 70px;
+  height: 36px;
+  background: var(--card);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.mode-ball {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.light-mode .mode-ball {
+  transform: translateX(32px);
+}
+
+/* ============================
    SIDEBAR
-========================= */
-.sidebar{
-position:fixed;
-top:0;
-left:-260px;
-width:260px;
-height:100%;
-background:#111;
-padding:80px 25px;
-transition:.4s ease;
-z-index:2500;
-box-shadow:3px 0 20px rgba(0,0,0,.6);
+============================ */
+
+.sidebar {
+  position: fixed;
+  left: -260px;
+  top: 0;
+  height: 100%;
+  width: 260px;
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  padding-top: 80px;
+  transition: 0.4s ease;
+  z-index: 200;
 }
 
-.sidebar a{
-display:block;
-padding:15px 0;
-font-size:18px;
-text-decoration:none;
-color:#fff;
-opacity:.85;
-transition:.3s;
+.sidebar.open {
+  left: 0;
 }
 
-.sidebar a:hover{
-opacity:1;
-transform:translateX(5px);
+.sidebar a {
+  display: block;
+  padding: 18px 30px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  transition: 0.2s;
 }
 
-.sidebar.active{
-left:0;
+.sidebar a:hover {
+  background: rgba(255,255,255,0.05);
 }
 
-.menu-btn{
-position:fixed;
-top:20px;
-left:25px;
-font-size:28px;
-cursor:pointer;
-z-index:3000;
+/* ============================
+   MAIN CONTENT
+============================ */
+
+main {
+  padding: 120px 20px 40px;
 }
 
-/* =========================
-   HERO
-========================= */
-.hero{
-text-align:center;
-padding:120px 20px 60px;
+.section {
+  margin-bottom: 50px;
 }
 
-.hero h1{
-font-size:50px;
-font-weight:700;
-letter-spacing:2px;
-margin-bottom:20px;
+.section h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
 }
 
-.section{
-padding:50px 20px;
-text-align:center;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
 }
 
-.section h2{
-font-size:28px;
-margin-bottom:30px;
+.card {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:20px;
-max-width:900px;
-margin:auto;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--glow);
 }
 
-.card{
-background:#121212;
-padding:25px;
-border-radius:18px;
-transition:.3s;
-cursor:pointer;
-}
-
-.card:hover{
-transform:translateY(-5px);
-background:#1c1c1c;
-}
-
-/* =========================
-   TOOL SCREEN
-========================= */
-.tool-screen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-z-index:4000;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-.hidden{
-display:none;
-}
-
-.back-btn{
-position:absolute;
-top:25px;
-left:25px;
-font-size:22px;
-cursor:pointer;
-}
-
-/* =========================
+/* ============================
    CALCULATOR
-========================= */
-.calc-display{
-font-size:60px;
-margin-bottom:30px;
-text-align:right;
-width:100%;
-max-width:500px;
+============================ */
+
+#calculator, #stopwatch, #library {
+  display: none;
+  min-height: 100vh;
+  padding-top: 120px;
 }
 
-.calc-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-max-width:500px;
-width:100%;
+.calc-display {
+  font-size: 42px;
+  text-align: right;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: var(--card);
+  border-radius: 12px;
 }
 
-.calc-grid button{
-padding:22px;
-border-radius:50px;
-border:none;
-font-size:20px;
-background:#1c1c1c;
-color:#fff;
-cursor:pointer;
-transition:.3s;
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 
-.calc-grid button:hover{
-background:#333;
+.btn {
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  background: var(--card);
+  color: var(--text);
 }
 
-.yellow{
-background:#ffb400;
-color:#000;
+.btn.yellow {
+  background: var(--accent);
+  color: #000;
 }
 
-/* =========================
+/* ============================
    STOPWATCH
-========================= */
-.stopwatch-display{
-font-size:clamp(80px,12vw,170px);
-margin-bottom:40px;
-text-shadow:0 0 25px rgba(255,255,255,.4);
+============================ */
+
+.time {
+  font-size: 70px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.stopwatch-buttons{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
+.sw-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-.stopwatch-buttons button{
-padding:14px 30px;
-border-radius:40px;
-background:#111;
-border:1px solid #fff;
-color:#fff;
-cursor:pointer;
-transition:.3s;
+.sw-buttons button {
+  padding: 14px 28px;
+  border-radius: 30px;
+  border: none;
+  background: var(--card);
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.stopwatch-buttons button:hover{
-background:#fff;
-color:#000;
-}
+/* ============================
+   LIBRARY
+============================ */
 
-.laps{
-margin-top:25px;
-max-height:150px;
-overflow:auto;
-}
-
-/* =========================
-   INFINITY ANIMATION
-========================= */
-.loader{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:5000;
-}
-
-svg{
-width:320px;
-height:160px;
-}
-
-path{
-stroke:#fff;
-stroke-width:18;
-fill:none;
-stroke-linecap:round;
-stroke-dasharray:1000;
-stroke-dashoffset:1000;
-animation:draw 2.5s ease forwards;
-}
-
-@keyframes draw{
-to{stroke-dashoffset:0;}
+#pdfViewer {
+  width: 100%;
+  height: 80vh;
+  border-radius: 16px;
+  margin-top: 20px;
+  border: none;
 }
 
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader">
-<svg viewBox="0 0 600 300">
-<path d="M150,150
-C150,50 300,50 300,150
-C300,250 450,250 450,150
-C450,50 300,50 300,150
-C300,250 150,250 150,150"/>
-</svg>
+<!-- INFINITY LOADER -->
+<div id="loader">
+  <svg class="infinity-svg" viewBox="0 0 500 200">
+    <path class="infinity-path"
+      d="M100,100
+         C100,40 200,40 250,100
+         C300,160 400,160 400,100
+         C400,40 300,40 250,100
+         C200,160 100,160 100,100" />
+  </svg>
 </div>
 
-<div class="menu-btn" onclick="toggleSidebar()">☰</div>
-
-<div class="mode-toggle" onclick="toggleMode()">
-<div class="toggle-track"><div class="toggle-thumb"></div></div>
-</div>
+<header>
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <div class="logo">RAHSAYS</div>
+  <div class="mode-toggle" onclick="toggleMode()">
+    <div class="mode-ball"></div>
+  </div>
+</header>
 
 <div class="sidebar" id="sidebar">
-<a onclick="goHome()">🏠 Home</a>
-<a onclick="goHome()">📚 Classes</a>
-<a onclick="goHome()">🎯 Exams</a>
-<a onclick="goHome()">📖 Library</a>
-<a onclick="openCalc()">🧮 Calculator</a>
-<a onclick="openStopwatch()">⏱ Stopwatch</a>
+  <a href="#" onclick="showHome()">🏠 Home</a>
+  <a href="#" onclick="showCalculator()">🧮 Calculator</a>
+  <a href="#" onclick="showStopwatch()">⏱ Stopwatch</a>
+  <a href="#" onclick="showLibrary()">📚 Library</a>
 </div>
 
-<div class="hero">
-<h1>RahSays</h1>
-<p>Building The Most Elite Educational Platform</p>
-</div>
+<main id="home">
 
-<div class="section">
-<h2>School Classes</h2>
-<div class="grid">
-<div class="card">Class 6</div>
-<div class="card">Class 7</div>
-<div class="card">Class 8</div>
-<div class="card">Class 9</div>
-<div class="card">Class 10</div>
-<div class="card">Class 11</div>
-<div class="card">Class 12</div>
-</div>
-</div>
+  <div class="section">
+    <h2>School Classes</h2>
+    <div class="grid">
+      <div class="card">Class 6</div>
+      <div class="card">Class 7</div>
+      <div class="card">Class 8</div>
+      <div class="card">Class 9</div>
+      <div class="card">Class 10</div>
+      <div class="card">Class 11</div>
+      <div class="card">Class 12</div>
+    </div>
+  </div>
 
-<div class="section">
-<h2>Competitive Exams</h2>
-<div class="grid">
-<div class="card">IIT / JEE</div>
-<div class="card">NEET</div>
-<div class="card">UPSC</div>
-<div class="card">SSC</div>
-</div>
-</div>
+  <div class="section">
+    <h2>Competitive Exams</h2>
+    <div class="grid">
+      <div class="card">IIT / JEE</div>
+      <div class="card">NEET</div>
+      <div class="card">UPSC</div>
+      <div class="card">SSC</div>
+    </div>
+  </div>
+
+</main>
 
 <!-- CALCULATOR -->
-<div id="calculator" class="tool-screen hidden">
-<div class="back-btn" onclick="closeTools()">← Back</div>
-<div class="calc-display" id="calcDisplay">0</div>
-<div class="calc-grid">
-<button onclick="press('7')">7</button>
-<button onclick="press('8')">8</button>
-<button onclick="press('9')">9</button>
-<button onclick="press('/')">÷</button>
-<button onclick="press('4')">4</button>
-<button onclick="press('5')">5</button>
-<button onclick="press('6')">6</button>
-<button onclick="press('*')">×</button>
-<button onclick="press('1')">1</button>
-<button onclick="press('2')">2</button>
-<button onclick="press('3')">3</button>
-<button onclick="press('-')">−</button>
-<button onclick="press('0')">0</button>
-<button onclick="press('.')">.</button>
-<button class="yellow" onclick="backspace()">⌫</button>
-<button onclick="press('+')">+</button>
-<button class="yellow" onclick="clearCalc()">AC</button>
-<button class="yellow" onclick="calculate()">=</button>
-</div>
-</div>
+<section id="calculator">
+  <div class="calc-display" id="display">0</div>
+  <div class="calc-grid">
+    <button class="btn yellow" onclick="clearAll()">AC</button>
+    <button class="btn yellow" onclick="backspace()">⌫</button>
+    <button class="btn yellow" onclick="append('%')">%</button>
+    <button class="btn yellow" onclick="append('/')">÷</button>
+
+    <button class="btn" onclick="append('7')">7</button>
+    <button class="btn" onclick="append('8')">8</button>
+    <button class="btn" onclick="append('9')">9</button>
+    <button class="btn yellow" onclick="append('*')">×</button>
+
+    <button class="btn" onclick="append('4')">4</button>
+    <button class="btn" onclick="append('5')">5</button>
+    <button class="btn" onclick="append('6')">6</button>
+    <button class="btn yellow" onclick="append('-')">−</button>
+
+    <button class="btn" onclick="append('1')">1</button>
+    <button class="btn" onclick="append('2')">2</button>
+    <button class="btn" onclick="append('3')">3</button>
+    <button class="btn yellow" onclick="append('+')">+</button>
+
+    <button class="btn" onclick="append('0')">0</button>
+    <button class="btn" onclick="append('.')">.</button>
+    <button class="btn yellow" onclick="calculate()">=</button>
+  </div>
+</section>
 
 <!-- STOPWATCH -->
-<div id="stopwatch" class="tool-screen hidden">
-<div class="back-btn" onclick="closeTools()">← Back</div>
-<div class="stopwatch-display" id="display">00:00:00.00</div>
-<div class="stopwatch-buttons">
-<button onclick="startStopwatch()">Start</button>
-<button onclick="stopStopwatch()">Stop</button>
-<button onclick="resetStopwatch()">Reset</button>
-<button onclick="lapTime()">Lap</button>
-</div>
-<div id="laps" class="laps"></div>
-</div>
+<section id="stopwatch">
+  <div class="time" id="time">00:00:00</div>
+  <div class="sw-buttons">
+    <button onclick="startSW()">Start</button>
+    <button onclick="stopSW()">Stop</button>
+    <button onclick="resetSW()">Reset</button>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="library">
+  <input type="file" accept="application/pdf" onchange="loadPDF(event)">
+  <iframe id="pdfViewer"></iframe>
+</section>
 
 <script>
 
-/* LOADER */
-window.onload=function(){
-setTimeout(()=>{
-document.getElementById("loader").style.display="none";
-if(navigator.vibrate) navigator.vibrate(100);
-},2600);
+/* ============================
+   LOADER
+============================ */
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    if (navigator.vibrate) navigator.vibrate(100);
+    document.getElementById("loader").style.display = "none";
+  }, 2500);
+});
+
+/* ============================
+   MODE TOGGLE
+============================ */
+
+function toggleMode() {
+  document.body.classList.toggle("light-mode");
 }
 
-/* SIDEBAR */
-function toggleSidebar(){
-document.getElementById("sidebar").classList.toggle("active");
+/* ============================
+   SIDEBAR
+============================ */
+
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
 }
 
-function goHome(){
-document.getElementById("sidebar").classList.remove("active");
+function closeSidebar() {
+  document.getElementById("sidebar").classList.remove("open");
 }
 
-function toggleMode(){
-document.body.classList.toggle("light-mode");
+/* ============================
+   NAVIGATION
+============================ */
+
+function showHome() {
+  document.getElementById("home").style.display = "block";
+  document.getElementById("calculator").style.display = "none";
+  document.getElementById("stopwatch").style.display = "none";
+  document.getElementById("library").style.display = "none";
+  closeSidebar();
 }
 
-/* TOOLS */
-function openCalc(){
-document.getElementById("calculator").classList.remove("hidden");
-goHome();
+function showCalculator() {
+  showHome();
+  document.getElementById("home").style.display = "none";
+  document.getElementById("calculator").style.display = "block";
 }
 
-function openStopwatch(){
-document.getElementById("stopwatch").classList.remove("hidden");
-goHome();
+function showStopwatch() {
+  showHome();
+  document.getElementById("home").style.display = "none";
+  document.getElementById("stopwatch").style.display = "block";
 }
 
-function closeTools(){
-document.getElementById("calculator").classList.add("hidden");
-document.getElementById("stopwatch").classList.add("hidden");
+function showLibrary() {
+  showHome();
+  document.getElementById("home").style.display = "none";
+  document.getElementById("library").style.display = "block";
 }
 
-/* CALCULATOR */
-let calcInput="";
+/* ============================
+   CALCULATOR LOGIC
+============================ */
 
-function press(val){
-calcInput+=val;
-document.getElementById("calcDisplay").innerText=calcInput;
-}
+let display = document.getElementById("display");
 
-function clearCalc(){
-calcInput="";
-document.getElementById("calcDisplay").innerText="0";
+function append(val) {
+  if (display.innerText === "0") display.innerText = val;
+  else display.innerText += val;
 }
 
-function backspace(){
-calcInput=calcInput.slice(0,-1);
-document.getElementById("calcDisplay").innerText=calcInput||"0";
+function clearAll() {
+  display.innerText = "0";
 }
 
-function calculate(){
-try{
-calcInput=eval(calcInput).toString();
-document.getElementById("calcDisplay").innerText=calcInput;
-}catch{
-document.getElementById("calcDisplay").innerText="Error";
-}
+function backspace() {
+  display.innerText = display.innerText.slice(0, -1) || "0";
 }
 
-/* STOPWATCH */
-let stopwatchInterval;
-let startTime=0;
-let elapsedTime=0;
-let running=false;
-
-function updateDisplay(){
-let time=Date.now()-startTime+elapsedTime;
-let hours=Math.floor(time/(1000*60*60));
-let minutes=Math.floor((time/(1000*60))%60);
-let seconds=Math.floor((time/1000)%60);
-let milliseconds=Math.floor((time%1000)/10);
-document.getElementById("display").innerText=
-`${String(hours).padStart(2,"0")}:`+
-`${String(minutes).padStart(2,"0")}:`+
-`${String(seconds).padStart(2,"0")}.`+
-`${String(milliseconds).padStart(2,"0")}`;
+function calculate() {
+  try {
+    display.innerText = eval(display.innerText);
+  } catch {
+    display.innerText = "Error";
+  }
 }
 
-function startStopwatch(){
-if(!running){
-running=true;
-startTime=Date.now();
-stopwatchInterval=setInterval(updateDisplay,10);
-}
+/* ============================
+   STOPWATCH LOGIC
+============================ */
+
+let swInterval;
+let seconds = 0;
+
+function startSW() {
+  if (swInterval) return;
+  swInterval = setInterval(() => {
+    seconds++;
+    updateTime();
+  }, 1000);
 }
 
-function stopStopwatch(){
-if(running){
-running=false;
-clearInterval(stopwatchInterval);
-elapsedTime+=Date.now()-startTime;
-}
+function stopSW() {
+  clearInterval(swInterval);
+  swInterval = null;
 }
 
-function resetStopwatch(){
-running=false;
-clearInterval(stopwatchInterval);
-startTime=0;
-elapsedTime=0;
-document.getElementById("display").innerText="00:00:00.00";
-document.getElementById("laps").innerHTML="";
+function resetSW() {
+  stopSW();
+  seconds = 0;
+  updateTime();
 }
 
-function lapTime(){
-if(running){
-let lap=document.createElement("div");
-lap.innerText=document.getElementById("display").innerText;
-document.getElementById("laps").appendChild(lap);
+function updateTime() {
+  let hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+  let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+  let secs = String(seconds % 60).padStart(2, '0');
+  document.getElementById("time").innerText = `${hrs}:${mins}:${secs}`;
 }
+
+/* ============================
+   PDF VIEWER
+============================ */
+
+function loadPDF(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const fileURL = URL.createObjectURL(file);
+    document.getElementById("pdfViewer").src = fileURL;
+  }
 }
 
 </script>
-
 </body>
 </html>
