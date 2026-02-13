@@ -1,64 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rahsays</title>
+<title>rahsays | Education Platform</title>
 
 <style>
+:root {
+  --bg: #0f0f0f;
+  --card: #1a1a1a;
+  --text: #ffffff;
+  --accent: #00c6ff;
+}
+
+body.light {
+  --bg: #f5f5f5;
+  --card: #ffffff;
+  --text: #111;
+  --accent: #0077ff;
+}
+
+body.amoled {
+  --bg: #000000;
+  --card: #0a0a0a;
+  --text: #ffffff;
+  --accent: #00e0ff;
+}
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: all .3s ease;
 }
 
 body{
-  background:#000;
-  color:#fff;
+  background: var(--bg);
+  color: var(--text);
 }
 
+/* Header */
 header{
-  padding:20px;
-  text-align:center;
-  font-size:24px;
-  letter-spacing:4px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 20px;
   border-bottom:1px solid #222;
 }
 
-nav{
-  display:flex;
-  justify-content:center;
-  gap:25px;
-  padding:15px;
-  border-bottom:1px solid #111;
+.logo{
+  font-size:20px;
+  letter-spacing:4px;
+  font-weight:600;
 }
 
-nav a{
-  color:#aaa;
-  text-decoration:none;
-  font-size:16px;
+.menu-btn{
+  font-size:24px;
+  cursor:pointer;
 }
 
-nav a:hover{
-  color:#fff;
+/* Sidebar */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-260px;
+  width:250px;
+  height:100%;
+  background:var(--card);
+  padding:30px 20px;
+  transition:.4s;
+  box-shadow:2px 0 15px rgba(0,0,0,0.4);
 }
 
+.sidebar.active{
+  left:0;
+}
+
+.sidebar h3{
+  margin-bottom:20px;
+}
+
+.theme-btn{
+  display:block;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  background:var(--accent);
+  color:white;
+}
+
+/* Hero */
 .hero{
   text-align:center;
   padding:40px 20px;
 }
 
-.search{
-  margin-top:20px;
-  padding:12px;
-  width:80%;
-  max-width:400px;
-  border-radius:30px;
-  border:none;
-  background:#111;
-  color:#fff;
+.hero h1{
+  font-size:32px;
+  margin-bottom:20px;
 }
 
+.search{
+  width:90%;
+  max-width:400px;
+  padding:12px 15px;
+  border-radius:25px;
+  border:none;
+  background:var(--card);
+  color:var(--text);
+}
+
+/* Section */
 .section{
   padding:40px 20px;
   text-align:center;
@@ -66,105 +121,129 @@ nav a:hover{
 
 .section h2{
   margin-bottom:25px;
+  font-size:24px;
 }
 
+/* Grid */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:20px;
-  max-width:600px;
+  grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
+  gap:15px;
+  max-width:700px;
   margin:auto;
 }
 
 .card{
-  background:#111;
-  padding:25px;
-  border-radius:15px;
-  transition:0.3s;
+  background:var(--card);
+  padding:20px;
+  border-radius:12px;
+  cursor:pointer;
   border:1px solid #222;
 }
 
 .card:hover{
-  background:#1a1a1a;
-  transform:scale(1.05);
+  transform:translateY(-5px);
+  border:1px solid var(--accent);
 }
 
-.telegram-btn{
-  display:inline-block;
+/* Telegram Button */
+.telegram{
   margin-top:40px;
-  padding:12px 25px;
-  background:#0088cc;
-  border-radius:30px;
-  text-decoration:none;
-  color:#fff;
-  font-weight:bold;
 }
 
+.telegram a{
+  text-decoration:none;
+  background:var(--accent);
+  padding:12px 25px;
+  border-radius:25px;
+  color:white;
+  font-weight:600;
+}
+
+/* Footer */
 footer{
-  margin-top:60px;
-  padding:20px;
   text-align:center;
+  padding:30px;
   font-size:14px;
-  color:#777;
-  border-top:1px solid #111;
+  opacity:0.7;
 }
 </style>
 </head>
 
 <body>
 
-<header>rahsays</header>
+<header>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <div class="logo">rahsays</div>
+</header>
 
-<nav>
-<a href="#">Home</a>
-<a href="#">Telegram</a>
-</nav>
+<div class="sidebar" id="sidebar">
+  <h3>Theme Mode</h3>
+  <button class="theme-btn" onclick="setTheme('dark')">Dark</button>
+  <button class="theme-btn" onclick="setTheme('amoled')">AMOLED</button>
+  <button class="theme-btn" onclick="setTheme('light')">Light</button>
+</div>
 
 <div class="hero">
-<h1>Education Platform</h1>
-<input class="search" placeholder="Search...">
+  <h1>Education Platform</h1>
+  <input class="search" placeholder="Search courses...">
 </div>
 
 <div class="section">
-<h2>School Classes</h2>
-
-<div class="grid">
-<div class="card">Class 6</div>
-<div class="card">Class 7</div>
-<div class="card">Class 8</div>
-<div class="card">Class 9</div>
-<div class="card">Class 10</div>
-<div class="card">Class 11</div>
-<div class="card">Class 12</div>
-</div>
-</div>
-
-<div class="section">
-<h2>Competitive Exams</h2>
-
-<div class="grid">
-<div class="card">IIT / JEE</div>
-<div class="card">NEET</div>
-<div class="card">UPSC</div>
-<div class="card">SSC</div>
-<div class="card">BPSC</div>
-<div class="card">State PCS</div>
-</div>
+  <h2>School Classes</h2>
+  <div class="grid">
+    <div class="card">Class 6</div>
+    <div class="card">Class 7</div>
+    <div class="card">Class 8</div>
+    <div class="card">Class 9</div>
+    <div class="card">Class 10</div>
+    <div class="card">Class 11</div>
+    <div class="card">Class 12</div>
+  </div>
 </div>
 
 <div class="section">
-<a class="telegram-btn" href="https://t.me/yourtelegramusername" target="_blank">
-Join Telegram
-</a>
+  <h2>Competitive Exams</h2>
+  <div class="grid">
+    <div class="card">IIT / JEE</div>
+    <div class="card">NEET</div>
+    <div class="card">UPSC</div>
+    <div class="card">SSC</div>
+    <div class="card">BPSC</div>
+    <div class="card">State PCS</div>
+  </div>
 
-<p style="margin-top:20px; color:#888;">
-Contact: 6202016384
-</p>
+  <div class="telegram">
+    <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank">
+      Join Telegram
+    </a>
+  </div>
 </div>
 
 <footer>
-© 2026 rahsays
+  © 2026 rahsays. All rights reserved.
 </footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
+
+function setTheme(mode){
+  document.body.classList.remove("light","amoled");
+  if(mode !== "dark"){
+    document.body.classList.add(mode);
+  }
+  localStorage.setItem("theme",mode);
+}
+
+window.onload = function(){
+  const saved = localStorage.getItem("theme");
+  if(saved && saved !== "dark"){
+    document.body.classList.add(saved);
+  }
+}
+</script>
 
 </body>
 </html>
