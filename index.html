@@ -10,22 +10,31 @@
 /* ================= ROOT THEME ================= */
 
 :root{
---bg:#000;
---card:#1a1a1a;
---text:#fff;
+--bg:#000000;
+--surface:#111111;
+--card:#1c1c1e;
+--text:#ffffff;
 --muted:#888;
 --yellow:#ffcc00;
+--border:#2a2a2a;
 }
 
 .light{
---bg:#ffffff;
---card:#f1f1f1;
---text:#111;
---muted:#666;
+--bg:#f4f4f4;
+--surface:#ffffff;
+--card:#eaeaea;
+--text:#111111;
+--muted:#555;
 --yellow:#ffb800;
+--border:#d0d0d0;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+}
 
 body{
 background:var(--bg);
@@ -46,33 +55,26 @@ justify-content:center;
 z-index:9999;
 }
 
-.infinity-svg{
-width:320px;
-}
-
-#infinityPath{
-stroke-dasharray:1000;
-stroke-dashoffset:1000;
-animation:drawInfinity 2.4s ease forwards;
-filter:drop-shadow(0 0 30px rgba(255,255,255,0.9));
-}
-
-@keyframes drawInfinity{
-to{stroke-dashoffset:0;}
+#infinityCanvas{
+width:100%;
+height:100%;
 }
 
 /* ================= HEADER ================= */
 
 header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 25px;
 position:fixed;
+top:0;
+left:0;
 width:100%;
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
 background:var(--bg);
+border-bottom:1px solid var(--border);
 z-index:100;
-border-bottom:1px solid var(--card);
 }
 
 .logo{
@@ -81,20 +83,13 @@ letter-spacing:6px;
 font-weight:600;
 }
 
-.menu-btn{
-font-size:24px;
-background:none;
-color:var(--text);
-border:none;
-cursor:pointer;
-}
-
-.theme-toggle{
-cursor:pointer;
-font-size:18px;
+.menu-btn,
+.theme-btn{
 background:none;
 border:none;
+font-size:22px;
 color:var(--text);
+cursor:pointer;
 }
 
 /* ================= SIDEBAR ================= */
@@ -102,75 +97,87 @@ color:var(--text);
 .sidebar{
 position:fixed;
 top:0;
-left:-260px;
+left:-280px;
 width:260px;
 height:100%;
-background:var(--card);
+background:var(--surface);
 padding-top:80px;
 transition:0.4s;
 z-index:200;
+border-right:1px solid var(--border);
 }
 
-.sidebar.active{left:0;}
+.sidebar.active{
+left:0;
+}
 
 .sidebar a{
 display:block;
-padding:18px 30px;
-color:var(--text);
+padding:18px 28px;
 text-decoration:none;
-font-size:17px;
-transition:0.3s;
+color:var(--text);
+font-size:16px;
 cursor:pointer;
+transition:0.3s;
 }
 
-.sidebar a:hover{background:rgba(0,0,0,0.1);}
+.sidebar a:hover{
+background:var(--card);
+}
 
-/* ================= SECTIONS ================= */
+/* ================= MAIN SECTIONS ================= */
 
 section{
-padding:120px 20px;
+padding:120px 25px;
 min-height:100vh;
 display:none;
 }
 
-section.active{display:block;}
+section.active{
+display:block;
+}
 
-.title{
+.section-title{
+font-size:28px;
+margin-bottom:35px;
 text-align:center;
-font-size:30px;
-margin-bottom:40px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
 gap:20px;
 }
 
 .card{
 background:var(--card);
-padding:25px;
-border-radius:16px;
+padding:28px;
+border-radius:18px;
+border:1px solid var(--border);
 text-align:center;
-font-weight:500;
+transition:0.25s;
+}
+
+.card:hover{
+transform:translateY(-4px);
 }
 
 /* ================= CALCULATOR ================= */
 
 .calc-container{
-max-width:400px;
+max-width:420px;
 margin:auto;
 }
 
 .calc-display{
-background:var(--bg);
+background:var(--surface);
+padding:25px;
 font-size:48px;
 text-align:right;
-padding:25px;
-border-radius:12px;
+border-radius:14px;
 margin-bottom:20px;
+border:1px solid var(--border);
 overflow:hidden;
-border:1px solid var(--card);
 }
 
 .calc-grid{
@@ -183,11 +190,12 @@ gap:12px;
 padding:22px;
 border-radius:50px;
 background:var(--card);
-color:var(--text);
 font-size:20px;
+color:var(--text);
+border:1px solid var(--border);
 }
 
-.yellow{
+.calc-btn.yellow{
 background:var(--yellow);
 color:#000;
 font-weight:bold;
@@ -195,44 +203,71 @@ font-weight:bold;
 
 /* ================= STOPWATCH ================= */
 
-.stopwatch{
+.stopwatch-display{
+font-size:48px;
 text-align:center;
-font-size:42px;
 margin-bottom:25px;
 }
 
 .sw-btn{
-padding:14px 30px;
-border-radius:30px;
+padding:14px 28px;
 margin:10px;
+border-radius:30px;
 background:var(--card);
 color:var(--text);
+border:1px solid var(--border);
 }
 
-/* ================= PDF ================= */
+/* ================= LIBRARY ================= */
+
+.library-search{
+width:100%;
+padding:12px;
+border-radius:12px;
+border:1px solid var(--border);
+background:var(--surface);
+color:var(--text);
+margin-bottom:20px;
+}
+
+.book{
+background:var(--card);
+padding:20px;
+border-radius:16px;
+border:1px solid var(--border);
+cursor:pointer;
+}
+
+/* ================= PDF VIEWER ================= */
+
+#pdfViewer{
+display:none;
+flex-direction:column;
+}
 
 iframe{
 width:100%;
 height:80vh;
 border:none;
-border-radius:12px;
+border-radius:14px;
+}
+
+/* ================= BACK BUTTON ================= */
+
+.back{
+margin-bottom:20px;
+cursor:pointer;
+color:var(--muted);
 }
 
 </style>
 </head>
 <body>
 
-<!-- ================= LOADER ================= -->
+<!-- ================= INFINITY LOADER ================= -->
 
 <div id="loader">
-<svg viewBox="0 0 500 250" class="infinity-svg">
-<path id="infinityPath"
-d="M125,125 C125,40 375,40 375,125 C375,210 125,210 125,125"
-fill="none"
-stroke="white"
-stroke-width="22"
-stroke-linecap="round"/>
-</svg>
+<canvas id="infinityCanvas"></canvas>
 </div>
 
 <!-- ================= HEADER ================= -->
@@ -240,7 +275,7 @@ stroke-linecap="round"/>
 <header>
 <button class="menu-btn" onclick="toggleSidebar()">☰</button>
 <div class="logo">rahsays</div>
-<button class="theme-toggle" onclick="toggleTheme()">◐</button>
+<button class="theme-btn" onclick="toggleTheme()">◐</button>
 </header>
 
 <!-- ================= SIDEBAR ================= -->
@@ -255,9 +290,9 @@ stroke-linecap="round"/>
 <!-- ================= HOME ================= -->
 
 <section id="home" class="active">
-<div class="title">Education Platform</div>
+<div class="section-title">Education Platform</div>
 
-<h2 style="margin:20px 0">School Classes</h2>
+<h3 style="margin-bottom:20px;">School Classes</h3>
 <div class="grid">
 <div class="card">Class 6</div>
 <div class="card">Class 7</div>
@@ -268,7 +303,7 @@ stroke-linecap="round"/>
 <div class="card">Class 12</div>
 </div>
 
-<h2 style="margin:40px 0 20px">Competitive Exams</h2>
+<h3 style="margin:40px 0 20px;">Competitive Exams</h3>
 <div class="grid">
 <div class="card">IIT / JEE</div>
 <div class="card">NEET</div>
@@ -280,7 +315,7 @@ stroke-linecap="round"/>
 <!-- ================= CALCULATOR ================= -->
 
 <section id="calculator">
-<div class="title">Calculator</div>
+<div class="section-title">Calculator</div>
 <div class="calc-container">
 <div class="calc-display" id="display">0</div>
 
@@ -315,30 +350,82 @@ stroke-linecap="round"/>
 <!-- ================= STOPWATCH ================= -->
 
 <section id="stopwatch">
-<div class="title">Stopwatch</div>
-<div class="stopwatch" id="time">00:00:00</div>
+<div class="section-title">Stopwatch</div>
+<div class="stopwatch-display" id="time">00:00:00</div>
+<div style="text-align:center;">
 <button class="sw-btn" onclick="start()">Start</button>
 <button class="sw-btn" onclick="stop()">Stop</button>
 <button class="sw-btn" onclick="reset()">Reset</button>
+</div>
 </section>
 
 <!-- ================= LIBRARY ================= -->
 
 <section id="library">
-<div class="title">Library</div>
-<iframe src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+<div class="section-title">Library</div>
+<input class="library-search" placeholder="Search PDFs...">
+<div class="grid">
+<div class="book" onclick="openPDF()">Mathematics Notes</div>
+<div class="book" onclick="openPDF()">Science Handbook</div>
+</div>
+<div id="pdfViewer">
+<div class="back" onclick="closePDF()">← Back</div>
+<iframe id="pdfFrame" src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+</div>
 </section>
 
 <script>
 
-/* ================= LOADER ================= */
+/* ================= TRUE MATHEMATICAL INFINITY ================= */
 
+const canvas = document.getElementById("infinityCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let progress = 0;
+const duration = 2000;
+let startTime = null;
+
+function drawInfinity(timestamp){
+if(!startTime) startTime = timestamp;
+let elapsed = timestamp - startTime;
+progress = Math.min(elapsed / duration, 1);
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+const cx = canvas.width/2;
+const cy = canvas.height/2;
+const scale = Math.min(canvas.width,canvas.height)/5;
+
+ctx.beginPath();
+ctx.lineWidth = 18;
+ctx.strokeStyle = "white";
+ctx.shadowBlur = 40;
+ctx.shadowColor = "white";
+
+for(let t=0; t<=progress * Math.PI * 2; t+=0.02){
+let x = cx + scale * Math.sin(t);
+let y = cy + scale * Math.sin(t) * Math.cos(t);
+if(t===0) ctx.moveTo(x,y);
+else ctx.lineTo(x,y);
+}
+
+ctx.stroke();
+
+if(progress < 1){
+requestAnimationFrame(drawInfinity);
+}else{
+if(navigator.vibrate) navigator.vibrate(120);
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
-if(navigator.vibrate) navigator.vibrate(120);
-},2500);
+},400);
+}
+}
 
-/* ================= SIDEBAR ================= */
+requestAnimationFrame(drawInfinity);
+
+/* ================= NAVIGATION ================= */
 
 function toggleSidebar(){
 document.getElementById("sidebar").classList.toggle("active");
@@ -350,7 +437,7 @@ document.getElementById(id).classList.add("active");
 document.getElementById("sidebar").classList.remove("active");
 }
 
-/* ================= THEME TOGGLE ================= */
+/* ================= THEME ================= */
 
 function toggleTheme(){
 document.body.classList.toggle("light");
@@ -358,13 +445,12 @@ document.body.classList.toggle("light");
 
 /* ================= CALCULATOR ================= */
 
-let display=document.getElementById("display");
+let display = document.getElementById("display");
 
 function append(val){
 if(display.innerText==="0") display.innerText="";
 display.innerText+=val;
 }
-
 function clearDisplay(){display.innerText="0";}
 function backspace(){display.innerText=display.innerText.slice(0,-1)||"0";}
 function calculate(){
@@ -376,20 +462,24 @@ catch{display.innerText="Error";}
 
 let timer;
 let seconds=0;
-
 function format(sec){
 let h=Math.floor(sec/3600);
 let m=Math.floor((sec%3600)/60);
 let s=sec%60;
 return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-
-function start(){
-timer=setInterval(()=>{seconds++;document.getElementById("time").innerText=format(seconds)},1000);
-}
-
+function start(){timer=setInterval(()=>{seconds++;document.getElementById("time").innerText=format(seconds)},1000);}
 function stop(){clearInterval(timer);}
 function reset(){clearInterval(timer);seconds=0;document.getElementById("time").innerText="00:00:00";}
+
+/* ================= PDF ================= */
+
+function openPDF(){
+document.getElementById("pdfViewer").style.display="flex";
+}
+function closePDF(){
+document.getElementById("pdfViewer").style.display="none";
+}
 
 </script>
 
