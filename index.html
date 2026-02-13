@@ -1,171 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rahsays | Education Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rahsays</title>
 
 <style>
-:root {
-  --bg: #0f0f0f;
-  --card: #1a1a1a;
-  --text: #ffffff;
-  --accent: #00c6ff;
+:root{
+--bg:#0f0f0f;
+--card:#1c1c1c;
+--text:#fff;
+--accent:#00c6ff;
 }
 
-body.light {
-  --bg: #f5f5f5;
-  --card: #ffffff;
-  --text: #111;
-  --accent: #0077ff;
+body.light{
+--bg:#f4f4f4;
+--card:#ffffff;
+--text:#111;
+--accent:#0077ff;
 }
 
-body.amoled {
-  --bg: #000000;
-  --card: #0a0a0a;
-  --text: #ffffff;
-  --accent: #00e0ff;
+body.amoled{
+--bg:#000;
+--card:#0a0a0a;
+--text:#fff;
+--accent:#00e0ff;
 }
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  transition: all .3s ease;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+transition:.3s;
 }
 
 body{
-  background: var(--bg);
-  color: var(--text);
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
 }
 
-/* Header */
+/* HEADER */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 20px;
-  border-bottom:1px solid #222;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:18px;
+border-bottom:1px solid #222;
+position:relative;
 }
 
 .logo{
-  font-size:20px;
-  letter-spacing:4px;
-  font-weight:600;
+font-size:22px;
+letter-spacing:4px;
+font-weight:600;
 }
 
-.menu-btn{
-  font-size:24px;
-  cursor:pointer;
+.theme{
+position:absolute;
+right:15px;
 }
 
-/* Sidebar */
-.sidebar{
-  position:fixed;
-  top:0;
-  left:-260px;
-  width:250px;
-  height:100%;
-  background:var(--card);
-  padding:30px 20px;
-  transition:.4s;
-  box-shadow:2px 0 15px rgba(0,0,0,0.4);
+select{
+background:var(--card);
+color:var(--text);
+border:none;
+padding:6px 10px;
+border-radius:20px;
 }
 
-.sidebar.active{
-  left:0;
+/* PAGE SYSTEM */
+.page{
+display:none;
+padding:30px 20px;
+animation:fade .3s ease;
 }
 
-.sidebar h3{
-  margin-bottom:20px;
+.page.active{
+display:block;
 }
 
-.theme-btn{
-  display:block;
-  padding:10px;
-  margin-bottom:10px;
-  border-radius:8px;
-  border:none;
-  cursor:pointer;
-  background:var(--accent);
-  color:white;
+@keyframes fade{
+from{opacity:0; transform:translateX(20px);}
+to{opacity:1; transform:translateX(0);}
 }
 
-/* Hero */
-.hero{
-  text-align:center;
-  padding:40px 20px;
-}
-
-.hero h1{
-  font-size:32px;
-  margin-bottom:20px;
-}
-
-.search{
-  width:90%;
-  max-width:400px;
-  padding:12px 15px;
-  border-radius:25px;
-  border:none;
-  background:var(--card);
-  color:var(--text);
-}
-
-/* Section */
-.section{
-  padding:40px 20px;
-  text-align:center;
-}
-
-.section h2{
-  margin-bottom:25px;
-  font-size:24px;
-}
-
-/* Grid */
+/* BUTTON GRID */
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
-  gap:15px;
-  max-width:700px;
-  margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+gap:15px;
+max-width:800px;
+margin:auto;
 }
 
 .card{
-  background:var(--card);
-  padding:20px;
-  border-radius:12px;
-  cursor:pointer;
-  border:1px solid #222;
+background:var(--card);
+padding:20px;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+border:1px solid #222;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  border:1px solid var(--accent);
+transform:translateY(-5px);
+border:1px solid var(--accent);
 }
 
-/* Telegram Button */
+h1,h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+/* BACK BUTTON */
+.back{
+display:inline-block;
+margin-bottom:20px;
+background:var(--accent);
+padding:8px 15px;
+border-radius:20px;
+cursor:pointer;
+}
+
+/* TELEGRAM */
 .telegram{
-  margin-top:40px;
+text-align:center;
+margin-top:40px;
 }
 
 .telegram a{
-  text-decoration:none;
-  background:var(--accent);
-  padding:12px 25px;
-  border-radius:25px;
-  color:white;
-  font-weight:600;
+text-decoration:none;
+background:var(--accent);
+padding:12px 25px;
+border-radius:25px;
+color:white;
+font-weight:600;
 }
 
-/* Footer */
+/* PDF VIEWER */
+iframe{
+width:100%;
+height:500px;
+border:none;
+border-radius:10px;
+}
+
+/* CALCULATOR */
+.calc{
+max-width:300px;
+margin:30px auto;
+background:var(--card);
+padding:20px;
+border-radius:15px;
+}
+
+.calc input{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+background:var(--bg);
+border:none;
+color:var(--text);
+border-radius:8px;
+}
+
+.calc button{
+width:23%;
+padding:8px;
+margin:3px;
+background:var(--accent);
+border:none;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
 footer{
-  text-align:center;
-  padding:30px;
-  font-size:14px;
-  opacity:0.7;
+text-align:center;
+padding:30px;
+opacity:.6;
 }
 </style>
 </head>
@@ -173,75 +187,143 @@ footer{
 <body>
 
 <header>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  <div class="logo">rahsays</div>
+<div class="logo">rahsays</div>
+<div class="theme">
+<select onchange="setTheme(this.value)">
+<option value="dark">Dark</option>
+<option value="amoled">AMOLED</option>
+<option value="light">Light</option>
+</select>
+</div>
 </header>
 
-<div class="sidebar" id="sidebar">
-  <h3>Theme Mode</h3>
-  <button class="theme-btn" onclick="setTheme('dark')">Dark</button>
-  <button class="theme-btn" onclick="setTheme('amoled')">AMOLED</button>
-  <button class="theme-btn" onclick="setTheme('light')">Light</button>
+<!-- HOME -->
+<div class="page active" id="home">
+<h1>Education Platform</h1>
+
+<h2>School Classes</h2>
+<div class="grid">
+<div class="card" onclick="openPage('class6')">Class 6</div>
+<div class="card" onclick="openPage('class7')">Class 7</div>
+<div class="card" onclick="openPage('class8')">Class 8</div>
+<div class="card" onclick="openPage('class9')">Class 9</div>
+<div class="card" onclick="openPage('class10')">Class 10</div>
+<div class="card" onclick="openPage('class11')">Class 11</div>
+<div class="card" onclick="openPage('class12')">Class 12</div>
 </div>
 
-<div class="hero">
-  <h1>Education Platform</h1>
-  <input class="search" placeholder="Search courses...">
+<h2 style="margin-top:40px;">Competitive Exams</h2>
+<div class="grid">
+<div class="card" onclick="openPage('iit')">IIT / JEE</div>
+<div class="card" onclick="openPage('neet')">NEET</div>
+<div class="card" onclick="openPage('upsc')">UPSC</div>
+<div class="card" onclick="openPage('ssc')">SSC</div>
 </div>
 
-<div class="section">
-  <h2>School Classes</h2>
-  <div class="grid">
-    <div class="card">Class 6</div>
-    <div class="card">Class 7</div>
-    <div class="card">Class 8</div>
-    <div class="card">Class 9</div>
-    <div class="card">Class 10</div>
-    <div class="card">Class 11</div>
-    <div class="card">Class 12</div>
-  </div>
+<div class="telegram">
+<a href="https://t.me/YOUR_USERNAME" target="_blank">
+Join Telegram
+</a>
 </div>
 
-<div class="section">
-  <h2>Competitive Exams</h2>
-  <div class="grid">
-    <div class="card">IIT / JEE</div>
-    <div class="card">NEET</div>
-    <div class="card">UPSC</div>
-    <div class="card">SSC</div>
-    <div class="card">BPSC</div>
-    <div class="card">State PCS</div>
-  </div>
+</div>
 
-  <div class="telegram">
-    <a href="https://t.me/YOUR_TELEGRAM_USERNAME" target="_blank">
-      Join Telegram
-    </a>
-  </div>
+<!-- SAMPLE CLASS PAGE -->
+<div class="page" id="class6">
+<div class="back" onclick="goHome()">← Back</div>
+<h2>Class 6 Subjects</h2>
+<div class="grid">
+<div class="card" onclick="openPage('pdf')">Math Notes</div>
+<div class="card">Science</div>
+<div class="card">English</div>
+</div>
+</div>
+
+<!-- PDF PAGE -->
+<div class="page" id="pdf">
+<div class="back" onclick="goHome()">← Back</div>
+<h2>PDF Viewer</h2>
+<iframe src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"></iframe>
+</div>
+
+<!-- CALCULATOR PAGE -->
+<div class="page" id="iit">
+<div class="back" onclick="goHome()">← Back</div>
+<h2>Advanced Calculator</h2>
+<div class="calc">
+<input id="display" readonly>
+<div>
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button onclick="add('/')">÷</button>
+</div>
+<div>
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button onclick="add('*')">×</button>
+</div>
+<div>
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button onclick="add('-')">−</button>
+</div>
+<div>
+<button onclick="add('0')">0</button>
+<button onclick="calculate()">=</button>
+<button onclick="clearCalc()">C</button>
+<button onclick="add('+')">+</button>
+</div>
+</div>
 </div>
 
 <footer>
-  © 2026 rahsays. All rights reserved.
+© 2026 rahsays
 </footer>
 
 <script>
-function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("active");
+function openPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo(0,0);
+}
+
+function goHome(){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('home').classList.add('active');
+window.scrollTo(0,0);
 }
 
 function setTheme(mode){
-  document.body.classList.remove("light","amoled");
-  if(mode !== "dark"){
-    document.body.classList.add(mode);
-  }
-  localStorage.setItem("theme",mode);
+document.body.classList.remove("light","amoled");
+if(mode!=="dark"){document.body.classList.add(mode);}
+localStorage.setItem("theme",mode);
 }
 
-window.onload = function(){
-  const saved = localStorage.getItem("theme");
-  if(saved && saved !== "dark"){
-    document.body.classList.add(saved);
-  }
+window.onload=function(){
+let saved=localStorage.getItem("theme");
+if(saved && saved!=="dark"){
+document.body.classList.add(saved);
+}
+}
+
+function add(val){
+document.getElementById("display").value+=val;
+}
+
+function calculate(){
+try{
+document.getElementById("display").value=
+eval(document.getElementById("display").value);
+}catch{
+alert("Error");
+}
+}
+
+function clearCalc(){
+document.getElementById("display").value="";
 }
 </script>
 
