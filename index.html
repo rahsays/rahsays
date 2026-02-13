@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rahsays – Elite Education Platform</title>
+<title>quantum – Elite Learning Platform</title>
 
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
 <style>
 
 /* ============================
-   ROOT THEME SYSTEM
+   ROOT THEME SYSTEM + CLASSY TOUCHES
 ============================ */
 
 :root {
@@ -19,16 +19,17 @@
   --card: #111;
   --text: #fff;
   --muted: #aaa;
-  --accent: #ffb800;
-  --glow: 0 0 20px rgba(255,255,255,0.4);
+  --accent: #00f5ff;
+  --glow: 0 0 30px rgba(0, 245, 255, 0.3);
+  --gradient: linear-gradient(135deg, #00f5ff, #ff00c3);
 }
 
 .light-mode {
-  --bg: #f4f6f8;
-  --card: #fff;
+  --bg: #f8f9fc;
+  --card: #ffffff;
   --text: #111;
   --muted: #555;
-  --accent: #ff9500;
+  --accent: #00b8d4;
   --glow: none;
 }
 
@@ -44,10 +45,11 @@ body {
   color: var(--text);
   transition: 0.4s ease;
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
 /* ============================
-   INFINITY LOADER
+   INFINITY LOADER (kept same)
 ============================ */
 
 #loader {
@@ -78,59 +80,65 @@ body {
 }
 
 @keyframes drawInfinity {
-  to {
-    stroke-dashoffset: 0;
-  }
+  to { stroke-dashoffset: 0; }
 }
 
 /* ============================
-   HEADER
+   HEADER – QUANTUM LOGO (small, thin, classy)
 ============================ */
 
 header {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 16px 20px;
+  padding: 18px 24px;
   background: var(--bg);
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .logo {
-  font-weight: 800;
-  letter-spacing: 3px;
-  font-size: 18px;
+  font-weight: 200;
+  font-size: 28px;
+  letter-spacing: 8px;
+  text-transform: lowercase;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.95;
 }
 
 .menu-btn {
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
+  padding: 8px;
 }
 
 .mode-toggle {
-  width: 70px;
-  height: 36px;
+  width: 74px;
+  height: 38px;
   background: var(--card);
   border-radius: 30px;
   display: flex;
   align-items: center;
   padding: 4px;
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .mode-ball {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   background: var(--accent);
   border-radius: 50%;
-  transition: 0.3s;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .light-mode .mode-ball {
-  transform: translateX(32px);
+  transform: translateX(34px);
 }
 
 /* ============================
@@ -139,15 +147,16 @@ header {
 
 .sidebar {
   position: fixed;
-  left: -260px;
+  left: -280px;
   top: 0;
   height: 100%;
-  width: 260px;
+  width: 280px;
   background: var(--card);
   backdrop-filter: blur(20px);
-  padding-top: 80px;
+  padding-top: 90px;
   transition: 0.4s ease;
   z-index: 200;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.6);
 }
 
 .sidebar.open {
@@ -156,174 +165,271 @@ header {
 
 .sidebar a {
   display: block;
-  padding: 18px 30px;
+  padding: 20px 32px;
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
+  font-size: 17px;
   transition: 0.2s;
 }
 
 .sidebar a:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(0, 245, 255, 0.08);
+  padding-left: 40px;
 }
 
 /* ============================
-   MAIN CONTENT + DETAIL VIEW
+   HOME CARDS – with arrow
 ============================ */
 
 main, #subject-detail {
-  padding: 120px 20px 40px;
+  padding: 130px 24px 60px;
 }
 
 .section {
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
 .section h2 {
-  margin-bottom: 20px;
-  font-size: 26px;
+  margin-bottom: 28px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
 }
 
 .card {
   background: var(--card);
-  padding: 30px;
-  border-radius: 16px;
-  text-align: center;
+  padding: 28px 24px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  font-size: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-12px) scale(1.02);
   box-shadow: var(--glow);
+  border-color: var(--accent);
 }
 
-/* Detail view specific */
-#detail-title {
+.card .arrow {
   font-size: 32px;
-  margin-bottom: 24px;
+  color: var(--accent);
+  transition: 0.4s;
 }
 
-#detail-content {
-  font-size: 18px;
-  line-height: 1.6;
-  color: var(--muted);
-}
-
-#detail-content ul {
-  list-style-type: disc;
-  padding-left: 24px;
-  margin: 16px 0;
-}
-
-#detail-content h3 {
-  color: var(--text);
-  margin: 24px 0 12px;
+.card:hover .arrow {
+  transform: translateX(12px);
 }
 
 /* ============================
-   CALCULATOR
+   DETAIL VIEW – SUBJECTS + WEIGHTAGE
+============================ */
+
+#subject-detail {
+  display: none;
+  min-height: 100vh;
+}
+
+.detail-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  margin-bottom: 28px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  transform: translateX(-6px);
+}
+
+.detail-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.syllabus-badge {
+  display: inline-block;
+  background: rgba(0, 245, 255, 0.15);
+  color: var(--accent);
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.subject-card {
+  background: var(--card);
+  padding: 32px 28px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.subject-card:hover::before {
+  opacity: 1;
+}
+
+.subject-card:hover {
+  transform: translateY(-14px);
+  box-shadow: var(--glow);
+}
+
+.subject-icon {
+  font-size: 52px;
+  margin-bottom: 20px;
+}
+
+.subject-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.weight-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(0, 245, 255, 0.2);
+  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+}
+
+.chapters-count {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: auto;
+}
+
+/* Chapters View */
+.chapters-view {
+  display: none;
+  margin-top: 40px;
+}
+
+.chapters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.chapters-list {
+  list-style: none;
+}
+
+.chapters-list li {
+  padding: 20px 28px;
+  background: var(--card);
+  border-radius: 18px;
+  margin-bottom: 14px;
+  font-size: 17.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.chapters-list li:hover {
+  background: rgba(0, 245, 255, 0.1);
+  padding-left: 34px;
+  border-color: var(--accent);
+}
+
+/* ============================
+   CALCULATOR, STOPWATCH, LIBRARY (unchanged)
 ============================ */
 
 #calculator, #stopwatch, #library {
   display: none;
   min-height: 100vh;
-  padding-top: 120px;
+  padding-top: 130px;
 }
 
-.calc-display {
-  font-size: 42px;
-  text-align: right;
-  margin-bottom: 20px;
-  padding: 20px;
-  background: var(--card);
-  border-radius: 12px;
-}
+.calc-display { font-size: 48px; text-align: right; margin-bottom: 24px; padding: 24px; background: var(--card); border-radius: 20px; }
+.calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.btn { padding: 24px; font-size: 22px; border-radius: 50px; border: none; cursor: pointer; background: var(--card); color: var(--text); }
+.btn.yellow { background: var(--accent); color: #000; font-weight: 700; }
 
-.calc-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-.btn {
-  padding: 20px;
-  font-size: 20px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  background: var(--card);
-  color: var(--text);
-}
-
-.btn.yellow {
-  background: var(--accent);
-  color: #000;
-}
-
-/* ============================
-   STOPWATCH
-============================ */
-
-.time {
-  font-size: 70px;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.sw-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.sw-buttons button {
-  padding: 14px 28px;
-  border-radius: 30px;
-  border: none;
-  background: var(--card);
-  color: var(--text);
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* ============================
-   LIBRARY
-============================ */
+.time { font-size: 78px; text-align: center; margin-bottom: 40px; font-weight: 300; letter-spacing: 4px; }
+.sw-buttons button { padding: 16px 36px; border-radius: 50px; border: none; background: var(--card); color: var(--text); font-size: 17px; cursor: pointer; }
 
 #pdfViewer {
   width: 100%;
-  height: 80vh;
-  border-radius: 16px;
-  margin-top: 20px;
+  height: 82vh;
+  border-radius: 24px;
+  margin-top: 28px;
   border: none;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
 </style>
 </head>
 <body>
 
-<!-- INFINITY LOADER -->
+<!-- LOADER -->
 <div id="loader">
   <svg class="infinity-svg" viewBox="0 0 500 200">
-    <path class="infinity-path"
-      d="M100,100
-         C100,40 200,40 250,100
-         C300,160 400,160 400,100
-         C400,40 300,40 250,100
-         C200,160 100,160 100,100" />
+    <path class="infinity-path" d="M100,100 C100,40 200,40 250,100 C300,160 400,160 400,100 C400,40 300,40 250,100 C200,160 100,160 100,100" />
   </svg>
 </div>
 
 <header>
   <div class="menu-btn" onclick="toggleSidebar()">☰</div>
-  <div class="logo">RAHSAYS</div>
+  <div class="logo">quantum</div>
   <div class="mode-toggle" onclick="toggleMode()">
     <div class="mode-ball"></div>
   </div>
@@ -339,38 +445,52 @@ main, #subject-detail {
 <main id="home">
 
   <div class="section">
-    <h2>School Classes</h2>
+    <h2>School Classes (CBSE 2025-26)</h2>
     <div class="grid">
-      <div class="card" onclick="showSubject(this)" data-subject="class-6">Class 6</div>
-      <div class="card" onclick="showSubject(this)" data-subject="class-7">Class 7</div>
-      <div class="card" onclick="showSubject(this)" data-subject="class-8">Class 8</div>
-      <div class="card" onclick="showSubject(this)" data-subject="class-9">Class 9</div>
-      <div class="card" onclick="showSubject(this)" data-subject="class-10">Class 10</div>
-      <div class="card" onclick="showSubject(this)" data-subject="class-11">Class 11</div>
-      <div class="card" onclick="showSubject(this)" data-subject="class-12">Class 12</div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-6"><span>Class 6</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-7"><span>Class 7</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-8"><span>Class 8</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-9"><span>Class 9</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-10"><span>Class 10</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-11"><span>Class 11</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="class-12"><span>Class 12</span><span class="arrow">→</span></div>
     </div>
   </div>
 
   <div class="section">
     <h2>Competitive Exams</h2>
     <div class="grid">
-      <div class="card" onclick="showSubject(this)" data-subject="iit-jee">IIT / JEE</div>
-      <div class="card" onclick="showSubject(this)" data-subject="neet">NEET</div>
-      <div class="card" onclick="showSubject(this)" data-subject="upsc">UPSC</div>
-      <div class="card" onclick="showSubject(this)" data-subject="ssc">SSC</div>
+      <div class="card" onclick="showSubject(this)" data-subject="iit-jee"><span>IIT JEE</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="neet"><span>NEET</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="upsc"><span>UPSC</span><span class="arrow">→</span></div>
+      <div class="card" onclick="showSubject(this)" data-subject="ssc"><span>SSC</span><span class="arrow">→</span></div>
     </div>
   </div>
 
 </main>
 
-<!-- SUBJECT DETAIL VIEW -->
+<!-- SUBJECT DETAIL -->
 <section id="subject-detail">
-  <div style="max-width:900px; margin:0 auto; padding:0 20px;">
-    <button onclick="backToHome()" style="margin-bottom:24px; padding:10px 20px; background:var(--accent); color:#000; border:none; border-radius:30px; font-weight:600; cursor:pointer;">
-      ← Back to Home
-    </button>
-    <h1 id="detail-title"></h1>
-    <div id="detail-content"></div>
+  <div class="detail-container">
+    <button class="back-btn" onclick="backToHome()">← Back to Home</button>
+    
+    <h1 id="detail-title" class="detail-title"></h1>
+    <div class="syllabus-badge">Updated Syllabus • 2025-26</div>
+
+    <!-- SUBJECTS -->
+    <div id="subjects-view">
+      <h3 style="font-size:21px; margin-bottom:24px; opacity:0.8;">Subjects &amp; Weightage</h3>
+      <div id="subjects-grid" class="subjects-grid"></div>
+    </div>
+
+    <!-- CHAPTERS -->
+    <div id="chapters-view" class="chapters-view">
+      <div class="chapters-header">
+        <h2 id="subject-title" style="font-size:32px;"></h2>
+        <button class="back-btn" onclick="backToSubjects()" style="padding:10px 24px; font-size:15px;">← Subjects</button>
+      </div>
+      <ul id="chapters-list" class="chapters-list"></ul>
+    </div>
   </div>
 </section>
 
@@ -382,22 +502,18 @@ main, #subject-detail {
     <button class="btn yellow" onclick="backspace()">⌫</button>
     <button class="btn yellow" onclick="append('%')">%</button>
     <button class="btn yellow" onclick="append('/')">÷</button>
-
     <button class="btn" onclick="append('7')">7</button>
     <button class="btn" onclick="append('8')">8</button>
     <button class="btn" onclick="append('9')">9</button>
     <button class="btn yellow" onclick="append('*')">×</button>
-
     <button class="btn" onclick="append('4')">4</button>
     <button class="btn" onclick="append('5')">5</button>
     <button class="btn" onclick="append('6')">6</button>
     <button class="btn yellow" onclick="append('-')">−</button>
-
     <button class="btn" onclick="append('1')">1</button>
     <button class="btn" onclick="append('2')">2</button>
     <button class="btn" onclick="append('3')">3</button>
     <button class="btn yellow" onclick="append('+')">+</button>
-
     <button class="btn" onclick="append('0')">0</button>
     <button class="btn" onclick="append('.')">.</button>
     <button class="btn yellow" onclick="calculate()">=</button>
@@ -416,46 +532,88 @@ main, #subject-detail {
 
 <!-- LIBRARY -->
 <section id="library">
-  <input type="file" accept="application/pdf" onchange="loadPDF(event)">
+  <input type="file" accept="application/pdf" onchange="loadPDF(event)" style="margin-bottom:20px;">
   <iframe id="pdfViewer"></iframe>
 </section>
 
 <script>
 
 /* ============================
-   LOADER
+   DATA – Full NCERT + Weightage (2025-26)
+============================ */
+
+const subjectsData = {
+  "class-6": { title: "Class 6", subjects: [
+    { name: "Mathematics", icon: "📐", weightage: "Essential", chapters: ["Knowing Our Numbers","Whole Numbers","Playing with Numbers","Basic Geometrical Ideas","Understanding Elementary Shapes","Integers","Fractions","Decimals","Data Handling","Mensuration","Algebra","Ratio and Proportion","Symmetry","Practical Geometry"] },
+    { name: "Science", icon: "🧪", weightage: "Essential", chapters: ["Food: Where Does It Come From?","Components of Food","Fibre to Fabric","Sorting Materials","Separation of Substances","Changes Around Us","Getting to Know Plants","Body Movements","Living Organisms","Motion and Measurement","Light, Shadows","Electricity","Magnets","Air Around Us"] },
+    { name: "Social Science", icon: "🌍", weightage: "Essential", chapters: ["What, Where, How and When?","Earliest People","Hunting to Growing Food","Earliest Cities","Books and Burials","Kingdoms and Republic","New Ideas","Ashoka","Vital Villages","Traders and Pilgrims","New Empires","Buildings and Books"] }
+  ]},
+  "class-7": { title: "Class 7", subjects: [
+    { name: "Mathematics", icon: "📊", weightage: "Essential", chapters: ["Integers","Fractions & Decimals","Data Handling","Simple Equations","Lines and Angles","Triangle Properties","Congruence","Comparing Quantities","Rational Numbers","Practical Geometry","Perimeter & Area","Algebraic Expressions","Exponents","Symmetry","Solid Shapes"] },
+    { name: "Science", icon: "🧬", weightage: "Essential", chapters: ["Nutrition in Plants","Nutrition in Animals","Fibre to Fabric","Heat","Acids Bases Salts","Physical Changes","Weather & Climate","Winds Storms","Soil","Respiration","Transportation","Reproduction","Motion & Time","Electric Current","Light","Water","Forests","Wastewater"] }
+  ]},
+  "class-8": { title: "Class 8", subjects: [
+    { name: "Mathematics", icon: "📐", weightage: "Essential", chapters: ["Rational Numbers","Linear Equations","Quadrilaterals","Data Handling","Squares & Roots","Cubes & Roots","Comparing Quantities","Algebraic Expressions","Solid Shapes","Mensuration","Exponents","Proportions","Factorisation","Graphs","Playing with Numbers"] },
+    { name: "Science", icon: "⚗️", weightage: "Essential", chapters: ["Crop Production","Microorganisms","Synthetic Fibres","Metals & Non-Metals","Coal & Petroleum","Combustion","Conservation","Cell","Reproduction","Adolescence","Force & Pressure","Friction","Sound","Chemical Effects","Natural Phenomena","Light","Stars & Solar","Pollution"] }
+  ]},
+  "class-9": { title: "Class 9", subjects: [
+    { name: "Mathematics", icon: "📊", weightage: "25%", chapters: ["Number Systems","Polynomials","Coordinate Geometry","Linear Equations","Euclid Geometry","Lines & Angles","Triangles","Quadrilaterals","Areas","Circles","Constructions","Heron Formula","Surface Areas","Statistics","Probability"] },
+    { name: "Science", icon: "🧪", weightage: "25%", chapters: ["Matter","Is Matter Pure?","Atoms & Molecules","Structure of Atom","Cell","Tissues","Diversity","Motion","Force & Laws","Gravitation","Work & Energy","Sound","Why We Fall Ill","Resources","Food Improvement"] }
+  ]},
+  "class-10": { title: "Class 10", subjects: [
+    { name: "Mathematics", icon: "📐", weightage: "25%", chapters: ["Real Numbers","Polynomials","Linear Equations","Quadratic Equations","Progressions","Triangles","Coordinate Geometry","Trigonometry","Applications","Circles","Constructions","Areas","Surface Volumes","Statistics","Probability"] },
+    { name: "Science", icon: "🧬", weightage: "25%", chapters: ["Chemical Reactions","Acids Bases","Metals Non-metals","Carbon Compounds","Periodic Table","Life Processes","Control & Coordination","Reproduction","Heredity","Light Reflection","Human Eye","Electricity","Magnetic Effects","Energy Sources","Environment"] },
+    { name: "Social Science", icon: "🌐", weightage: "20%", chapters: ["Nationalism Europe","Nationalism India","Global World","Industrialisation","Print Culture","Power Sharing","Federalism","Gender Caste","Political Parties","Outcomes Democracy"] }
+  ]},
+  "class-11": { title: "Class 11 (PCM/PCB)", subjects: [
+    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Units","Motion Straight","Motion Plane","Laws Motion","Work Energy","Rotational","Gravitation","Solids","Fluids","Thermal","Thermodynamics","Kinetic Theory","Oscillations","Waves"] },
+    { name: "Chemistry", icon: "🧪", weightage: "33%", chapters: ["Basic Concepts","Atom Structure","Classification","Bonding","States Matter","Thermodynamics","Equilibrium","Redox","Hydrogen","s-Block","p-Block","Organic","Hydrocarbons"] },
+    { name: "Mathematics", icon: "📊", weightage: "33%", chapters: ["Sets","Relations","Trigonometry","Complex Numbers","Inequalities","Permutations","Binomial","Sequences","Lines","Conics","3D Geometry","Limits","Statistics","Probability"] }
+  ]},
+  "class-12": { title: "Class 12 (PCM/PCB)", subjects: [
+    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Charges","Potential","Current","Magnetism","Induction","Waves","Optics","Dual Nature","Atoms","Nuclei","Semiconductors"] },
+    { name: "Chemistry", icon: "🧪", weightage: "33%", chapters: ["Solutions","Electrochemistry","Kinetics","d f Block","Coordination","Haloalkanes","Alcohols","Aldehydes","Amines","Biomolecules","Polymers"] },
+    { name: "Mathematics", icon: "📐", weightage: "33%", chapters: ["Relations","Inverse Trig","Matrices","Determinants","Continuity","Derivatives","Integrals","Differential","Vectors","3D","Linear Programming","Probability"] }
+  ]},
+  "iit-jee": { title: "IIT JEE (Main + Advanced)", subjects: [
+    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Kinematics","Laws Motion","Work Energy","Rotational","Gravitation","Thermodynamics","Electrostatics","Current","Magnetism","Optics","Modern Physics"] },
+    { name: "Chemistry", icon: "🧪", weightage: "33%", chapters: ["Atomic Structure","Bonding","Thermodynamics","Equilibrium","Kinetics","Periodic","Coordination","Organic Basics","Hydrocarbons","Biomolecules"] },
+    { name: "Mathematics", icon: "📊", weightage: "33%", chapters: ["Complex Numbers","Quadratic","Matrices","Trigonometry","Coordinate","Calculus","Vectors","3D","Probability"] }
+  ]},
+  "neet": { title: "NEET UG", subjects: [
+    { name: "Physics", icon: "⚡", weightage: "25%", chapters: ["Kinematics","Laws","Work Energy","Gravitation","Thermodynamics","Electrostatics","Current","Magnetism","Optics","Modern"] },
+    { name: "Chemistry", icon: "🧪", weightage: "25%", chapters: ["Atomic","Bonding","Equilibrium","Kinetics","Periodic","Coordination","Organic","Hydrocarbons","Biomolecules"] },
+    { name: "Biology", icon: "🧬", weightage: "50%", chapters: ["Living World","Classification","Plant Kingdom","Animal Kingdom","Morphology","Cell","Photosynthesis","Human Physiology","Genetics","Biotechnology"] }
+  ]},
+  "upsc": { title: "UPSC CSE", subjects: [
+    { name: "History", icon: "📜", weightage: "25%", chapters: ["Ancient","Medieval","Modern","World History"] },
+    { name: "Geography", icon: "🌍", weightage: "20%", chapters: ["Physical","Human","Indian","World"] },
+    { name: "Polity", icon: "⚖️", weightage: "20%", chapters: ["Constitution","Governance","International"] },
+    { name: "Economy", icon: "💰", weightage: "20%", chapters: ["Indian Economy","Development","Budget"] }
+  ]},
+  "ssc": { title: "SSC CGL / CHSL", subjects: [
+    { name: "Quantitative Aptitude", icon: "📊", weightage: "25%", chapters: ["Number System","Percentage","Profit Loss","Time Work","Geometry","Algebra","Data Interpretation"] },
+    { name: "English", icon: "📖", weightage: "25%", chapters: ["Grammar","Vocabulary","Comprehension","Cloze"] },
+    { name: "Reasoning", icon: "🧠", weightage: "25%", chapters: ["Analogy","Series","Coding","Blood Relations","Syllogism"] },
+    { name: "General Awareness", icon: "🌐", weightage: "25%", chapters: ["History","Polity","Economy","Science","Current Affairs"] }
+  ]}
+};
+
+/* ============================
+   LOADER + MODE + SIDEBAR + NAV (same as before)
 ============================ */
 
 window.addEventListener("load", () => {
   setTimeout(() => {
-    if (navigator.vibrate) navigator.vibrate(100);
+    if (navigator.vibrate) navigator.vibrate(80);
     document.getElementById("loader").style.display = "none";
-  }, 2500);
+  }, 2200);
 });
 
-/* ============================
-   MODE TOGGLE
-============================ */
+function toggleMode() { document.body.classList.toggle("light-mode"); }
 
-function toggleMode() {
-  document.body.classList.toggle("light-mode");
-}
-
-/* ============================
-   SIDEBAR
-============================ */
-
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("open");
-}
-
-function closeSidebar() {
-  document.getElementById("sidebar").classList.remove("open");
-}
-
-/* ============================
-   NAVIGATION
-============================ */
+function toggleSidebar() { document.getElementById("sidebar").classList.toggle("open"); }
+function closeSidebar() { document.getElementById("sidebar").classList.remove("open"); }
 
 function showHome() {
   document.getElementById("home").style.display = "block";
@@ -466,174 +624,69 @@ function showHome() {
   closeSidebar();
 }
 
-function showCalculator() {
-  showHome();
-  document.getElementById("home").style.display = "none";
-  document.getElementById("calculator").style.display = "block";
-}
-
-function showStopwatch() {
-  showHome();
-  document.getElementById("home").style.display = "none";
-  document.getElementById("stopwatch").style.display = "block";
-}
-
-function showLibrary() {
-  showHome();
-  document.getElementById("home").style.display = "none";
-  document.getElementById("library").style.display = "block";
-}
+function showCalculator() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("calculator").style.display = "block"; }
+function showStopwatch() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("stopwatch").style.display = "block"; }
+function showLibrary() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("library").style.display = "block"; }
 
 /* ============================
-   SUBJECT DETAIL VIEW
+   SUBJECT + CHAPTERS LOGIC
 ============================ */
 
-function showSubject(card) {
-  const subject = card.getAttribute("data-subject");
-  const titleEl = document.getElementById("detail-title");
-  const contentEl = document.getElementById("detail-content");
+let currentData = null;
 
-  // Hide home, show detail
+function showSubject(card) {
+  const key = card.getAttribute("data-subject");
+  currentData = subjectsData[key];
+
   document.getElementById("home").style.display = "none";
   document.getElementById("subject-detail").style.display = "block";
 
-  let title = "";
-  let content = "";
+  document.getElementById("detail-title").textContent = currentData.title;
 
-  switch(subject) {
-    case "class-6":
-      title = "Class 6";
-      content = `
-        <p>Welcome to Class 6 preparation on RAHSAYS!</p>
-        <h3>Main Subjects:</h3>
-        <ul>
-          <li>Mathematics</li>
-          <li>Science</li>
-          <li>Social Science (History, Geography, Civics)</li>
-          <li>English</li>
-          <li>Hindi / Second Language</li>
-        </ul>
-        <p>Focus: Building strong basics in numbers, basic physics/chemistry/biology concepts, ancient history, etc.</p>
-        <p>Coming soon: Chapter-wise notes, MCQs, videos...</p>
-      `;
-      break;
+  renderSubjects();
+}
 
-    case "class-7":
-      title = "Class 7";
-      content = `
-        <p>Class 7 content coming soon...</p>
-        <ul>
-          <li>Maths – Integers, Fractions, Algebra intro</li>
-          <li>Science – Heat, Acids & Bases, Nutrition</li>
-          <li>Social – Medieval History, Environment</li>
-        </ul>
-      `;
-      break;
+function renderSubjects() {
+  const grid = document.getElementById("subjects-grid");
+  grid.innerHTML = "";
 
-    case "class-8":
-      title = "Class 8";
-      content = "<p>Class 8 notes & resources coming soon...</p>";
-      break;
+  currentData.subjects.forEach((sub, i) => {
+    const div = document.createElement("div");
+    div.className = "subject-card";
+    div.innerHTML = `
+      <div class="subject-icon">${sub.icon}</div>
+      <div class="subject-name">${sub.name}</div>
+      <div class="weight-badge">${sub.weightage}</div>
+      <div class="chapters-count">${sub.chapters.length} Chapters</div>
+    `;
+    div.onclick = () => showChapters(i);
+    grid.appendChild(div);
+  });
 
-    case "class-9":
-      title = "Class 9";
-      content = `
-        <p>Class 9 – Foundation for board exams starts here!</p>
-        <ul>
-          <li>Maths: Number Systems, Polynomials, Coordinate Geometry</li>
-          <li>Science: Matter, Atoms & Molecules, Force & Laws</li>
-        </ul>
-      `;
-      break;
+  document.getElementById("subjects-view").style.display = "block";
+  document.getElementById("chapters-view").style.display = "none";
+}
 
-    case "class-10":
-      title = "Class 10";
-      content = `
-        <p>Class 10 – Board exam year!</p>
-        <h3>Key Subjects:</h3>
-        <ul>
-          <li>Mathematics</li>
-          <li>Science (Physics, Chemistry, Biology)</li>
-          <li>Social Science</li>
-          <li>English</li>
-          <li>Hindi / Other Language</li>
-        </ul>
-        <p>We will add previous year papers, important questions, NCERT solutions soon.</p>
-      `;
-      break;
+function showChapters(index) {
+  const sub = currentData.subjects[index];
+  document.getElementById("subject-title").textContent = sub.name;
 
-    case "class-11":
-      title = "Class 11";
-      content = "<p>Class 11 – Senior secondary begins. PCM / PCB streams...</p>";
-      break;
+  const list = document.getElementById("chapters-list");
+  list.innerHTML = "";
 
-    case "class-12":
-      title = "Class 12";
-      content = "<p>Class 12 – Final board + entrance prep year!</p>";
-      break;
+  sub.chapters.forEach(ch => {
+    const li = document.createElement("li");
+    li.innerHTML = `${ch} <span style="color:var(--accent); font-size:13px; font-weight:600;">→</span>`;
+    list.appendChild(li);
+  });
 
-    case "iit-jee":
-      title = "IIT / JEE Preparation";
-      content = `
-        <p>Engineering entrance – JEE Main + Advanced</p>
-        <h3>Core Subjects:</h3>
-        <ul>
-          <li>Physics</li>
-          <li>Chemistry</li>
-          <li>Mathematics</li>
-        </ul>
-        <p>Focus: Mechanics, Organic Chemistry, Calculus, Algebra...</p>
-        <p>Coming: Topic-wise theory, PYQs, mock tests.</p>
-      `;
-      break;
+  document.getElementById("subjects-view").style.display = "none";
+  document.getElementById("chapters-view").style.display = "block";
+}
 
-    case "neet":
-      title = "NEET Preparation";
-      content = `
-        <p>Medical entrance – NEET UG</p>
-        <ul>
-          <li>Physics</li>
-          <li>Chemistry</li>
-          <li>Biology (Botany + Zoology)</li>
-        </ul>
-        <p>High weightage: Human Physiology, Genetics, Organic Chem...</p>
-      `;
-      break;
-
-    case "upsc":
-      title = "UPSC / Civil Services";
-      content = `
-        <p>UPSC CSE – IAS, IPS, IFS...</p>
-        <ul>
-          <li>General Studies (History, Geography, Polity, Economy, Environment)</li>
-          <li>CSAT (Aptitude)</li>
-          <li>Optional Subject</li>
-          <li>Essay & Interview</li>
-        </ul>
-        <p>Start with NCERTs 6–12!</p>
-      `;
-      break;
-
-    case "ssc":
-      title = "SSC Exams (CGL, CHSL, etc.)";
-      content = `
-        <p>Staff Selection Commission exams for government jobs</p>
-        <ul>
-          <li>Quantitative Aptitude</li>
-          <li>English</li>
-          <li>General Intelligence & Reasoning</li>
-          <li>General Awareness (GK + Current Affairs)</li>
-        </ul>
-      `;
-      break;
-
-    default:
-      title = "Subject";
-      content = "Content coming soon...";
-  }
-
-  titleEl.textContent = title;
-  contentEl.innerHTML = content;
+function backToSubjects() {
+  document.getElementById("subjects-view").style.display = "block";
+  document.getElementById("chapters-view").style.display = "none";
 }
 
 function backToHome() {
@@ -643,75 +696,53 @@ function backToHome() {
 }
 
 /* ============================
-   CALCULATOR LOGIC
+   CALCULATOR (improved eval)
 ============================ */
 
 let display = document.getElementById("display");
 
 function append(val) {
-  if (display.innerText === "0") display.innerText = val;
+  if (display.innerText === "0" && val !== ".") display.innerText = val;
   else display.innerText += val;
 }
 
-function clearAll() {
-  display.innerText = "0";
-}
-
-function backspace() {
-  display.innerText = display.innerText.slice(0, -1) || "0";
-}
+function clearAll() { display.innerText = "0"; }
+function backspace() { display.innerText = display.innerText.slice(0, -1) || "0"; }
 
 function calculate() {
   try {
-    display.innerText = eval(display.innerText);
-  } catch {
+    let expr = display.innerText.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+    display.innerText = eval(expr);
+  } catch(e) {
     display.innerText = "Error";
+    setTimeout(() => display.innerText = "0", 1200);
   }
 }
 
 /* ============================
-   STOPWATCH LOGIC
+   STOPWATCH + PDF (same)
 ============================ */
 
-let swInterval;
-let seconds = 0;
+let swInterval, seconds = 0;
 
 function startSW() {
   if (swInterval) return;
-  swInterval = setInterval(() => {
-    seconds++;
-    updateTime();
-  }, 1000);
+  swInterval = setInterval(() => { seconds++; updateTime(); }, 1000);
 }
 
-function stopSW() {
-  clearInterval(swInterval);
-  swInterval = null;
-}
-
-function resetSW() {
-  stopSW();
-  seconds = 0;
-  updateTime();
-}
+function stopSW() { clearInterval(swInterval); swInterval = null; }
+function resetSW() { stopSW(); seconds = 0; updateTime(); }
 
 function updateTime() {
-  let hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
-  let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-  let secs = String(seconds % 60).padStart(2, '0');
-  document.getElementById("time").innerText = `${hrs}:${mins}:${secs}`;
+  let h = String(Math.floor(seconds / 3600)).padStart(2,'0');
+  let m = String(Math.floor((seconds % 3600) / 60)).padStart(2,'0');
+  let s = String(seconds % 60).padStart(2,'0');
+  document.getElementById("time").innerText = `${h}:${m}:${s}`;
 }
 
-/* ============================
-   PDF VIEWER
-============================ */
-
-function loadPDF(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const fileURL = URL.createObjectURL(file);
-    document.getElementById("pdfViewer").src = fileURL;
-  }
+function loadPDF(e) {
+  const file = e.target.files[0];
+  if (file) document.getElementById("pdfViewer").src = URL.createObjectURL(file);
 }
 
 </script>
