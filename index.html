@@ -6,20 +6,15 @@
 <title>rahsays</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 html,body{
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background:#000;
   color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
   overflow-x:hidden;
 }
 
-/* ================= LOADER ================= */
+/* ===== LOADER ===== */
 
 #loader{
   position:fixed;
@@ -32,37 +27,34 @@ html,body{
 }
 
 .infinity{
-  width:220px;
+  width:240px;
 }
 
 .infinity path{
   fill:none;
   stroke:#fff;
-  stroke-width:14;
+  stroke-width:16;
   stroke-linecap:round;
   stroke-linejoin:round;
-  stroke-dasharray:700;
-  stroke-dashoffset:700;
+  stroke-dasharray:800;
+  stroke-dashoffset:800;
   animation:draw 2.5s ease forwards;
-  filter:drop-shadow(0 0 18px rgba(255,255,255,0.7));
+  filter:drop-shadow(0 0 20px rgba(255,255,255,0.8));
 }
 
-@keyframes draw{
-  to{stroke-dashoffset:0;}
-}
+@keyframes draw{to{stroke-dashoffset:0;}}
 
-/* ================= HEADER ================= */
+/* ===== HEADER ===== */
 
 header{
   position:fixed;
   top:0;
-  left:0;
   width:100%;
   height:60px;
+  background:#000;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#000;
   z-index:1000;
 }
 
@@ -74,84 +66,109 @@ header{
 }
 
 header h1{
+  letter-spacing:4px;
   font-weight:600;
-  letter-spacing:3px;
 }
 
-/* ================= SIDEBAR ================= */
+/* ===== SIDEBAR ===== */
 
 .sidebar{
   position:fixed;
   top:0;
-  left:-260px;
-  width:260px;
+  left:-270px;
+  width:270px;
   height:100%;
   background:#0a0a0a;
-  padding-top:80px;
-  transition:0.3s;
+  padding-top:90px;
+  transition:.3s;
   z-index:1200;
-  box-shadow:4px 0 25px rgba(255,255,255,0.05);
+  box-shadow:4px 0 30px rgba(255,255,255,0.05);
 }
+
+.sidebar.active{left:0;}
 
 .sidebar a{
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:18px 25px;
+  gap:15px;
+  padding:20px 30px;
   text-decoration:none;
   color:#fff;
-  font-size:17px;
-  transition:0.2s;
+  font-size:18px;
+  transition:.2s;
 }
 
-.sidebar a:hover{
-  background:#111;
-}
+.sidebar a:hover{background:#111;}
 
-.sidebar.active{
-  left:0;
-}
-
-/* ================= MAIN ================= */
+/* ===== MAIN ===== */
 
 main{
-  padding-top:90px;
-  padding-left:20px;
-  padding-right:20px;
-  max-width:1100px;
+  padding:90px 20px 100px;
+  max-width:1200px;
   margin:auto;
 }
 
-.section{
-  margin-top:60px;
+.hero{
+  text-align:center;
+  margin-bottom:50px;
 }
 
-.section h2{
-  margin-bottom:25px;
-  font-weight:600;
+.hero h2{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  opacity:.7;
+}
+
+.section{
+  margin-top:50px;
+}
+
+.section h3{
+  margin-bottom:20px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:20px;
 }
 
 .card{
   background:#111;
-  padding:25px;
-  border-radius:16px;
+  padding:30px;
+  border-radius:18px;
   text-align:center;
-  font-weight:500;
   cursor:pointer;
-  transition:0.2s;
+  transition:.2s;
 }
 
-.card:hover{
-  background:#151515;
+.card:hover{background:#151515;}
+
+/* ===== BOTTOM NAV ===== */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #111;
 }
 
-/* ================= TOOL SCREEN ================= */
+.bottom-nav div{
+  cursor:pointer;
+  opacity:.8;
+}
+
+.bottom-nav div:hover{opacity:1;}
+
+/* ===== TOOL SCREENS ===== */
 
 .tool-screen{
   position:fixed;
@@ -164,9 +181,7 @@ main{
   z-index:2000;
 }
 
-.tool-screen.active{
-  display:flex;
-}
+.tool-screen.active{display:flex;}
 
 .back-btn{
   position:absolute;
@@ -176,15 +191,14 @@ main{
   cursor:pointer;
 }
 
-/* ================= CALCULATOR ================= */
+/* ===== CALCULATOR ===== */
 
 .calc-display{
-  font-size:48px;
+  font-size:50px;
   margin-bottom:30px;
-  min-height:60px;
-  text-align:right;
   width:90%;
-  max-width:400px;
+  max-width:420px;
+  text-align:right;
 }
 
 .calc-grid{
@@ -192,59 +206,65 @@ main{
   grid-template-columns:repeat(4,1fr);
   gap:15px;
   width:90%;
-  max-width:400px;
+  max-width:420px;
 }
 
 .calc-btn{
   padding:22px;
   border-radius:50px;
   background:#111;
-  font-size:20px;
   text-align:center;
   cursor:pointer;
-  transition:0.2s;
+  transition:.2s;
 }
 
-.calc-btn:hover{
-  background:#1a1a1a;
-}
+.calc-btn:hover{background:#1a1a1a;}
 
-/* ================= STOPWATCH ================= */
+/* ===== STOPWATCH ===== */
 
 .stopwatch-time{
-  font-size:48px;
+  font-size:50px;
   margin-bottom:30px;
 }
 
-.stopwatch-buttons{
+.sw-controls{
   display:flex;
   gap:20px;
 }
 
 .sw-btn{
-  padding:14px 28px;
+  padding:14px 30px;
   border-radius:30px;
   background:#111;
   cursor:pointer;
-  transition:0.2s;
 }
 
-.sw-btn:hover{
-  background:#1a1a1a;
+.sw-btn:hover{background:#1a1a1a;}
+
+/* ===== PDF VIEWER ===== */
+
+.pdf-viewer{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:none;
+  flex-direction:column;
+  z-index:3000;
+}
+
+.pdf-viewer iframe{
+  flex:1;
+  width:100%;
+  border:none;
 }
 
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
 <div id="loader">
   <svg class="infinity" viewBox="0 0 300 150">
-    <path d="M75,75
-             C75,25 150,25 150,75
-             C150,125 225,125 225,75
-             C225,25 150,25 150,75
-             C150,125 75,125 75,75"/>
+    <path d="M75,75 C75,25 150,25 150,75 C150,125 225,125 225,75 C225,25 150,25 150,75 C150,125 75,125 75,75"/>
   </svg>
 </div>
 
@@ -254,158 +274,153 @@ main{
 </header>
 
 <div class="sidebar" id="sidebar">
-  <a onclick="closeSidebar()">🏠 Home</a>
+  <a onclick="goHome()">🏠 Home</a>
   <a onclick="openCalculator()">🧮 Calculator</a>
   <a onclick="openStopwatch()">⏱ Stopwatch</a>
+  <a onclick="openPDF()">📚 PDF Library</a>
 </div>
 
 <main>
 
-  <div class="section">
-    <h2>School Classes</h2>
-    <div class="grid">
-      <div class="card">Class 6</div>
-      <div class="card">Class 7</div>
-      <div class="card">Class 8</div>
-      <div class="card">Class 9</div>
-      <div class="card">Class 10</div>
-      <div class="card">Class 11</div>
-      <div class="card">Class 12</div>
-    </div>
-  </div>
+<div class="hero">
+  <h2>Education Platform</h2>
+  <p>Building the most advanced minimal learning system.</p>
+</div>
 
-  <div class="section">
-    <h2>Competitive Exams</h2>
-    <div class="grid">
-      <div class="card">IIT / JEE</div>
-      <div class="card">NEET</div>
-      <div class="card">UPSC</div>
-      <div class="card">SSC</div>
-    </div>
-  </div>
+<div class="section">
+<h3>School Classes</h3>
+<div class="grid">
+<div class="card">Class 6</div>
+<div class="card">Class 7</div>
+<div class="card">Class 8</div>
+<div class="card">Class 9</div>
+<div class="card">Class 10</div>
+<div class="card">Class 11</div>
+<div class="card">Class 12</div>
+</div>
+</div>
+
+<div class="section">
+<h3>Competitive Exams</h3>
+<div class="grid">
+<div class="card">IIT / JEE</div>
+<div class="card">NEET</div>
+<div class="card">UPSC</div>
+<div class="card">SSC</div>
+</div>
+</div>
 
 </main>
 
-<!-- CALCULATOR SCREEN -->
-<div class="tool-screen" id="calculatorScreen">
-  <div class="back-btn" onclick="closeTool()">← Back</div>
-  <div class="calc-display" id="calcDisplay">0</div>
-  <div class="calc-grid" id="calcButtons"></div>
+<div class="bottom-nav">
+<div onclick="goHome()">Home</div>
+<div onclick="openCalculator()">Calculator</div>
+<div onclick="openStopwatch()">Stopwatch</div>
+<div onclick="openPDF()">Library</div>
 </div>
 
-<!-- STOPWATCH SCREEN -->
+<!-- CALCULATOR -->
+<div class="tool-screen" id="calculatorScreen">
+<div class="back-btn" onclick="closeTool()">← Back</div>
+<div class="calc-display" id="calcDisplay">0</div>
+<div class="calc-grid" id="calcGrid"></div>
+</div>
+
+<!-- STOPWATCH -->
 <div class="tool-screen" id="stopwatchScreen">
-  <div class="back-btn" onclick="closeTool()">← Back</div>
-  <div class="stopwatch-time" id="swTime">00:00:00</div>
-  <div class="stopwatch-buttons">
-    <div class="sw-btn" onclick="startSW()">Start</div>
-    <div class="sw-btn" onclick="stopSW()">Stop</div>
-    <div class="sw-btn" onclick="resetSW()">Reset</div>
-  </div>
+<div class="back-btn" onclick="closeTool()">← Back</div>
+<div class="stopwatch-time" id="swTime">00:00:00</div>
+<div class="sw-controls">
+<div class="sw-btn" onclick="startSW()">Start</div>
+<div class="sw-btn" onclick="stopSW()">Stop</div>
+<div class="sw-btn" onclick="resetSW()">Reset</div>
+</div>
+</div>
+
+<!-- PDF -->
+<div class="pdf-viewer" id="pdfViewer">
+<div class="back-btn" onclick="closePDF()">← Back</div>
+<iframe src="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"></iframe>
 </div>
 
 <script>
 
-/* ===== Loader ===== */
-window.onload = () => {
-  setTimeout(()=>{
-    document.getElementById("loader").style.display="none";
-    if(navigator.vibrate) navigator.vibrate(100);
-  },2600);
+/* LOADER */
+window.onload=()=>{
+setTimeout(()=>{
+document.getElementById("loader").style.display="none";
+if(navigator.vibrate) navigator.vibrate(100);
+},2600);
 };
 
-/* ===== Sidebar ===== */
+/* SIDEBAR */
 function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("active");
+document.getElementById("sidebar").classList.toggle("active");
 }
-
 function closeSidebar(){
-  document.getElementById("sidebar").classList.remove("active");
+document.getElementById("sidebar").classList.remove("active");
+}
+function goHome(){
+closeTool();
+closePDF();
+closeSidebar();
 }
 
-/* ===== Tool Navigation ===== */
+/* TOOL NAV */
 function openCalculator(){
-  closeSidebar();
-  document.getElementById("calculatorScreen").classList.add("active");
+closeSidebar();
+document.getElementById("calculatorScreen").classList.add("active");
 }
-
 function openStopwatch(){
-  closeSidebar();
-  document.getElementById("stopwatchScreen").classList.add("active");
+closeSidebar();
+document.getElementById("stopwatchScreen").classList.add("active");
 }
-
 function closeTool(){
-  document.getElementById("calculatorScreen").classList.remove("active");
-  document.getElementById("stopwatchScreen").classList.remove("active");
+document.getElementById("calculatorScreen").classList.remove("active");
+document.getElementById("stopwatchScreen").classList.remove("active");
 }
 
-/* ===== Calculator Logic ===== */
+/* PDF */
+function openPDF(){
+closeSidebar();
+document.getElementById("pdfViewer").style.display="flex";
+}
+function closePDF(){
+document.getElementById("pdfViewer").style.display="none";
+}
 
-const display = document.getElementById("calcDisplay");
-const buttons = [
-"7","8","9","÷",
-"4","5","6","×",
-"1","2","3","−",
-"0",".","AC","+",
-"="
-];
-
+/* CALCULATOR */
+const calcButtons=["7","8","9","/","4","5","6","*","1","2","3","-","0",".","AC","+","="];
 let current="";
-
-buttons.forEach(b=>{
-  const btn=document.createElement("div");
-  btn.className="calc-btn";
-  btn.innerText=b;
-  btn.onclick=()=>calcInput(b);
-  document.getElementById("calcButtons").appendChild(btn);
+const grid=document.getElementById("calcGrid");
+calcButtons.forEach(b=>{
+let btn=document.createElement("div");
+btn.className="calc-btn";
+btn.innerText=b;
+btn.onclick=()=>calcInput(b);
+grid.appendChild(btn);
 });
-
-function calcInput(val){
-  if(val==="AC"){ current=""; display.innerText="0"; return; }
-  if(val==="="){
-    try{
-      current=current.replace(/÷/g,"/").replace(/×/g,"*").replace(/−/g,"-");
-      current=eval(current).toString();
-      display.innerText=current;
-    }catch{ display.innerText="Error"; }
-    return;
-  }
-  current+=val;
-  display.innerText=current;
+function calcInput(v){
+if(v==="AC"){current="";return display();}
+if(v==="="){try{current=eval(current).toString();}catch{current="Error";}return display();}
+current+=v;display();
 }
+function display(){document.getElementById("calcDisplay").innerText=current||"0";}
 
-/* ===== Stopwatch ===== */
-
-let swInterval;
-let seconds=0;
-
+/* STOPWATCH */
+let swInt,sec=0;
 function updateSW(){
-  seconds++;
-  let h=Math.floor(seconds/3600);
-  let m=Math.floor((seconds%3600)/60);
-  let s=seconds%60;
-  document.getElementById("swTime").innerText=
-  `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+sec++;
+let h=Math.floor(sec/3600);
+let m=Math.floor((sec%3600)/60);
+let s=sec%60;
+document.getElementById("swTime").innerText=
+`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
 }
-
-function startSW(){
-  if(!swInterval){
-    swInterval=setInterval(updateSW,1000);
-  }
-}
-
-function stopSW(){
-  clearInterval(swInterval);
-  swInterval=null;
-}
-
-function resetSW(){
-  stopSW();
-  seconds=0;
-  document.getElementById("swTime").innerText="00:00:00";
-}
+function startSW(){if(!swInt) swInt=setInterval(updateSW,1000);}
+function stopSW(){clearInterval(swInt);swInt=null;}
+function resetSW(){stopSW();sec=0;document.getElementById("swTime").innerText="00:00:00";}
 
 </script>
-
 </body>
 </html>
