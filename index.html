@@ -1,258 +1,204 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rahsays</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-background:#000;
-color:#fff;
-font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-overflow-x:hidden;
-}
 
-/* ===== LOADER ===== */
+/* ================= GLOBAL ================= */
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;}
+body{background:#000;color:#fff;overflow-x:hidden;}
+button{border:none;cursor:pointer}
+
+/* ================= INFINITY LOADER ================= */
+
 #loader{
 position:fixed;
-inset:0;
-background:#000;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:5000;
-}
-
-.infinity{
-width:180px;
-height:100px;
-position:relative;
-}
-.infinity::before,
-.infinity::after{
-content:"";
-position:absolute;
-width:90px;
-height:90px;
-border:12px solid #fff;
-border-radius:50% 50% 50% 50%;
-animation:spin 2.5s linear forwards;
-}
-.infinity::before{left:0;}
-.infinity::after{right:0;}
-
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
-}
-
-/* ===== HEADER ===== */
-header{
-position:fixed;
-top:0;
 width:100%;
-height:70px;
+height:100%;
 background:#000;
 display:flex;
 align-items:center;
 justify-content:center;
-border-bottom:1px solid #111;
-z-index:1000;
-}
-.menu{
-position:absolute;
-left:20px;
-font-size:24px;
-cursor:pointer;
-}
-header h1{
-letter-spacing:6px;
-font-size:18px;
+z-index:9999;
 }
 
-/* ===== SIDEBAR ===== */
+.infinity-svg{width:320px;}
+
+#infinityPath{
+stroke-dasharray:1000;
+stroke-dashoffset:1000;
+animation:drawInfinity 2.4s ease forwards;
+filter:drop-shadow(0 0 30px rgba(255,255,255,0.9));
+}
+
+@keyframes drawInfinity{
+to{stroke-dashoffset:0;}
+}
+
+/* ================= HEADER ================= */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 25px;
+position:fixed;
+width:100%;
+background:#000;
+z-index:100;
+}
+
+.logo{font-size:22px;letter-spacing:6px;font-weight:600;}
+
+.menu-btn{font-size:26px;background:none;color:#fff}
+
+/* ================= SIDEBAR ================= */
+
 .sidebar{
 position:fixed;
-left:-300px;
 top:0;
-width:300px;
+left:-300px;
+width:260px;
 height:100%;
-background:#050505;
-padding-top:100px;
-transition:.3s;
-z-index:2000;
-box-shadow:10px 0 40px rgba(255,255,255,.05);
+background:#111;
+padding-top:80px;
+transition:0.4s;
+z-index:200;
 }
+
 .sidebar.active{left:0;}
+
 .sidebar a{
 display:block;
-padding:22px 40px;
+padding:18px 30px;
 color:#fff;
 text-decoration:none;
-font-size:18px;
-cursor:pointer;
-transition:.2s;
+font-size:17px;
+transition:0.3s;
 }
-.sidebar a:hover{background:#111;}
 
-/* ===== MAIN ===== */
-main{
-padding:110px 20px 110px;
-max-width:1300px;
-margin:auto;
-}
-.section{margin-top:60px;}
-.section h3{margin-bottom:20px;font-size:18px;}
+.sidebar a:hover{background:#222;}
+
+/* ================= SECTIONS ================= */
+
+section{padding:120px 20px;min-height:100vh;display:none;}
+section.active{display:block;}
+
+.title{text-align:center;font-size:32px;margin-bottom:40px;}
+
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
 gap:20px;
 }
+
 .card{
-background:#0d0d0d;
-padding:30px;
-border-radius:20px;
-text-align:center;
-cursor:pointer;
-transition:.25s;
-border:1px solid #141414;
-}
-.card:hover{background:#141414;transform:translateY(-4px);}
-
-/* ===== LIBRARY ===== */
-.library-search{
-margin-bottom:20px;
-padding:12px;
-width:100%;
-background:#111;
-border:none;
-border-radius:12px;
-color:#fff;
-}
-.book{
-background:#0d0d0d;
+background:#1a1a1a;
 padding:25px;
-border-radius:18px;
-cursor:pointer;
-transition:.2s;
-border:1px solid #141414;
-}
-.book:hover{background:#141414;}
-
-/* ===== PDF VIEWER ===== */
-#pdfViewer{
-position:fixed;
-inset:0;
-background:#000;
-display:none;
-flex-direction:column;
-z-index:3000;
-}
-#pdfViewer iframe{
-flex:1;
-border:none;
-}
-.back{
-position:absolute;
-top:20px;
-left:20px;
-cursor:pointer;
+border-radius:16px;
+text-align:center;
+font-weight:500;
 }
 
-/* ===== TOOL SCREENS ===== */
-.tool{
-position:fixed;
-inset:0;
-background:#000;
-display:none;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-z-index:2500;
-}
-.tool.active{display:flex;}
+/* ================= CALCULATOR ================= */
 
-/* CALCULATOR */
-.display{
-font-size:55px;
-margin-bottom:30px;
-width:90%;
+.calc-container{
 max-width:400px;
-text-align:right;
+margin:auto;
 }
+
+.calc-display{
+background:#000;
+font-size:48px;
+text-align:right;
+padding:25px;
+border-radius:12px;
+margin-bottom:20px;
+overflow:hidden;
+}
+
 .calc-grid{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:14px;
-width:90%;
-max-width:400px;
+gap:12px;
 }
-.btn{
-padding:22px;
-border-radius:60px;
-background:#0d0d0d;
-text-align:center;
-cursor:pointer;
-}
-.btn:hover{background:#141414;}
 
-/* STOPWATCH */
-.time{
-font-size:55px;
-margin-bottom:30px;
+.calc-btn{
+padding:22px;
+border-radius:50px;
+background:#222;
+color:#fff;
+font-size:22px;
 }
-.sw-controls{
-display:flex;
-gap:20px;
+
+.yellow{background:#ffcc00;color:#000;font-weight:bold;}
+.gray{background:#555;}
+.wide{grid-column:span 2;}
+
+/* ================= STOPWATCH ================= */
+
+.stopwatch{
+text-align:center;
+font-size:42px;
+margin-bottom:25px;
 }
+
 .sw-btn{
 padding:14px 30px;
-border-radius:40px;
-background:#0d0d0d;
-cursor:pointer;
+border-radius:30px;
+margin:10px;
+background:#222;
+color:#fff;
 }
 
-/* ===== BOTTOM NAV ===== */
-.bottom{
-position:fixed;
-bottom:0;
-width:100%;
-height:70px;
-background:#000;
-display:flex;
-justify-content:space-around;
-align-items:center;
-border-top:1px solid #111;
-}
-.bottom div{cursor:pointer;opacity:.7;}
-.bottom div:hover{opacity:1;}
+/* ================= PDF ================= */
+
+iframe{width:100%;height:80vh;border:none;border-radius:12px;}
+
 </style>
 </head>
-
 <body>
 
+<!-- ================= LOADER ================= -->
+
 <div id="loader">
-<div class="infinity"></div>
+<svg viewBox="0 0 500 250" class="infinity-svg">
+<path id="infinityPath"
+d="M125,125 C125,40 375,40 375,125 C375,210 125,210 125,125"
+fill="none"
+stroke="white"
+stroke-width="22"
+stroke-linecap="round"/>
+</svg>
 </div>
+
+<!-- ================= HEADER ================= -->
 
 <header>
-<div class="menu" onclick="toggleSidebar()">☰</div>
-<h1>rahsays</h1>
+<button class="menu-btn" onclick="toggleSidebar()">☰</button>
+<div class="logo">rahsays</div>
+<div></div>
 </header>
 
+<!-- ================= SIDEBAR ================= -->
+
 <div class="sidebar" id="sidebar">
-<a onclick="goHome()">🏠 Home</a>
-<a onclick="openLibrary()">📚 Library</a>
-<a onclick="openCalc()">🧮 Calculator</a>
-<a onclick="openSW()">⏱ Stopwatch</a>
+<a onclick="openSection('home')">🏠 Home</a>
+<a onclick="openSection('calculator')">🧮 Calculator</a>
+<a onclick="openSection('stopwatch')">⏱ Stopwatch</a>
+<a onclick="openSection('library')">📚 Library</a>
 </div>
 
-<main>
+<!-- ================= HOME ================= -->
 
-<div class="section">
-<h3>School Classes</h3>
+<section id="home" class="active">
+<div class="title">Education Platform</div>
+
+<h2 style="margin:20px 0">School Classes</h2>
 <div class="grid">
 <div class="card">Class 6</div>
 <div class="card">Class 7</div>
@@ -262,135 +208,124 @@ border-top:1px solid #111;
 <div class="card">Class 11</div>
 <div class="card">Class 12</div>
 </div>
-</div>
 
-<div class="section">
-<h3>Competitive Exams</h3>
+<h2 style="margin:40px 0 20px">Competitive Exams</h2>
 <div class="grid">
 <div class="card">IIT / JEE</div>
 <div class="card">NEET</div>
 <div class="card">UPSC</div>
 <div class="card">SSC</div>
 </div>
-</div>
+</section>
 
-<div class="section">
-<h3>Library</h3>
-<input class="library-search" placeholder="Search PDFs...">
-<div class="grid">
-<div class="book" onclick="openPDF()">Mathematics Notes</div>
-<div class="book" onclick="openPDF()">Science Handbook</div>
-<input type="file" accept="application/pdf" onchange="uploadPDF(event)">
-</div>
-</div>
+<!-- ================= CALCULATOR ================= -->
 
-</main>
+<section id="calculator">
+<div class="title">Calculator</div>
+<div class="calc-container">
+<div class="calc-display" id="display">0</div>
 
-<div id="pdfViewer">
-<div class="back" onclick="closePDF()">← Back</div>
-<iframe id="pdfFrame"></iframe>
-</div>
+<div class="calc-grid">
+<button class="calc-btn yellow" onclick="clearDisplay()">AC</button>
+<button class="calc-btn yellow" onclick="backspace()">⌫</button>
+<button class="calc-btn gray" onclick="append('%')">%</button>
+<button class="calc-btn gray" onclick="append('/')">÷</button>
 
-<div class="tool" id="calculator">
-<div class="back" onclick="closeTool()">← Back</div>
-<div class="display" id="display">0</div>
-<div class="calc-grid" id="calcGrid"></div>
-</div>
+<button class="calc-btn" onclick="append('7')">7</button>
+<button class="calc-btn" onclick="append('8')">8</button>
+<button class="calc-btn" onclick="append('9')">9</button>
+<button class="calc-btn gray" onclick="append('*')">×</button>
 
-<div class="tool" id="stopwatch">
-<div class="back" onclick="closeTool()">← Back</div>
-<div class="time" id="time">00:00:00</div>
-<div class="sw-controls">
-<div class="sw-btn" onclick="start()">Start</div>
-<div class="sw-btn" onclick="stop()">Stop</div>
-<div class="sw-btn" onclick="reset()">Reset</div>
-</div>
-</div>
+<button class="calc-btn" onclick="append('4')">4</button>
+<button class="calc-btn" onclick="append('5')">5</button>
+<button class="calc-btn" onclick="append('6')">6</button>
+<button class="calc-btn gray" onclick="append('-')">−</button>
 
-<div class="bottom">
-<div onclick="goHome()">Home</div>
-<div onclick="openLibrary()">Library</div>
-<div onclick="toggleSidebar()">Dashboard</div>
-<div>Profile</div>
+<button class="calc-btn" onclick="append('1')">1</button>
+<button class="calc-btn" onclick="append('2')">2</button>
+<button class="calc-btn" onclick="append('3')">3</button>
+<button class="calc-btn gray" onclick="append('+')">+</button>
+
+<button class="calc-btn wide" onclick="append('0')">0</button>
+<button class="calc-btn" onclick="append('.')">.</button>
+<button class="calc-btn yellow" onclick="calculate()">=</button>
 </div>
+</div>
+</section>
+
+<!-- ================= STOPWATCH ================= -->
+
+<section id="stopwatch">
+<div class="title">Stopwatch</div>
+<div class="stopwatch" id="time">00:00:00</div>
+<button class="sw-btn" onclick="start()">Start</button>
+<button class="sw-btn" onclick="stop()">Stop</button>
+<button class="sw-btn" onclick="reset()">Reset</button>
+</section>
+
+<!-- ================= LIBRARY ================= -->
+
+<section id="library">
+<div class="title">Library</div>
+<iframe src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+</section>
 
 <script>
-/* LOADER */
-window.onload=function(){
+
+/* ================= LOADER ================= */
+
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
-if(navigator.vibrate) navigator.vibrate(120);
+if(navigator.vibrate){navigator.vibrate(100);}
 },2500);
-};
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
+
 function toggleSidebar(){
 document.getElementById("sidebar").classList.toggle("active");
 }
-function goHome(){
+
+function openSection(id){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
 document.getElementById("sidebar").classList.remove("active");
-closePDF();closeTool();
 }
 
-/* LIBRARY */
-function openLibrary(){
-document.getElementById("sidebar").classList.remove("active");
-}
-function openPDF(){
-document.getElementById("pdfViewer").style.display="flex";
-document.getElementById("pdfFrame").src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf";
-}
-function uploadPDF(e){
-let file=e.target.files[0];
-let url=URL.createObjectURL(file);
-document.getElementById("pdfFrame").src=url;
-document.getElementById("pdfViewer").style.display="flex";
-}
-function closePDF(){
-document.getElementById("pdfViewer").style.display="none";
+/* ================= CALCULATOR ================= */
+
+let display=document.getElementById("display");
+
+function append(val){
+if(display.innerText==="0") display.innerText="";
+display.innerText+=val;
 }
 
-/* CALCULATOR */
-const buttons=["7","8","9","/","4","5","6","*","1","2","3","-","0",".","AC","+","="];
-let current="";
-buttons.forEach(b=>{
-let btn=document.createElement("div");
-btn.className="btn";
-btn.innerText=b;
-btn.onclick=()=>input(b);
-document.getElementById("calcGrid").appendChild(btn);
-});
-function input(v){
-if(v==="AC"){current="";}
-else if(v==="="){try{current=eval(current).toString();}catch{current="Error";}}
-else current+=v;
-document.getElementById("display").innerText=current||"0";
-}
-function openCalc(){
-document.getElementById("sidebar").classList.remove("active");
-document.getElementById("calculator").classList.add("active");
-}
-function closeTool(){
-document.getElementById("calculator").classList.remove("active");
-document.getElementById("stopwatch").classList.remove("active");
-}
-function openSW(){
-document.getElementById("sidebar").classList.remove("active");
-document.getElementById("stopwatch").classList.add("active");
+function clearDisplay(){display.innerText="0";}
+function backspace(){display.innerText=display.innerText.slice(0,-1)||"0";}
+function calculate(){
+try{display.innerText=eval(display.innerText);}
+catch{display.innerText="Error";}
 }
 
-/* STOPWATCH */
-let interval,sec=0;
-function start(){if(!interval)interval=setInterval(()=>{sec++;update();},1000);}
-function stop(){clearInterval(interval);interval=null;}
-function reset(){stop();sec=0;update();}
-function update(){
+/* ================= STOPWATCH ================= */
+
+let timer;
+let seconds=0;
+
+function format(sec){
 let h=Math.floor(sec/3600);
 let m=Math.floor((sec%3600)/60);
 let s=sec%60;
-document.getElementById("time").innerText=
-`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
+
+function start(){
+timer=setInterval(()=>{seconds++;document.getElementById("time").innerText=format(seconds)},1000);
+}
+
+function stop(){clearInterval(timer);}
+function reset(){clearInterval(timer);seconds=0;document.getElementById("time").innerText="00:00:00";}
+
 </script>
 
 </body>
