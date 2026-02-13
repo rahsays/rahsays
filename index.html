@@ -5,125 +5,130 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rahsays</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --bg:#000;
-  --card:#111;
-  --text:#fff;
-  --accent:#00f0ff;
-}
-
-body.light{
-  --bg:#f5f5f5;
-  --card:#ffffff;
-  --text:#111;
-  --accent:#0077ff;
-}
-
-body{
+*{
   margin:0;
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:.4s;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,body{
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background:#000;
+  color:#fff;
   overflow-x:hidden;
 }
 
-/* ===== INTRO ===== */
-#intro{
+/* ================= LOADER ================= */
+
+#loader{
   position:fixed;
   inset:0;
   background:#000;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   z-index:9999;
 }
 
 .infinity{
   width:220px;
-  height:120px;
 }
 
 .infinity path{
-  stroke:white;
-  stroke-width:14;
   fill:none;
-  stroke-dasharray:800;
-  stroke-dashoffset:800;
-  animation:draw 2.8s ease forwards;
+  stroke:#fff;
+  stroke-width:14;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:700;
+  stroke-dashoffset:700;
+  animation:draw 2.5s ease forwards;
+  filter:drop-shadow(0 0 18px rgba(255,255,255,0.7));
 }
 
 @keyframes draw{
-  to{ stroke-dashoffset:0; }
+  to{stroke-dashoffset:0;}
 }
 
-/* ===== HEADER ===== */
+/* ================= HEADER ================= */
+
 header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:60px;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:18px;
-  font-weight:800;
-  font-size:22px;
-  letter-spacing:3px;
-  position:sticky;
-  top:0;
-  background:var(--bg);
+  background:#000;
+  z-index:1000;
 }
 
 .menu-btn{
   position:absolute;
-  left:18px;
+  left:20px;
   font-size:24px;
   cursor:pointer;
 }
 
-.theme-btn{
-  position:absolute;
-  right:18px;
-  cursor:pointer;
+header h1{
+  font-weight:600;
+  letter-spacing:3px;
 }
 
-/* ===== SIDEBAR ===== */
+/* ================= SIDEBAR ================= */
+
 .sidebar{
   position:fixed;
   top:0;
   left:-260px;
-  width:240px;
+  width:260px;
   height:100%;
   background:#0a0a0a;
-  padding:30px 20px;
-  transition:.4s;
-  z-index:1000;
+  padding-top:80px;
+  transition:0.3s;
+  z-index:1200;
+  box-shadow:4px 0 25px rgba(255,255,255,0.05);
+}
+
+.sidebar a{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:18px 25px;
+  text-decoration:none;
+  color:#fff;
+  font-size:17px;
+  transition:0.2s;
+}
+
+.sidebar a:hover{
+  background:#111;
 }
 
 .sidebar.active{
   left:0;
 }
 
-.sidebar div{
-  margin:18px 0;
-  cursor:pointer;
-  font-weight:600;
+/* ================= MAIN ================= */
+
+main{
+  padding-top:90px;
+  padding-left:20px;
+  padding-right:20px;
+  max-width:1100px;
+  margin:auto;
 }
 
-/* ===== MAIN SECTIONS ===== */
 .section{
-  padding:40px 20px;
-  display:none;
+  margin-top:60px;
 }
 
-.section.active{
-  display:block;
-}
-
-h1{
-  text-align:center;
-  font-size:32px;
-  margin-bottom:30px;
+.section h2{
+  margin-bottom:25px;
+  font-weight:600;
 }
 
 .grid{
@@ -133,243 +138,274 @@ h1{
 }
 
 .card{
-  background:var(--card);
-  padding:22px;
+  background:#111;
+  padding:25px;
+  border-radius:16px;
   text-align:center;
-  border-radius:14px;
-  font-weight:600;
-  transition:.3s;
+  font-weight:500;
   cursor:pointer;
+  transition:0.2s;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px var(--accent);
+  background:#151515;
 }
 
-/* ===== CALCULATOR ===== */
-.calculator{
-  max-width:360px;
-  margin:30px auto;
-}
+/* ================= TOOL SCREEN ================= */
 
-.display{
-  font-size:38px;
-  text-align:right;
-  padding:20px;
+.tool-screen{
+  position:fixed;
+  inset:0;
   background:#000;
-  border-radius:12px;
-  margin-bottom:15px;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+.tool-screen.active{
+  display:flex;
+}
+
+.back-btn{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* ================= CALCULATOR ================= */
+
+.calc-display{
+  font-size:48px;
+  margin-bottom:30px;
+  min-height:60px;
+  text-align:right;
+  width:90%;
+  max-width:400px;
 }
 
 .calc-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px;
+  gap:15px;
+  width:90%;
+  max-width:400px;
 }
 
 .calc-btn{
-  padding:18px;
-  border-radius:50%;
-  background:#222;
-  text-align:center;
+  padding:22px;
+  border-radius:50px;
+  background:#111;
   font-size:20px;
-  cursor:pointer;
-}
-
-.operator{
-  background:var(--accent);
-  color:#000;
-  font-weight:700;
-}
-
-/* ===== STOPWATCH ===== */
-.stopwatch{
   text-align:center;
-  margin-top:30px;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-.time{
+.calc-btn:hover{
+  background:#1a1a1a;
+}
+
+/* ================= STOPWATCH ================= */
+
+.stopwatch-time{
   font-size:48px;
-  margin-bottom:20px;
+  margin-bottom:30px;
 }
 
-.btn{
-  padding:10px 20px;
-  margin:8px;
-  background:var(--accent);
-  color:#000;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:600;
+.stopwatch-buttons{
+  display:flex;
+  gap:20px;
 }
 
-/* BACK BUTTON */
-.back{
-  margin-bottom:20px;
+.sw-btn{
+  padding:14px 28px;
+  border-radius:30px;
+  background:#111;
   cursor:pointer;
-  font-weight:600;
+  transition:0.2s;
 }
+
+.sw-btn:hover{
+  background:#1a1a1a;
+}
+
 </style>
 </head>
-
 <body>
 
-<!-- ===== INTRO SCREEN ===== -->
-<div id="intro">
-<svg class="infinity" viewBox="0 0 500 200">
-<path d="M100,100 C150,30 250,170 300,100 C350,30 450,170 400,100"/>
-</svg>
+<!-- LOADER -->
+<div id="loader">
+  <svg class="infinity" viewBox="0 0 300 150">
+    <path d="M75,75
+             C75,25 150,25 150,75
+             C150,125 225,125 225,75
+             C225,25 150,25 150,75
+             C150,125 75,125 75,75"/>
+  </svg>
 </div>
 
 <header>
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
-rahsays
-<div class="theme-btn" onclick="toggleTheme()">🌓</div>
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <h1>rahsays</h1>
 </header>
 
 <div class="sidebar" id="sidebar">
-<div onclick="showSection('home');toggleMenu()">🏠 Home</div>
-<div onclick="showSection('calculator');toggleMenu()">🧮 Calculator</div>
-<div onclick="showSection('stopwatch');toggleMenu()">⏱ Stopwatch</div>
-<div onclick="showSection('library');toggleMenu()">📚 Library</div>
+  <a onclick="closeSidebar()">🏠 Home</a>
+  <a onclick="openCalculator()">🧮 Calculator</a>
+  <a onclick="openStopwatch()">⏱ Stopwatch</a>
 </div>
 
-<!-- ===== HOME ===== -->
-<div class="section active" id="home">
-<h1>Education Platform</h1>
+<main>
 
-<h2>School Classes</h2>
-<div class="grid">
-<div class="card">Class 6</div>
-<div class="card">Class 7</div>
-<div class="card">Class 8</div>
-<div class="card">Class 9</div>
-<div class="card">Class 10</div>
-<div class="card">Class 11</div>
-<div class="card">Class 12</div>
-</div>
+  <div class="section">
+    <h2>School Classes</h2>
+    <div class="grid">
+      <div class="card">Class 6</div>
+      <div class="card">Class 7</div>
+      <div class="card">Class 8</div>
+      <div class="card">Class 9</div>
+      <div class="card">Class 10</div>
+      <div class="card">Class 11</div>
+      <div class="card">Class 12</div>
+    </div>
+  </div>
 
-<h2 style="margin-top:40px;">Competitive Exams</h2>
-<div class="grid">
-<div class="card">IIT / JEE</div>
-<div class="card">NEET</div>
-<div class="card">UPSC</div>
-<div class="card">SSC</div>
-<div class="card">BPSC</div>
-</div>
-</div>
+  <div class="section">
+    <h2>Competitive Exams</h2>
+    <div class="grid">
+      <div class="card">IIT / JEE</div>
+      <div class="card">NEET</div>
+      <div class="card">UPSC</div>
+      <div class="card">SSC</div>
+    </div>
+  </div>
 
-<!-- ===== CALCULATOR SECTION ===== -->
-<div class="section" id="calculator">
-<div class="back" onclick="showSection('home')">⬅ Back</div>
-<h1>Calculator</h1>
-<div class="calculator">
-<div class="display" id="calcDisplay">0</div>
-<div class="calc-grid" id="calcButtons"></div>
-</div>
-</div>
+</main>
 
-<!-- ===== STOPWATCH ===== -->
-<div class="section" id="stopwatch">
-<div class="back" onclick="showSection('home')">⬅ Back</div>
-<h1>Stopwatch</h1>
-<div class="stopwatch">
-<div class="time" id="time">00:00:00</div>
-<button class="btn" onclick="start()">Start</button>
-<button class="btn" onclick="stop()">Stop</button>
-<button class="btn" onclick="reset()">Reset</button>
-</div>
+<!-- CALCULATOR SCREEN -->
+<div class="tool-screen" id="calculatorScreen">
+  <div class="back-btn" onclick="closeTool()">← Back</div>
+  <div class="calc-display" id="calcDisplay">0</div>
+  <div class="calc-grid" id="calcButtons"></div>
 </div>
 
-<!-- ===== LIBRARY ===== -->
-<div class="section" id="library">
-<div class="back" onclick="showSection('home')">⬅ Back</div>
-<h1>Library</h1>
-<div class="grid">
-<div class="card">Mathematics PDF</div>
-<div class="card">Science PDF</div>
-<div class="card">History PDF</div>
-</div>
+<!-- STOPWATCH SCREEN -->
+<div class="tool-screen" id="stopwatchScreen">
+  <div class="back-btn" onclick="closeTool()">← Back</div>
+  <div class="stopwatch-time" id="swTime">00:00:00</div>
+  <div class="stopwatch-buttons">
+    <div class="sw-btn" onclick="startSW()">Start</div>
+    <div class="sw-btn" onclick="stopSW()">Stop</div>
+    <div class="sw-btn" onclick="resetSW()">Reset</div>
+  </div>
 </div>
 
 <script>
 
-/* INTRO */
-window.onload = ()=>{
+/* ===== Loader ===== */
+window.onload = () => {
   setTimeout(()=>{
-    document.getElementById("intro").style.display="none";
+    document.getElementById("loader").style.display="none";
     if(navigator.vibrate) navigator.vibrate(100);
-  },2800);
+  },2600);
 };
 
-/* MENU */
-function toggleMenu(){
+/* ===== Sidebar ===== */
+function toggleSidebar(){
   document.getElementById("sidebar").classList.toggle("active");
 }
 
-/* SECTIONS */
-function showSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("active");
 }
 
-/* THEME */
-function toggleTheme(){
-  document.body.classList.toggle("light");
+/* ===== Tool Navigation ===== */
+function openCalculator(){
+  closeSidebar();
+  document.getElementById("calculatorScreen").classList.add("active");
 }
 
-/* CALCULATOR LOGIC */
-const buttons=['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+'];
-const container=document.getElementById("calcButtons");
-const display=document.getElementById("calcDisplay");
+function openStopwatch(){
+  closeSidebar();
+  document.getElementById("stopwatchScreen").classList.add("active");
+}
+
+function closeTool(){
+  document.getElementById("calculatorScreen").classList.remove("active");
+  document.getElementById("stopwatchScreen").classList.remove("active");
+}
+
+/* ===== Calculator Logic ===== */
+
+const display = document.getElementById("calcDisplay");
+const buttons = [
+"7","8","9","÷",
+"4","5","6","×",
+"1","2","3","−",
+"0",".","AC","+",
+"="
+];
+
+let current="";
 
 buttons.forEach(b=>{
-  const div=document.createElement("div");
-  div.className="calc-btn";
-  if("/*-+=".includes(b)) div.classList.add("operator");
-  div.innerText=b;
-  div.onclick=()=>{
-    if(b==='='){
-      try{ display.innerText=eval(display.innerText); }
-      catch{ display.innerText="Error"; }
-    }else{
-      if(display.innerText==="0") display.innerText=b;
-      else display.innerText+=b;
-    }
-  };
-  container.appendChild(div);
+  const btn=document.createElement("div");
+  btn.className="calc-btn";
+  btn.innerText=b;
+  btn.onclick=()=>calcInput(b);
+  document.getElementById("calcButtons").appendChild(btn);
 });
 
-/* STOPWATCH */
-let interval;
+function calcInput(val){
+  if(val==="AC"){ current=""; display.innerText="0"; return; }
+  if(val==="="){
+    try{
+      current=current.replace(/÷/g,"/").replace(/×/g,"*").replace(/−/g,"-");
+      current=eval(current).toString();
+      display.innerText=current;
+    }catch{ display.innerText="Error"; }
+    return;
+  }
+  current+=val;
+  display.innerText=current;
+}
+
+/* ===== Stopwatch ===== */
+
+let swInterval;
 let seconds=0;
 
-function format(s){
-  let h=Math.floor(s/3600);
-  let m=Math.floor((s%3600)/60);
-  let sec=s%60;
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+function updateSW(){
+  seconds++;
+  let h=Math.floor(seconds/3600);
+  let m=Math.floor((seconds%3600)/60);
+  let s=seconds%60;
+  document.getElementById("swTime").innerText=
+  `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
 }
 
-function start(){
-  interval=setInterval(()=>{
-    seconds++;
-    document.getElementById("time").innerText=format(seconds);
-  },1000);
+function startSW(){
+  if(!swInterval){
+    swInterval=setInterval(updateSW,1000);
+  }
 }
 
-function stop(){
-  clearInterval(interval);
+function stopSW(){
+  clearInterval(swInterval);
+  swInterval=null;
 }
 
-function reset(){
-  clearInterval(interval);
+function resetSW(){
+  stopSW();
   seconds=0;
-  document.getElementById("time").innerText="00:00:00";
+  document.getElementById("swTime").innerText="00:00:00";
 }
 
 </script>
+
 </body>
 </html>
