@@ -16,7 +16,7 @@
   --soft:#1c1c1c;
   --text:#ffffff;
   --muted:#9a9a9a;
-  --accent:#ffcc00; /* iOS deep yellow */
+  --accent:#ffcc00;
   --border-glow:rgba(255,255,255,0.4);
 }
 
@@ -44,7 +44,7 @@ body{
 }
 
 /* ===============================
-   INTRO INFINITY
+   INTRO INFINITY (ENLARGED CURVED)
 ================================*/
 #intro{
   position:fixed;
@@ -58,19 +58,20 @@ body{
 }
 
 .infinity{
-  width:360px;
-  height:200px;
+  width:520px;
+  height:280px;
 }
 
 .infinity path{
   fill:none;
   stroke:white;
-  stroke-width:28;
+  stroke-width:42;
   stroke-linecap:round;
   stroke-linejoin:round;
-  stroke-dasharray:1400;
-  stroke-dashoffset:1400;
+  stroke-dasharray:2600;
+  stroke-dashoffset:2600;
   animation:drawInfinity 3s ease forwards;
+  filter:drop-shadow(0 0 25px white);
 }
 
 @keyframes drawInfinity{
@@ -272,20 +273,20 @@ footer{
 
 <!-- INTRO -->
 <div id="intro">
-<svg class="infinity" viewBox="0 0 500 250">
+<svg class="infinity" viewBox="0 0 800 400">
   <path d="
-    M 125 125
-    C 125 40, 250 40, 250 125
-    C 250 210, 375 210, 375 125
-    C 375 40, 250 40, 250 125
-    C 250 210, 125 210, 125 125
+    M 200 200
+    C 200 40, 400 40, 400 200
+    C 400 360, 600 360, 600 200
+    C 600 40, 400 40, 400 200
+    C 400 360, 200 360, 200 200
   "/>
 </svg>
 </div>
 
 <header>
 <div class="menu-btn" onclick="openMenu()">☰</div>
-<div class="logo">RAHSAYS</div>
+<div class="logo">Quant</div>
 <div class="toggle" onclick="toggleTheme()"></div>
 </header>
 
@@ -367,14 +368,11 @@ footer{
 </div>
 
 <footer>
-© 2026 RAHSAYS — Elite Educational Platform
+© 2026 Quant — Elite Educational Platform
 </footer>
 
 <script>
 
-/* ===============================
-   INTRO EXIT + VIBRATION
-================================*/
 window.onload = function(){
   setTimeout(()=>{
     document.getElementById("intro").style.display="none";
@@ -382,23 +380,14 @@ window.onload = function(){
   },3000);
 };
 
-/* ===============================
-   MENU
-================================*/
 function openMenu(){
   document.getElementById("sidebar").classList.toggle("active");
 }
 
-/* ===============================
-   THEME
-================================*/
 function toggleTheme(){
   document.body.classList.toggle("light");
 }
 
-/* ===============================
-   NAVIGATION
-================================*/
 function showHome(){
   document.getElementById("home").style.display="block";
   document.getElementById("calculator").style.display="none";
@@ -420,9 +409,6 @@ function showStopwatch(){
   document.getElementById("sidebar").classList.remove("active");
 }
 
-/* ===============================
-   CALCULATOR LOGIC
-================================*/
 let display=document.getElementById("display");
 
 function append(val){
@@ -435,8 +421,7 @@ function clearDisplay(){
 }
 
 function backspace(){
-  display.innerText=display.innerText.slice(0,-1);
-  if(display.innerText==="") display.innerText="0";
+  display.innerText=display.innerText.slice(0,-1)||"0";
 }
 
 function calculate(){
@@ -447,9 +432,6 @@ function calculate(){
   }
 }
 
-/* ===============================
-   STOPWATCH LOGIC
-================================*/
 let swInterval;
 let seconds=0;
 
