@@ -14,7 +14,7 @@
   --text: #fff;
   --muted: #aaa;
   --accent: #00f5ff;
-  --glow: 0 0 30px rgba(0, 245, 255, 0.3);
+  --glow: 0 0 30px rgba(0, 245, 255, 0.35);
   --gradient: linear-gradient(135deg, #00f5ff, #ff00c3);
 }
 
@@ -23,8 +23,8 @@
   --card: #ffffff;
   --text: #111;
   --muted: #555;
-  --accent: #00b8d4;
-  --glow: none;
+  --accent: #0066cc;
+  --glow: 0 0 20px rgba(0, 102, 204, 0.2);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
@@ -48,10 +48,10 @@ header {
   border-bottom:1px solid rgba(255,255,255,0.05);
 }
 .logo {
-  font-weight:200; font-size:28px; letter-spacing:8px; text-transform:lowercase;
-  background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; opacity:0.95;
+  font-weight:300; font-size:32px; letter-spacing:10px; text-transform:lowercase;
+  background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-.menu-btn { font-size:26px; cursor:pointer; padding:8px; }
+.menu-btn { font-size:28px; cursor:pointer; padding:8px; }
 .mode-toggle {
   width:74px; height:38px; background:var(--card); border-radius:30px;
   display:flex; align-items:center; padding:4px; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3);
@@ -69,11 +69,11 @@ header {
   display:block; padding:20px 32px; text-decoration:none; color:var(--text);
   font-weight:500; font-size:17px; transition:0.2s;
 }
-.sidebar a:hover { background:rgba(0,245,255,0.08); padding-left:40px; }
+.sidebar a:hover { background:rgba(0,245,255,0.12); padding-left:40px; }
 
-main, #subject-detail { padding:130px 24px 60px; }
+main, #subject-detail { padding:130px 24px 80px; }
 .section { margin-bottom:60px; }
-.section h2 { margin-bottom:28px; font-size:28px; font-weight:600; letter-spacing:-0.5px; }
+.section h2 { margin-bottom:28px; font-size:28px; font-weight:700; letter-spacing:-0.5px; }
 
 .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:20px; }
 
@@ -107,8 +107,9 @@ main, #subject-detail { padding:130px 24px 60px; }
 #search-input {
   width:100%; padding:14px 20px; margin:20px 0 32px;
   border-radius:50px; border:1px solid var(--accent); background:var(--card);
-  color:var(--text); font-size:16px; outline:none;
+  color:var(--text); font-size:16px; outline:none; transition:0.3s;
 }
+#search-input:focus { box-shadow:0 0 0 4px rgba(0,245,255,0.2); }
 
 .recent-section { margin-bottom:60px; }
 .recent-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:16px; }
@@ -137,11 +138,11 @@ main, #subject-detail { padding:130px 24px 60px; }
   backdrop-filter:blur(10px);
 }
 .progress-bar {
-  height:6px; background:rgba(255,255,255,0.1); border-radius:3px;
-  margin-top:12px; overflow:hidden;
+  height:8px; background:rgba(255,255,255,0.12); border-radius:4px;
+  margin:12px 0; overflow:hidden;
 }
 .progress-fill {
-  height:100%; background:var(--accent); width:0%; transition:width 0.4s;
+  height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;
 }
 .progress-text { font-size:13px; color:var(--muted); text-align:center; margin-top:4px; }
 
@@ -346,40 +347,70 @@ function showCalculator() { showHome(); document.getElementById("home").style.di
 function showStopwatch() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("stopwatch").style.display = "block"; }
 function showLibrary() { showHome(); document.getElementById("home").style.display = "none"; document.getElementById("library").style.display = "block"; }
 
-// ==================== FULL SUBJECTS DATA (complete) ====================
+// ==================== FULL SUBJECTS DATA (complete – no skipping) ====================
 const subjectsData = {
   "class-6": { title: "Class 6", subjects: [
     { name: "Mathematics", icon: "📐", weightage: "Essential", chapters: ["Knowing Our Numbers","Whole Numbers","Playing with Numbers","Basic Geometrical Ideas","Understanding Elementary Shapes","Integers","Fractions","Decimals","Data Handling","Mensuration","Algebra","Ratio and Proportion","Symmetry","Practical Geometry"] },
-    { name: "Science", icon: "🧪", weightage: "Essential", chapters: ["Food: Where Does It Come From?","Components of Food","Fibre to Fabric","Sorting Materials into Groups","Separation of Substances","Changes Around Us","Getting to Know Plants","Body Movements","The Living Organisms","Motion and Measurement","Light, Shadows and Reflections","Electricity and Circuits","Fun with Magnets","Air Around Us","Garbage in, Garbage out"] },
-    { name: "Social Science", icon: "🌍", weightage: "Essential", chapters: ["What, Where, How and When?","On the Trail of the Earliest People","From Hunting–Gathering to Growing Food","In the Earliest Cities","What Books and Burials Tell Us","Kingdoms, Kings and an Early Republic","New Questions and Ideas","Ashoka, The Emperor Who Gave Up War","Vital Villages, Thriving Towns","Traders, Kings and Pilgrims","New Empires and Kingdoms","Buildings, Paintings and Books"] },
-    { name: "English", icon: "📖", weightage: "Essential", comingSoon: true }
+    { name: "Science", icon: "🧪", weightage: "Essential", chapters: ["Food: Where Does It Come From?","Components of Food","Fibre to Fabric","Sorting Materials into Groups","Separation of Substances","Changes Around Us","Getting to Know Plants","Body Movements","The Living Organisms and Their Surroundings","Motion and Measurement of Distances","Light, Shadows and Reflections","Electricity and Circuits","Fun with Magnets","Air Around Us","Garbage in, Garbage out"] },
+    { name: "Social Science – History", icon: "📜", weightage: "Essential", chapters: ["What, Where, How and When?","On the Trail of the Earliest People","From Hunting–Gathering to Growing Food","In the Earliest Cities","What Books and Burials Tell Us","Kingdoms, Kings and an Early Republic","New Questions and Ideas","Ashoka, The Emperor Who Gave Up War","Vital Villages, Thriving Towns","Traders, Kings and Pilgrims","New Empires and Kingdoms","Buildings, Paintings and Books"] },
+    { name: "Social Science – Geography", icon: "🌍", weightage: "Essential", chapters: ["The Earth in the Solar System","Globe : Latitudes and Longitudes","Motions of the Earth","Maps","Major Domains of the Earth","Major Landforms of the Earth","Our Country – India","India : Climate, Vegetation and Wildlife"] },
+    { name: "Social Science – Civics", icon: "⚖️", weightage: "Essential", chapters: ["Understanding Diversity","Diversity and Discrimination","What is Government?","Key Elements of a Democratic Government","Panchayati Raj","Rural Administration","Urban Administration","Rural Livelihoods","Urban Livelihoods"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["Who Did Patrick's Homework?","How the Dog Found Himself a New Master!","Taro's Reward","An Indian – American Woman in Space","A Different Kind of School","Who I Am","Fair Play","A Game of Chance","Desert Animals","The Banyan Tree"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["वह चिड़िया जो","बचपन","नादान दोस्त","चाँद से थोड़ी सी गप्पें","अक्षरों का महत्व","पार नज़र के पार","साथी हाथ बढ़ाना","जल की कहानी","संसार पुस्तक है"] }
   ]},
   "class-7": { title: "Class 7", subjects: [
     { name: "Mathematics", icon: "📊", weightage: "Essential", chapters: ["Integers","Fractions and Decimals","Data Handling","Simple Equations","Lines and Angles","The Triangle and its Properties","Congruence of Triangles","Comparing Quantities","Rational Numbers","Practical Geometry","Perimeter and Area","Algebraic Expressions","Exponents and Powers","Symmetry","Visualising Solid Shapes"] },
-    { name: "Science", icon: "🧬", weightage: "Essential", chapters: ["Nutrition in Plants","Nutrition in Animals","Fibre to Fabric","Heat","Acids, Bases and Salts","Physical and Chemical Changes","Weather, Climate and Adaptations of Animals to Climate","Winds, Storms and Cyclones","Soil","Respiration in Organisms","Transportation in Animals and Plants","Reproduction in Plants","Motion and Time","Electric Current and its Effects","Light","Water: A Precious Resource","Forests: Our Lifeline","Wastewater Story"] }
+    { name: "Science", icon: "🧬", weightage: "Essential", chapters: ["Nutrition in Plants","Nutrition in Animals","Fibre to Fabric","Heat","Acids, Bases and Salts","Physical and Chemical Changes","Weather, Climate and Adaptations of Animals of Climate","Winds, Storms and Cyclones","Soil","Respiration in Organisms","Transportation in Animals and Plants","Reproduction in Plants","Motion and Time","Electric Current and its Effects","Light","Water – A Precious Resource","Forests – Our Lifeline","Wastewater Story"] },
+    { name: "Social Science – History", icon: "📜", weightage: "Essential", chapters: ["Tracing Changes Through a Thousand Years","New Kings and Kingdoms","The Delhi Sultans","The Mughal Empire","Rulers and Buildings","Towns, Traders and Craftspersons","Tribes, Nomads and Settled Communities","Devotional Paths to the Divine","The Making of Regional Cultures","Eighteenth-Century Political Formations"] },
+    { name: "Social Science – Geography", icon: "🌍", weightage: "Essential", chapters: ["Environment","Inside Our Earth","Our Changing Earth","Air","Water","Natural Vegetation and Wildlife","Human Environment – Settlement, Transport and Communication","Human Environment Interactions – The Tropical and Subtropical Region","Life in the Deserts"] },
+    { name: "Social Science – Civics", icon: "⚖️", weightage: "Essential", chapters: ["On Equality","Role of the Government in Health","How the State Government Works","Growing up as Boys and Girls","Women Change the World","Understanding Media","Markets Around Us","A Shirt in the Market","Struggles for Equality"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["Three Questions","The Squirrel","A Gift of Chappals","The Rebel","The Shed","The Story of the Hills","The Invention of Shoes","Gopal and the Hilsa Fish","The Desert","Chivvy"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["हम पंछी उन्मुक्त गगन के","दादा जी","हिमालय की बेटियाँ","कप्तान","मिठाई वाला","रक्त और हमारा शरीर","पापा खो गए","शाम – एक किस्सा","नन्हा फुसलाना","एक तिनका"] }
   ]},
   "class-8": { title: "Class 8", subjects: [
     { name: "Mathematics", icon: "📐", weightage: "Essential", chapters: ["Rational Numbers","Linear Equations in One Variable","Understanding Quadrilaterals","Data Handling","Squares and Square Roots","Cubes and Cube Roots","Comparing Quantities","Algebraic Expressions and Identities","Visualising Solid Shapes","Mensuration","Exponents and Powers","Direct and Inverse Proportions","Factorisation","Introduction to Graphs","Playing with Numbers"] },
-    { name: "Science", icon: "⚗️", weightage: "Essential", chapters: ["Crop Production and Management","Microorganisms : Friend and Foe","Synthetic Fibres and Plastics","Materials: Metals and Non-Metals","Coal and Petroleum","Combustion and Flame","Conservation of Plants and Animals","Cell - Structure and Functions","Reproduction in Animals","Reaching the Age of Adolescence","Force and Pressure","Friction","Sound","Chemical Effects of Electric Current","Some Natural Phenomena","Light","Stars and The Solar System","Pollution of Air and Water"] }
+    { name: "Science", icon: "⚗️", weightage: "Essential", chapters: ["Crop Production and Management","Microorganisms : Friend and Foe","Synthetic Fibres and Plastics","Materials: Metals and Non-Metals","Coal and Petroleum","Combustion and Flame","Conservation of Plants and Animals","Cell - Structure and Functions","Reproduction in Animals","Reaching the Age of Adolescence","Force and Pressure","Friction","Sound","Chemical Effects of Electric Current","Some Natural Phenomena","Light","Stars and The Solar System","Pollution of Air and Water"] },
+    { name: "Social Science – History", icon: "📜", weightage: "Essential", chapters: ["How, When and Where","From Trade to Territory","Ruling the Countryside","Tribals, Dikus and the Vision of a Golden Age","When People Rebel","Colonialism and the City","Weavers, Iron Smelters and Factory Owners","Civilising the “Native”, Educating the Nation","Women, Caste and Reform","The Changing World of Visual Arts","The Making of the National Movement","India After Independence"] },
+    { name: "Social Science – Geography", icon: "🌍", weightage: "Essential", chapters: ["Resources","Land, Soil, Water, Natural Vegetation and Wildlife Resources","Agriculture","Industries","Human Resources"] },
+    { name: "Social Science – Civics", icon: "⚖️", weightage: "Essential", chapters: ["The Indian Constitution","Understanding Secularism","Why do we need a Parliament?","Understanding Laws","Judiciary","Understanding Our Criminal Justice System","Understanding Marginalisation","Confronting Marginalisation","Public Facilities","Law and Social Justice"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["The Best Christmas Present in the World","The Tsunami","Glimpses of the Past","Bepin Choudhury’s Lapse of Memory","The Summit Within","This is Jody’s Fawn","A Visit to Cambridge","A Short Monsoon Diary","The Great Stone Face – I","The Great Stone Face – II"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["दूध की कहानी","अनमोल तोरण","चाँद की किरणें","साँसों की माला","नन्हा फुसलाना","अनोखी स्मृति","साँसों की माला","चाँद की किरणें","सूरज की किरणें","अनोखी स्मृति"] }
   ]},
   "class-9": { title: "Class 9", subjects: [
     { name: "Mathematics", icon: "📊", weightage: "25%", chapters: ["Number Systems","Polynomials","Coordinate Geometry","Linear Equations in Two Variables","Introduction to Euclid's Geometry","Lines and Angles","Triangles","Quadrilaterals","Areas of Parallelograms and Triangles","Circles","Constructions","Heron's Formula","Surface Areas and Volumes","Statistics","Probability"] },
-    { name: "Science", icon: "🧪", weightage: "25%", chapters: ["Matter in Our Surroundings","Is Matter Around Us Pure?","Atoms and Molecules","Structure of the Atom","The Fundamental Unit of Life","Tissues","Diversity in Living Organisms","Motion","Force and Laws of Motion","Gravitation","Work and Energy","Sound","Why Do We Fall Ill?","Natural Resources","Improvement in Food Resources"] }
+    { name: "Science", icon: "🧪", weightage: "25%", chapters: ["Matter in Our Surroundings","Is Matter Around Us Pure?","Atoms and Molecules","Structure of the Atom","The Fundamental Unit of Life","Tissues","Diversity in Living Organisms","Motion","Force and Laws of Motion","Gravitation","Work and Energy","Sound","Why Do We Fall Ill?","Natural Resources","Improvement in Food Resources"] },
+    { name: "Social Science – History", icon: "📜", weightage: "Essential", chapters: ["The French Revolution","Socialism in Europe and the Russian Revolution","Nazism and the Rise of Hitler","Forest Society and Colonialism","Pastoralists in the Modern World"] },
+    { name: "Social Science – Geography", icon: "🌍", weightage: "Essential", chapters: ["India – Size and Location","Physical Features of India","Drainage","Climate","Natural Vegetation and Wildlife","Population"] },
+    { name: "Social Science – Civics", icon: "⚖️", weightage: "Essential", chapters: ["What is Democracy? Why Democracy?","Constitutional Design","Electoral Politics","Working of Institutions","Democratic Rights"] },
+    { name: "Social Science – Economics", icon: "💰", weightage: "Essential", chapters: ["The Story of Village Palampur","People as Resource","Poverty as a Challenge","Food Security in India"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["The Fun They Had","The Sound of Music","The Little Girl","A Truly Beautiful Mind","The Snake and the Mirror","My Childhood","Reach for the Top","Kathmandu","If I Were You"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["दो बैलों की कथा","ल्हासा की ओर","उपभोक्तावाद की संस्कृति","साँवले सपनों की याद","प्रेमचंद के फटे जूते","मेरा छोटा सा निजी पुस्तकालय","माता का आँचल","जॉर्ज पंचम की नाक","साँसों की माला"] }
   ]},
   "class-10": { title: "Class 10", subjects: [
     { name: "Mathematics", icon: "📐", weightage: "25%", chapters: ["Real Numbers","Polynomials","Pair of Linear Equations in Two Variables","Quadratic Equations","Arithmetic Progressions","Triangles","Coordinate Geometry","Introduction to Trigonometry","Some Applications of Trigonometry","Circles","Constructions","Areas Related to Circles","Surface Areas and Volumes","Statistics","Probability"] },
     { name: "Science", icon: "🧬", weightage: "25%", chapters: ["Chemical Reactions and Equations","Acids, Bases and Salts","Metals and Non-metals","Carbon and its Compounds","Periodic Classification of Elements","Life Processes","Control and Coordination","How do Organisms Reproduce?","Heredity and Evolution","Light – Reflection and Refraction","The Human Eye and the Colourful World","Electricity","Magnetic Effects of Electric Current","Sources of Energy","Our Environment","Sustainable Management of Natural Resources"] },
-    { name: "Social Science", icon: "🌐", weightage: "20%", chapters: ["The Rise of Nationalism in Europe","Nationalism in India","The Making of a Global World","The Age of Industrialisation","Print Culture and the Modern World","Power Sharing","Federalism","Gender, Religion and Caste","Political Parties","Outcomes of Democracy"] }
+    { name: "Social Science – History", icon: "📜", weightage: "Essential", chapters: ["The Rise of Nationalism in Europe","Nationalism in India","The Making of a Global World","The Age of Industrialisation","Print Culture and the Modern World"] },
+    { name: "Social Science – Geography", icon: "🌍", weightage: "Essential", chapters: ["Resources and Development","Forest and Wildlife Resources","Water Resources","Agriculture","Minerals and Energy Resources","Manufacturing Industries","Lifelines of National Economy"] },
+    { name: "Social Science – Civics", icon: "⚖️", weightage: "Essential", chapters: ["Power Sharing","Federalism","Gender, Religion and Caste","Political Parties","Outcomes of Democracy"] },
+    { name: "Social Science – Economics", icon: "💰", weightage: "Essential", chapters: ["Development","Sectors of the Indian Economy","Money and Credit","Globalisation and the Indian Economy","Consumer Rights"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["A Letter to God","Nelson Mandela – Long Walk to Freedom","Two Stories about Flying","From the Diary of Anne Frank","The Hundred Dresses – I","The Hundred Dresses – II","Glimpses of India","Mijbil the Otter","Madam Rides the Bus","The Sermon at Benares","The Proposal"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["सूरदास","तुलसीदास","देव","जयशंकर प्रसाद","सूर्यकांत त्रिपाठी 'निराला'","नागार्जुन","सुमित्रानंदन पन्त","सूर्यकांत त्रिपाठी 'निराला'","महादेवी वर्मा","सुभद्रा कुमारी चौहान"] }
   ]},
   "class-11": { title: "Class 11 (PCM/PCB)", subjects: [
     { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Units and Measurements","Motion in a Straight Line","Motion in a Plane","Laws of Motion","Work, Energy and Power","System of Particles and Rotational Motion","Gravitation","Mechanical Properties of Solids","Mechanical Properties of Fluids","Thermal Properties of Matter","Thermodynamics","Kinetic Theory","Oscillations","Waves"] },
     { name: "Chemistry", icon: "🧪", weightage: "33%", chapters: ["Some Basic Concepts of Chemistry","Structure of Atom","Classification of Elements and Periodicity in Properties","Chemical Bonding and Molecular Structure","States of Matter","Thermodynamics","Equilibrium","Redox Reactions","Hydrogen","The s-Block Elements","The p-Block Elements","Organic Chemistry – Some Basic Principles and Techniques","Hydrocarbons"] },
-    { name: "Mathematics", icon: "📊", weightage: "33%", chapters: ["Sets","Relations and Functions","Trigonometric Functions","Complex Numbers and Quadratic Equations","Linear Inequalities","Permutations and Combinations","Binomial Theorem","Sequences and Series","Straight Lines","Conic Sections","Introduction to Three Dimensional Geometry","Limits and Derivatives","Statistics","Probability"] }
+    { name: "Mathematics", icon: "📊", weightage: "33%", chapters: ["Sets","Relations and Functions","Trigonometric Functions","Complex Numbers and Quadratic Equations","Linear Inequalities","Permutations and Combinations","Binomial Theorem","Sequences and Series","Straight Lines","Conic Sections","Introduction to Three Dimensional Geometry","Limits and Derivatives","Statistics","Probability"] },
+    { name: "Biology", icon: "🧬", weightage: "33%", chapters: ["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Structural Organisation in Animals","Cell: The Unit of Life","Biomolecules","Cell Cycle and Cell Division","Photosynthesis in Higher Plants","Respiration in Plants","Plant Growth and Development","Breathing and Exchange of Gases","Body Fluids and Circulation","Excretory Products and their Elimination","Locomotion and Movement","Neural Control and Coordination","Chemical Coordination and Integration"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["The Portrait of a Lady","We're Not Afraid to Die... if We Can All Be Together","Discovering Tut: the Saga Continues","Landscape of the Soul","The Ailing Planet: the Green Movement's Role","The Browning Version","The Adventure","Silk Road"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["आरोह – भाग 1","आरोह – भाग 2","वितान – भाग 1","वितान – भाग 2"] }
   ]},
   "class-12": { title: "Class 12 (PCM/PCB)", subjects: [
-    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics"] },
+    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics: Materials, Devices and Simple Circuits"] },
     { name: "Chemistry", icon: "🧪", weightage: "33%", chapters: ["Solutions","Electrochemistry","Chemical Kinetics","The d- and f-Block Elements","Coordination Compounds","Haloalkanes and Haloarenes","Alcohols, Phenols and Ethers","Aldehydes, Ketones and Carboxylic Acids","Amines","Biomolecules","Polymers","Chemistry in Everyday Life"] },
-    { name: "Mathematics", icon: "📐", weightage: "33%", chapters: ["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Application of Derivatives","Integrals","Application of Integrals","Differential Equations","Vector Algebra","Three Dimensional Geometry","Linear Programming","Probability"] }
+    { name: "Mathematics", icon: "📐", weightage: "33%", chapters: ["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Application of Derivatives","Integrals","Application of Integrals","Differential Equations","Vector Algebra","Three Dimensional Geometry","Linear Programming","Probability"] },
+    { name: "Biology", icon: "🧬", weightage: "33%", chapters: ["Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health","Principles of Inheritance and Variation","Molecular Basis of Inheritance","Evolution","Human Health and Disease","Microbes in Human Welfare","Biotechnology: Principles and Processes","Biotechnology and its Applications","Organisms and Populations","Ecosystem","Biodiversity and Conservation","Environmental Issues"] },
+    { name: "English", icon: "📖", weightage: "Essential", chapters: ["The Last Lesson","Lost Spring","Deep Water","The Rattrap","Indigo","Poets and Pancakes","The Interview","Going Places","My Mother at Sixty-six","Keeping Quiet","A Thing of Beauty","A Roadside Stand","Aunt Jennifer's Tigers"] },
+    { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["आरोह – भाग 2","वितान – भाग 2"] }
   ]},
   "iit-jee": { title: "IIT JEE (Main + Advanced)", subjects: [
     { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Kinematics","Laws of Motion","Work, Energy & Power","Rotational Motion","Gravitation","Properties of Matter","Thermodynamics","Kinetic Theory","Oscillations & Waves","Electrostatics","Current Electricity","Magnetic Effects","Electromagnetic Induction","Optics","Modern Physics"] },
@@ -389,22 +420,27 @@ const subjectsData = {
   "neet": { title: "NEET UG", subjects: [
     { name: "Physics", icon: "⚡", weightage: "25%", chapters: ["Kinematics","Laws of Motion","Work Energy Power","Rotational Motion","Gravitation","Thermodynamics","Electrostatics","Current Electricity","Magnetism","Optics","Modern Physics"] },
     { name: "Chemistry", icon: "🧪", weightage: "25%", chapters: ["Atomic Structure","Chemical Bonding","States of Matter","Thermodynamics","Equilibrium","Redox","Electrochemistry","Kinetics","Periodic Table","Coordination Compounds","Organic Chemistry","Hydrocarbons","Biomolecules"] },
-    { name: "Biology", icon: "🧬", weightage: "50%", chapters: ["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Cell: Unit of Life","Biomolecules","Cell Cycle & Division","Photosynthesis","Respiration","Human Physiology","Reproduction","Genetics","Evolution","Human Health & Disease","Biotechnology"] }
+    { name: "Biology", icon: "🧬", weightage: "50%", chapters: ["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Cell: The Unit of Life","Biomolecules","Cell Cycle and Cell Division","Photosynthesis in Higher Plants","Respiration in Plants","Plant Growth and Development","Human Physiology","Reproduction","Genetics and Evolution","Biology and Human Welfare","Biotechnology","Ecology and Environment"] }
   ]},
   "upsc": { title: "UPSC CSE", subjects: [
-    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["History","Geography","Polity","Economy","Environment","Science & Technology","Current Affairs"] }
+    { name: "General Studies Paper 1", icon: "📜", weightage: "25%", chapters: ["Indian Heritage & Culture","History & Geography of the World","Society"] },
+    { name: "General Studies Paper 2", icon: "⚖️", weightage: "25%", chapters: ["Governance","Constitution","Polity","Social Justice","International Relations"] },
+    { name: "General Studies Paper 3", icon: "💰", weightage: "25%", chapters: ["Economy","Agriculture","Environment","Science & Technology","Disaster Management","Security"] },
+    { name: "General Studies Paper 4", icon: "🧠", weightage: "25%", chapters: ["Ethics","Integrity","Aptitude"] },
+    { name: "CSAT", icon: "📊", weightage: "Qualifying", chapters: ["Comprehension","Interpersonal Skills","Logical Reasoning","Analytical Ability","Decision Making","Problem Solving","Basic Numeracy","Data Interpretation"] }
   ]},
   "ssc": { title: "SSC CGL / CHSL", subjects: [
-    { name: "Quantitative Aptitude", icon: "📊", weightage: "25%", chapters: ["Number System","Percentage","Profit Loss","Time Work","Geometry","Algebra","Data Interpretation"] },
-    { name: "English", icon: "📖", weightage: "25%", chapters: ["Grammar","Vocabulary","Comprehension","Cloze"] },
-    { name: "Reasoning", icon: "🧠", weightage: "25%", chapters: ["Analogy","Series","Coding","Blood Relations","Syllogism"] },
-    { name: "General Awareness", icon: "🌐", weightage: "25%", chapters: ["History","Polity","Economy","Science","Current Affairs"] }
+    { name: "Quantitative Aptitude", icon: "📊", weightage: "25%", chapters: ["Number System","Percentage","Profit & Loss","Simple & Compound Interest","Ratio & Proportion","Time & Work","Time & Distance","Geometry","Mensuration","Trigonometry","Algebra","Data Interpretation"] },
+    { name: "English", icon: "📖", weightage: "25%", chapters: ["Grammar","Vocabulary","Reading Comprehension","Cloze Test","Sentence Improvement","Error Spotting","Para Jumbles","Fill in the Blanks"] },
+    { name: "Reasoning", icon: "🧠", weightage: "25%", chapters: ["Analogy","Classification","Series","Coding-Decoding","Blood Relations","Direction Sense","Logical Venn Diagrams","Syllogism","Non-Verbal Reasoning"] },
+    { name: "General Awareness", icon: "🌐", weightage: "25%", chapters: ["History","Geography","Polity","Economy","General Science","Current Affairs","Static GK"] }
   ]},
   "state-pcs": { title: "State PCS", subjects: [
-    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["History","Geography","Polity","Economy","Environment","Science","Current Affairs","State Specific GK"] }
+    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["Indian History","Indian Geography","Indian Polity","Indian Economy","Environment & Ecology","General Science","Current Affairs","State Specific GK"] },
+    { name: "CSAT", icon: "🧠", weightage: "Qualifying", chapters: ["Comprehension","Logical Reasoning","Quantitative Aptitude","Decision Making"] }
   ]},
   "bpsc": { title: "BPSC", subjects: [
-    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["History of India & Bihar","Geography of India & Bihar","Indian Polity","Indian Economy","Environment & Ecology","Science & Technology","Current Affairs","Bihar Specific GK"] },
+    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["History of India & Bihar","Geography of India & Bihar","Indian Polity","Indian Economy","Environment & Ecology","General Science","Current Affairs","Bihar Specific GK"] },
     { name: "CSAT", icon: "🧠", weightage: "20%", chapters: ["Quantitative Aptitude","Logical Reasoning","Reading Comprehension"] },
     { name: "Bihar GK", icon: "🌾", weightage: "30%", chapters: ["Bihar History & Culture","Bihar Geography","Bihar Economy","Bihar Polity & Administration","Current Affairs Bihar"] }
   ]}
@@ -570,7 +606,7 @@ document.getElementById('search-input').addEventListener('input', e => {
   });
 });
 
-// ==================== CALCULATOR, STOPWATCH, PDF (your original) ====================
+// ==================== CALCULATOR ====================
 let display = document.getElementById("display");
 function append(val) { if (display.innerText === "0" && val !== ".") display.innerText = val; else display.innerText += val; }
 function clearAll() { display.innerText = "0"; }
@@ -585,6 +621,7 @@ function calculate() {
   }
 }
 
+// ==================== STOPWATCH ====================
 let swInterval, seconds = 0;
 function startSW() { if (swInterval) return; swInterval = setInterval(() => { seconds++; updateTime(); }, 1000); }
 function stopSW() { clearInterval(swInterval); swInterval = null; }
@@ -596,12 +633,13 @@ function updateTime() {
   document.getElementById("time").innerText = `${h}:${m}:${s}`;
 }
 
+// ==================== PDF LIBRARY ====================
 function loadPDF(event) {
   const file = event.target.files[0];
   if (file) document.getElementById("pdfViewer").src = URL.createObjectURL(file);
 }
 
-// Initial call
+// ==================== INITIAL CALL ====================
 updateRecent();
 </script>
 </body>
