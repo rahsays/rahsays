@@ -14,7 +14,7 @@ html,body{
   overflow-x:hidden;
 }
 
-/* ===== LOADER ===== */
+/* ================= LOADER ================= */
 
 #loader{
   position:fixed;
@@ -27,30 +27,35 @@ html,body{
 }
 
 .infinity{
-  width:240px;
+  width:420px;
+  max-width:85vw;
 }
 
 .infinity path{
   fill:none;
-  stroke:#fff;
-  stroke-width:16;
+  stroke:#ffffff;
+  stroke-width:22;
   stroke-linecap:round;
   stroke-linejoin:round;
-  stroke-dasharray:800;
-  stroke-dashoffset:800;
-  animation:draw 2.5s ease forwards;
-  filter:drop-shadow(0 0 20px rgba(255,255,255,0.8));
+  stroke-dasharray:1600;
+  stroke-dashoffset:1600;
+  animation:draw 2.8s cubic-bezier(.65,0,.35,1) forwards;
+  filter:
+    drop-shadow(0 0 25px rgba(255,255,255,0.9))
+    drop-shadow(0 0 60px rgba(255,255,255,0.5));
 }
 
-@keyframes draw{to{stroke-dashoffset:0;}}
+@keyframes draw{
+  to{stroke-dashoffset:0;}
+}
 
-/* ===== HEADER ===== */
+/* ================= HEADER ================= */
 
 header{
   position:fixed;
   top:0;
   width:100%;
-  height:60px;
+  height:65px;
   background:#000;
   display:flex;
   align-items:center;
@@ -60,29 +65,31 @@ header{
 
 .menu-btn{
   position:absolute;
-  left:20px;
+  left:22px;
   font-size:24px;
   cursor:pointer;
 }
 
 header h1{
-  letter-spacing:4px;
+  letter-spacing:6px;
   font-weight:600;
+  font-size:20px;
 }
 
-/* ===== SIDEBAR ===== */
+/* ================= SIDEBAR ================= */
 
 .sidebar{
   position:fixed;
   top:0;
-  left:-270px;
-  width:270px;
+  left:-300px;
+  width:300px;
   height:100%;
-  background:#0a0a0a;
-  padding-top:90px;
-  transition:.3s;
+  background:linear-gradient(180deg,#000,#0d0d0d);
+  padding-top:100px;
+  transition:.35s ease;
   z-index:1200;
-  box-shadow:4px 0 30px rgba(255,255,255,0.05);
+  box-shadow:8px 0 40px rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
 }
 
 .sidebar.active{left:0;}
@@ -90,70 +97,78 @@ header h1{
 .sidebar a{
   display:flex;
   align-items:center;
-  gap:15px;
-  padding:20px 30px;
+  gap:16px;
+  padding:22px 40px;
   text-decoration:none;
   color:#fff;
   font-size:18px;
   transition:.2s;
 }
 
-.sidebar a:hover{background:#111;}
+.sidebar a:hover{
+  background:rgba(255,255,255,0.05);
+}
 
-/* ===== MAIN ===== */
+/* ================= MAIN ================= */
 
 main{
-  padding:90px 20px 100px;
-  max-width:1200px;
+  padding:100px 25px 110px;
+  max-width:1300px;
   margin:auto;
 }
 
 .hero{
   text-align:center;
-  margin-bottom:50px;
+  margin-bottom:60px;
 }
 
 .hero h2{
-  font-size:32px;
-  margin-bottom:10px;
+  font-size:34px;
+  margin-bottom:12px;
 }
 
 .hero p{
-  opacity:.7;
+  opacity:.65;
+  font-size:15px;
 }
 
 .section{
-  margin-top:50px;
+  margin-top:60px;
 }
 
 .section h3{
-  margin-bottom:20px;
+  margin-bottom:22px;
+  font-size:20px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:22px;
 }
 
 .card{
   background:#111;
-  padding:30px;
-  border-radius:18px;
+  padding:32px;
+  border-radius:20px;
   text-align:center;
   cursor:pointer;
-  transition:.2s;
+  transition:.25s ease;
+  border:1px solid #151515;
 }
 
-.card:hover{background:#151515;}
+.card:hover{
+  background:#161616;
+  transform:translateY(-4px);
+}
 
-/* ===== BOTTOM NAV ===== */
+/* ================= BOTTOM NAV ================= */
 
 .bottom-nav{
   position:fixed;
   bottom:0;
   width:100%;
-  height:60px;
+  height:65px;
   background:#000;
   display:flex;
   justify-content:space-around;
@@ -163,12 +178,16 @@ main{
 
 .bottom-nav div{
   cursor:pointer;
-  opacity:.8;
+  font-size:14px;
+  opacity:.7;
+  transition:.2s;
 }
 
-.bottom-nav div:hover{opacity:1;}
+.bottom-nav div:hover{
+  opacity:1;
+}
 
-/* ===== TOOL SCREENS ===== */
+/* ================= TOOL SCREENS ================= */
 
 .tool-screen{
   position:fixed;
@@ -185,63 +204,76 @@ main{
 
 .back-btn{
   position:absolute;
-  top:20px;
-  left:20px;
+  top:22px;
+  left:22px;
   font-size:18px;
   cursor:pointer;
+  opacity:.8;
 }
 
-/* ===== CALCULATOR ===== */
+/* ================= CALCULATOR ================= */
 
 .calc-display{
-  font-size:50px;
-  margin-bottom:30px;
+  font-size:55px;
+  margin-bottom:35px;
   width:90%;
-  max-width:420px;
+  max-width:450px;
   text-align:right;
 }
 
 .calc-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:15px;
+  gap:16px;
   width:90%;
-  max-width:420px;
+  max-width:450px;
 }
 
 .calc-btn{
-  padding:22px;
-  border-radius:50px;
+  padding:24px;
+  border-radius:60px;
   background:#111;
   text-align:center;
   cursor:pointer;
+  font-size:18px;
   transition:.2s;
 }
 
-.calc-btn:hover{background:#1a1a1a;}
+.calc-btn:hover{
+  background:#1a1a1a;
+}
 
-/* ===== STOPWATCH ===== */
+/* ================= STOPWATCH ================= */
 
 .stopwatch-time{
-  font-size:50px;
-  margin-bottom:30px;
+း{
+  font-size:55px;
+  margin-bottom:35px;
+}
+
+.stopwatch-time{
+  font-size:55px;
+  margin-bottom:35px;
 }
 
 .sw-controls{
   display:flex;
-  gap:20px;
+  gap:22px;
 }
 
 .sw-btn{
-  padding:14px 30px;
-  border-radius:30px;
+  padding:14px 32px;
+  border-radius:40px;
   background:#111;
   cursor:pointer;
+  transition:.2s;
 }
 
-.sw-btn:hover{background:#1a1a1a;}
+.sw-btn:hover{
+  background:#1a1a1a;
+}
 
-/* ===== PDF VIEWER ===== */
+/* ================= PDF ================= */
 
 .pdf-viewer{
   position:fixed;
@@ -257,34 +289,40 @@ main{
   width:100%;
   border:none;
 }
-
 </style>
 </head>
 <body>
 
+<!-- ================= LOADER ================= -->
+
 <div id="loader">
-  <svg class="infinity" viewBox="0 0 300 150">
-    <path d="M75,75 C75,25 150,25 150,75 C150,125 225,125 225,75 C225,25 150,25 150,75 C150,125 75,125 75,75"/>
-  </svg>
+<svg class="infinity" viewBox="0 0 600 300">
+<path d="
+M150 150
+C150 50 300 50 300 150
+S450 250 450 150
+S300 50 300 150
+S150 250 150 150
+"/>
+</svg>
 </div>
 
 <header>
-  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
-  <h1>rahsays</h1>
+<div class="menu-btn" onclick="toggleSidebar()">☰</div>
+<h1>rahsays</h1>
 </header>
 
 <div class="sidebar" id="sidebar">
-  <a onclick="goHome()">🏠 Home</a>
-  <a onclick="openCalculator()">🧮 Calculator</a>
-  <a onclick="openStopwatch()">⏱ Stopwatch</a>
-  <a onclick="openPDF()">📚 PDF Library</a>
+<a onclick="goHome()">🏠 Home</a>
+<a onclick="openCalculator()">🧮 Calculator</a>
+<a onclick="openStopwatch()">⏱ Stopwatch</a>
+<a onclick="openPDF()">📚 PDF Library</a>
 </div>
 
 <main>
-
 <div class="hero">
-  <h2>Education Platform</h2>
-  <p>Building the most advanced minimal learning system.</p>
+<h2>Education Platform</h2>
+<p>Building the most advanced minimal learning system.</p>
 </div>
 
 <div class="section">
@@ -309,7 +347,6 @@ main{
 <div class="card">SSC</div>
 </div>
 </div>
-
 </main>
 
 <div class="bottom-nav">
@@ -344,16 +381,13 @@ main{
 </div>
 
 <script>
-
-/* LOADER */
 window.onload=()=>{
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
-if(navigator.vibrate) navigator.vibrate(100);
-},2600);
+if(navigator.vibrate) navigator.vibrate(120);
+},2800);
 };
 
-/* SIDEBAR */
 function toggleSidebar(){
 document.getElementById("sidebar").classList.toggle("active");
 }
@@ -366,7 +400,6 @@ closePDF();
 closeSidebar();
 }
 
-/* TOOL NAV */
 function openCalculator(){
 closeSidebar();
 document.getElementById("calculatorScreen").classList.add("active");
@@ -380,7 +413,6 @@ document.getElementById("calculatorScreen").classList.remove("active");
 document.getElementById("stopwatchScreen").classList.remove("active");
 }
 
-/* PDF */
 function openPDF(){
 closeSidebar();
 document.getElementById("pdfViewer").style.display="flex";
@@ -420,7 +452,7 @@ document.getElementById("swTime").innerText=
 function startSW(){if(!swInt) swInt=setInterval(updateSW,1000);}
 function stopSW(){clearInterval(swInt);swInt=null;}
 function resetSW(){stopSW();sec=0;document.getElementById("swTime").innerText="00:00:00";}
-
 </script>
+
 </body>
 </html>
