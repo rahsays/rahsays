@@ -5,100 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rahsays</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#f4f6f9;
-  --card:#ffffff;
+  --bg:#000;
+  --card:#111;
+  --text:#fff;
+  --sub:#aaa;
+  --accent:#4f8cff;
+}
+
+.light{
+  --bg:#f5f5f5;
+  --card:#fff;
   --text:#111;
-  --accent:#5b7cff;
+  --sub:#555;
+  --accent:#2563eb;
 }
 
-body.dark{
-  --bg:#000000;
-  --card:#0f0f0f;
-  --text:#ffffff;
-  --accent:#7c9cff;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
 
 body{
   background:var(--bg);
   color:var(--text);
-  transition:0.3s ease;
+  transition:.3s;
 }
 
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 8%;
+  text-align:center;
+  padding:20px;
+  font-size:22px;
+  letter-spacing:3px;
 }
 
-.logo{
-  font-size:22px;
-  font-weight:600;
-  letter-spacing:2px;
+nav{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding-bottom:15px;
+  border-bottom:1px solid #222;
 }
 
 nav a{
-  margin-left:20px;
+  color:var(--sub);
   text-decoration:none;
-  color:var(--text);
-  font-size:14px;
-  opacity:0.8;
-}
-
-nav a:hover{
-  opacity:1;
-}
-
-.toggle{
   cursor:pointer;
-  padding:6px 14px;
-  border-radius:20px;
-  background:var(--card);
-  border:1px solid #ccc;
-  font-size:12px;
 }
 
-.hero{
-  text-align:center;
+nav a:hover{color:var(--text);}
+
+.container{
   padding:40px 20px;
+  max-width:900px;
+  margin:auto;
 }
 
-.hero h1{
-  font-size:32px;
-  margin-bottom:15px;
-}
-
-.search{
-  width:90%;
-  max-width:400px;
-  padding:12px;
-  border-radius:30px;
-  border:none;
-  outline:none;
-  background:var(--card);
-  color:var(--text);
-  box-shadow:0 5px 15px rgba(0,0,0,0.05);
-}
-
-.section{
-  padding:40px 8%;
-}
-
-.section h2{
-  margin-bottom:25px;
-  font-size:22px;
+h2{
   text-align:center;
+  margin:40px 0 20px;
 }
 
 .grid{
@@ -109,78 +72,183 @@ nav a:hover{
 
 .card{
   background:var(--card);
-  padding:30px 20px;
-  border-radius:15px;
+  padding:30px;
   text-align:center;
-  font-weight:500;
+  border-radius:12px;
+  transition:.3s;
   cursor:pointer;
-  transition:0.3s ease;
-  box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  border:1px solid #222;
 }
 
 .card:hover{
   transform:translateY(-5px);
+  border-color:var(--accent);
+}
+
+.search{
+  width:100%;
+  padding:12px;
+  border-radius:25px;
+  border:none;
+  margin:20px 0;
+}
+
+.btn{
+  padding:8px 18px;
+  border:none;
+  border-radius:20px;
   background:var(--accent);
   color:#fff;
+  cursor:pointer;
+  margin:5px 0;
+}
+
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--card);
+  padding:30px;
+  border-radius:12px;
+  display:none;
+  z-index:10;
+  width:280px;
+}
+
+.popup input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #333;
+  background:transparent;
+  color:var(--text);
+}
+
+.overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.7);
+  top:0;
+  left:0;
+  display:none;
 }
 
 footer{
   text-align:center;
   padding:20px;
-  font-size:13px;
-  opacity:0.6;
+  border-top:1px solid #222;
+  margin-top:50px;
 }
 </style>
 </head>
 
-<body class="dark">
+<body>
 
-<header>
-  <div class="logo">rahsays</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Login</a>
-    <button class="toggle" onclick="toggleMode()">Mode</button>
-  </nav>
-</header>
+<header>rahsays</header>
 
-<div class="hero">
-  <h1>Education Platform</h1>
-  <input type="text" class="search" placeholder="Search courses...">
+<nav>
+  <a onclick="location.reload()">Home</a>
+  <a onclick="openLogin()">Login</a>
+  <a onclick="logout()">Logout</a>
+  <a onclick="toggleMode()">Mode</a>
+</nav>
+
+<div class="container">
+
+<h2>Education Platform</h2>
+<input class="search" placeholder="Search...">
+
+<h2>School Classes</h2>
+<div class="grid">
+  <div class="card">Class 6</div>
+  <div class="card">Class 7</div>
+  <div class="card">Class 8</div>
+  <div class="card">Class 9</div>
+  <div class="card">Class 10</div>
+  <div class="card">Class 11</div>
+  <div class="card">Class 12</div>
 </div>
 
-<div class="section">
-  <h2>School Classes</h2>
-  <div class="grid">
-    <div class="card">Class 6</div>
-    <div class="card">Class 7</div>
-    <div class="card">Class 8</div>
-    <div class="card">Class 9</div>
-    <div class="card">Class 10</div>
-    <div class="card">Class 11</div>
-    <div class="card">Class 12</div>
-  </div>
+<h2>Competitive Exams</h2>
+<div class="grid">
+  <div class="card">IIT / JEE</div>
+  <div class="card">NEET</div>
+  <div class="card">UPSC</div>
+  <div class="card">SSC</div>
+  <div class="card">BPSC</div>
+  <div class="card">State PCS</div>
 </div>
 
-<div class="section">
-  <h2>Competitive Exams</h2>
-  <div class="grid">
-    <div class="card">IIT / JEE</div>
-    <div class="card">NEET</div>
-    <div class="card">UPSC</div>
-    <div class="card">SSC</div>
-    <div class="card">BPSC</div>
-    <div class="card">State PCS</div>
-  </div>
 </div>
 
-<footer>
-  © 2026 rahsays
-</footer>
+<footer>© 2026 rahsays</footer>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="loginBox">
+  <h3>Login / Signup</h3>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <button class="btn" onclick="signup()">Signup</button>
+  <button class="btn" onclick="login()">Login</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { 
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD3euxtGl2YO-Blp0jkXCT7PY_OnRlQzSg",
+  authDomain: "rahsays.firebaseapp.com",
+  projectId: "rahsays",
+  storageBucket: "rahsays.firebasestorage.app",
+  messagingSenderId: "54710758290",
+  appId: "1:54710758290:web:1f8d4d298c049f11316f4b",
+  measurementId: "G-PSY28MW1D3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.signup = function(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+  .then(()=>alert("Signup successful"))
+  .catch(e=>alert(e.message));
+}
+
+window.login = function(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+  .then(()=>alert("Login successful"))
+  .catch(e=>alert(e.message));
+}
+
+window.logout = function(){
+  signOut(auth).then(()=>alert("Logged out"));
+}
+</script>
 
 <script>
+function openLogin(){
+  document.getElementById("loginBox").style.display="block";
+  document.getElementById("overlay").style.display="block";
+}
+
 function toggleMode(){
-  document.body.classList.toggle("dark");
+  document.body.classList.toggle("light");
 }
 </script>
 
