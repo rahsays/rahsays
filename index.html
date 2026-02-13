@@ -3,35 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAHSAYS ELITE</title>
+<title>RAHSAYS V32 ULTRA</title>
 
 <style>
-/* ===========================
-   GLOBAL RESET
-=========================== */
-*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, sans-serif;}
+
+/* =====================================================
+   GLOBAL SYSTEM
+===================================================== */
+:root{
+--bg:#000;
+--card:#0e0e0e;
+--border:rgba(255,255,255,.08);
+--white:#fff;
+--yellow:#f1c40f;
+--transition:.35s cubic-bezier(.4,0,.2,1);
+}
+
+.light{
+--bg:#f5f5f5;
+--card:#ffffff;
+--white:#111;
+--border:rgba(0,0,0,.08);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
+}
 
 body{
-background:#000;
-color:#fff;
+background:var(--bg);
+color:var(--white);
+transition:var(--transition);
 overflow-x:hidden;
-transition:.3s ease;
 }
 
-.light-mode{
-background:#f4f4f4;
-color:#111;
-}
-
-/* ===========================
-   INFINITY INTRO
-=========================== */
+/* =====================================================
+   INTRO INFINITY (UNCHANGED STRUCTURE)
+===================================================== */
 #intro{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 background:#000;
 display:flex;
 align-items:center;
@@ -40,88 +54,88 @@ z-index:9999;
 }
 
 .infinity{
-width:220px;
-height:120px;
+width:260px;
+height:150px;
 }
 
 .infinity path{
 fill:none;
 stroke:white;
-stroke-width:18;
+stroke-width:20;
 stroke-linecap:round;
 stroke-linejoin:round;
-stroke-dasharray:700;
-stroke-dashoffset:700;
-animation:drawInfinity 2.5s ease forwards;
+stroke-dasharray:750;
+stroke-dashoffset:750;
+animation:draw 2.8s ease forwards;
 }
 
-@keyframes drawInfinity{
+@keyframes draw{
 to{stroke-dashoffset:0;}
 }
 
-/* ===========================
+/* =====================================================
    HEADER
-=========================== */
+===================================================== */
 header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 24px;
+padding:20px 28px;
 position:sticky;
 top:0;
-background:#000;
+background:var(--bg);
 z-index:1000;
 }
 
 .logo{
 font-size:22px;
-letter-spacing:6px;
+letter-spacing:8px;
 font-weight:600;
 }
 
+.menu{
+font-size:28px;
+cursor:pointer;
+}
+
 .toggle{
-width:60px;
-height:30px;
-background:#222;
-border-radius:20px;
+width:70px;
+height:36px;
+background:var(--card);
+border-radius:30px;
 position:relative;
 cursor:pointer;
 }
 
 .toggle-circle{
-width:26px;
-height:26px;
-background:#fff;
+width:30px;
+height:30px;
+background:white;
 border-radius:50%;
 position:absolute;
-top:2px;
-left:2px;
-transition:.3s;
+top:3px;
+left:3px;
+transition:var(--transition);
 }
 
-.light-mode .toggle-circle{
-left:32px;
-background:#111;
+.light .toggle-circle{
+left:37px;
+background:#000;
 }
 
-.menu{
-font-size:26px;
-cursor:pointer;
-}
-
-/* ===========================
-   SIDEBAR
-=========================== */
+/* =====================================================
+   SIDEBAR PREMIUM
+===================================================== */
 .sidebar{
 position:fixed;
-left:-280px;
+left:-300px;
 top:0;
-width:260px;
+width:280px;
 height:100%;
 background:#111;
-padding:30px 20px;
-transition:.4s;
-z-index:1000;
+padding:40px 25px;
+transition:var(--transition);
+z-index:2000;
 }
 
 .sidebar.active{
@@ -133,141 +147,147 @@ list-style:none;
 }
 
 .sidebar li{
-margin:20px 0;
+margin:24px 0;
 font-size:18px;
 cursor:pointer;
 transition:.2s;
 }
 
 .sidebar li:hover{
-color:#f1c40f;
+color:var(--yellow);
 }
 
-/* ===========================
+/* =====================================================
    SECTIONS
-=========================== */
+===================================================== */
 section{
-padding:40px 24px;
+padding:60px 28px;
+display:none;
+}
+
+section.active{
+display:block;
 }
 
 h2{
-font-size:28px;
-margin-bottom:20px;
+font-size:30px;
+margin-bottom:30px;
 }
 
-/* ===========================
-   CLASS CARDS
-=========================== */
+/* =====================================================
+   CLASS GRID
+===================================================== */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:22px;
 }
 
 .card{
-padding:25px;
-border-radius:16px;
-background:#111;
+padding:28px;
+border-radius:18px;
+background:var(--card);
+border:2px solid var(--border);
 text-align:center;
 font-weight:600;
-border:2px solid rgba(255,255,255,.08);
-transition:.3s;
+transition:var(--transition);
 }
 
 .card:hover{
-border-color:#fff;
-box-shadow:0 0 25px rgba(255,255,255,.25);
+border-color:white;
+box-shadow:0 0 30px rgba(255,255,255,.25);
+transform:translateY(-4px);
 }
 
-/* ===========================
-   COMPETITIVE EXAMS (C Layout)
-=========================== */
+/* =====================================================
+   C LAYOUT EXAMS
+===================================================== */
 .exam-large{
 grid-column:span 2;
-padding:35px;
+padding:36px;
 font-size:18px;
 }
 
 .exam-small{
-padding:22px;
+padding:24px;
 font-size:16px;
 }
 
-/* ===========================
+/* =====================================================
    CALCULATOR
-=========================== */
-.tool-section{
-display:none;
-padding:40px 20px;
-}
-
+===================================================== */
 .calc-display{
-font-size:50px;
+font-size:60px;
 text-align:right;
-padding:20px;
+padding:25px;
 }
 
 .calc-grid{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:14px;
+gap:16px;
 }
 
 .btn{
-padding:22px;
-border-radius:40px;
+padding:24px;
+border-radius:50px;
 border:none;
-font-size:20px;
+font-size:22px;
 cursor:pointer;
 background:#222;
-color:#fff;
+color:white;
+transition:.2s;
+}
+
+.btn:active{
+transform:scale(.95);
 }
 
 .yellow{
-background:#f1c40f;
+background:var(--yellow);
 color:#000;
 font-weight:bold;
 }
 
-/* ===========================
+/* =====================================================
    STOPWATCH
-=========================== */
+===================================================== */
 .stopwatch-display{
-font-size:70px;
+font-size:90px;
 text-align:center;
-margin-bottom:30px;
+margin-bottom:40px;
 }
 
-.sw-btns{
+.sw-controls{
 display:flex;
 justify-content:center;
-gap:20px;
+gap:25px;
 }
 
 .sw-btn{
-padding:15px 35px;
-border-radius:30px;
+padding:18px 45px;
+border-radius:40px;
 background:#222;
-color:#fff;
-border:1px solid rgba(255,255,255,.2);
+color:white;
+border:1px solid var(--border);
 }
 
-/* ===========================
+/* =====================================================
    LIBRARY
-=========================== */
-.pdf-viewer{
+===================================================== */
+.pdf{
 width:100%;
-height:500px;
-border-radius:14px;
-margin-top:20px;
+height:600px;
+border-radius:20px;
+margin-top:25px;
 }
 
-/* ===========================
+/* =====================================================
    RESPONSIVE
-=========================== */
+===================================================== */
 @media(max-width:768px){
-.calc-display{font-size:36px;}
-.stopwatch-display{font-size:50px;}
+.calc-display{font-size:40px;}
+.stopwatch-display{font-size:55px;}
 }
 
 </style>
@@ -291,14 +311,15 @@ margin-top:20px;
 
 <div class="sidebar" id="sidebar">
 <ul>
-<li onclick="showHome()">🏠 Home</li>
-<li onclick="showCalc()">🧮 Calculator</li>
-<li onclick="showStopwatch()">⏱ Stopwatch</li>
-<li onclick="showLibrary()">📚 Library</li>
+<li onclick="openSection('home')">🏠 Home</li>
+<li onclick="openSection('calculator')">🧮 Calculator</li>
+<li onclick="openSection('stopwatch')">⏱ Stopwatch</li>
+<li onclick="openSection('library')">📚 Library</li>
 </ul>
 </div>
 
-<section id="home">
+<!-- HOME -->
+<section id="home" class="active">
 <h2>School Classes</h2>
 <div class="grid">
 <div class="card">Class 6</div>
@@ -310,7 +331,7 @@ margin-top:20px;
 <div class="card">Class 12</div>
 </div>
 
-<h2 style="margin-top:50px;">Competitive Exams</h2>
+<h2 style="margin-top:60px;">Competitive Exams</h2>
 <div class="grid">
 <div class="card exam-large">IIT / JEE</div>
 <div class="card exam-large">NEET</div>
@@ -322,8 +343,8 @@ margin-top:20px;
 </section>
 
 <!-- CALCULATOR -->
-<section class="tool-section" id="calculator">
-<div class="calc-display" id="calcDisplay">0</div>
+<section id="calculator">
+<div class="calc-display" id="display">0</div>
 <div class="calc-grid">
 <button class="btn yellow" onclick="clearAll()">AC</button>
 <button class="btn yellow" onclick="backspace()">⌫</button>
@@ -352,141 +373,69 @@ margin-top:20px;
 </section>
 
 <!-- STOPWATCH -->
-<section class="tool-section" id="stopwatch">
+<section id="stopwatch">
 <div class="stopwatch-display" id="sw">00:00:00</div>
-<div class="sw-btns">
-<button class="sw-btn" onclick="startSW()">Start</button>
-<button class="sw-btn" onclick="stopSW()">Stop</button>
-<button class="sw-btn" onclick="resetSW()">Reset</button>
+<div class="sw-controls">
+<button class="sw-btn" onclick="start()">Start</button>
+<button class="sw-btn" onclick="stop()">Stop</button>
+<button class="sw-btn" onclick="reset()">Reset</button>
 </div>
 </section>
 
 <!-- LIBRARY -->
-<section class="tool-section" id="library">
+<section id="library">
 <h2>Library</h2>
-<iframe class="pdf-viewer" src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+<iframe class="pdf" src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
 </section>
 
 <script>
 
-/* ===================
-   INTRO REMOVE
-=================== */
+/* INTRO */
 window.onload=function(){
 setTimeout(()=>{
 document.getElementById("intro").style.display="none";
 if(navigator.vibrate) navigator.vibrate(80);
-},2500);
+},2800);
 }
 
-/* ===================
-   SIDEBAR
-=================== */
+/* SIDEBAR */
 function toggleSidebar(){
 document.getElementById("sidebar").classList.toggle("active");
 }
 
-/* ===================
-   MODE
-=================== */
+/* MODE */
 function toggleMode(){
-document.body.classList.toggle("light-mode");
+document.body.classList.toggle("light");
 }
 
-/* ===================
-   NAVIGATION
-=================== */
-function showHome(){
-hideAll();
-document.getElementById("home").style.display="block";
+/* NAVIGATION */
+function openSection(id){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
 toggleSidebar();
 }
 
-function showCalc(){
-hideAll();
-document.getElementById("calculator").style.display="block";
-toggleSidebar();
+/* CALCULATOR */
+let display=document.getElementById("display");
+function append(v){
+if(display.innerText==="0") display.innerText=v;
+else display.innerText+=v;
 }
+function clearAll(){display.innerText="0";}
+function backspace(){display.innerText=display.innerText.slice(0,-1)||"0";}
+function calculate(){try{display.innerText=eval(display.innerText);}catch{display.innerText="Error";}}
 
-function showStopwatch(){
-hideAll();
-document.getElementById("stopwatch").style.display="block";
-toggleSidebar();
-}
-
-function showLibrary(){
-hideAll();
-document.getElementById("library").style.display="block";
-toggleSidebar();
-}
-
-function hideAll(){
-document.getElementById("home").style.display="none";
-document.getElementById("calculator").style.display="none";
-document.getElementById("stopwatch").style.display="none";
-document.getElementById("library").style.display="none";
-}
-
-/* ===================
-   CALCULATOR LOGIC
-=================== */
-let display=document.getElementById("calcDisplay");
-
-function append(val){
-if(display.innerText=="0") display.innerText=val;
-else display.innerText+=val;
-}
-
-function clearAll(){
-display.innerText="0";
-}
-
-function backspace(){
-display.innerText=display.innerText.slice(0,-1) || "0";
-}
-
-function calculate(){
-try{
-display.innerText=eval(display.innerText);
-}catch{
-display.innerText="Error";
-}
-}
-
-/* ===================
-   STOPWATCH
-=================== */
-let timer;
-let seconds=0;
-
-function startSW(){
-if(!timer){
-timer=setInterval(()=>{
-seconds++;
-updateSW();
-},1000);
-}
-}
-
-function stopSW(){
-clearInterval(timer);
-timer=null;
-}
-
-function resetSW(){
-stopSW();
-seconds=0;
-updateSW();
-}
-
-function updateSW(){
-let hrs=Math.floor(seconds/3600);
-let mins=Math.floor((seconds%3600)/60);
-let secs=seconds%60;
+/* STOPWATCH */
+let timer,sec=0;
+function start(){if(!timer) timer=setInterval(()=>{sec++;update();},1000);}
+function stop(){clearInterval(timer);timer=null;}
+function reset(){stop();sec=0;update();}
+function update(){
+let h=Math.floor(sec/3600),
+m=Math.floor((sec%3600)/60),
+s=sec%60;
 document.getElementById("sw").innerText=
-String(hrs).padStart(2,'0')+":"+
-String(mins).padStart(2,'0')+":"+
-String(secs).padStart(2,'0');
+String(h).padStart(2,'0')+":"+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
 }
 
 </script>
