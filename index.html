@@ -1,418 +1,366 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rahsays</title>
 
-<!-- PREMIUM FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= ROOT ================= */
+/* ===== CORE ===== */
 
 :root{
-  --bg:#000000;
-  --card:#0a0a0f;
-  --text:#ffffff;
-  --muted:#b5b5b5;
-  --accent:#00f2ff;
-  --gradient:linear-gradient(135deg,#00f2ff,#00aaff);
+--bg:#000;
+--card:#0e0e14;
+--soft:#1a1a22;
+--text:#ffffff;
+--muted:#a0a0a0;
+--accent:#00f2ff;
+--grad:linear-gradient(135deg,#00f2ff,#7c4dff);
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
 }
 
-/* ================= LOADING SCREEN ================= */
+/* ===== TOP BAR ===== */
 
-.loader{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:5000;
-  flex-direction:column;
+.topbar{
+position:fixed;
+top:0;
+width:100%;
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+background:rgba(0,0,0,.8);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,.05);
+z-index:1000;
 }
 
-.infinity{
-  width:120px;
-  height:60px;
-  position:relative;
+.menu{cursor:pointer;font-size:22px;}
+
+.title{
+font-weight:800;
+letter-spacing:2px;
 }
 
-.infinity::before,
-.infinity::after{
-  content:"";
-  position:absolute;
-  width:60px;
-  height:60px;
-  border:6px solid var(--accent);
-  border-radius:50%;
-  animation:spin 1.8s linear infinite;
+.top-icons{
+display:flex;
+gap:15px;
+font-size:14px;
+color:var(--muted);
 }
 
-.infinity::after{
-  left:50px;
-  animation-delay:.9s;
-}
-
-@keyframes spin{
-  0%{transform:rotate(0deg);}
-  100%{transform:rotate(360deg);}
-}
-
-.loader-text{
-  margin-top:20px;
-  letter-spacing:3px;
-  font-weight:600;
-  color:var(--accent);
-}
-
-.fade-out{
-  opacity:0;
-  transition:1s;
-}
-
-/* ================= HEADER ================= */
-
-header{
-  position:fixed;
-  top:0;
-  width:100%;
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backdrop-filter:blur(12px);
-  background:rgba(0,0,0,0.6);
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  z-index:2000;
-}
-
-.logo{
-  font-size:20px;
-  font-weight:800;
-  letter-spacing:3px;
-  color:#fff;
-}
-
-.menu-btn{
-  position:absolute;
-  left:20px;
-  font-size:22px;
-  cursor:pointer;
-}
-
-.theme-btn{
-  position:absolute;
-  right:20px;
-  cursor:pointer;
-}
-
-/* ================= SIDEBAR ================= */
-
-.sidebar{
-  position:fixed;
-  left:-280px;
-  top:0;
-  width:260px;
-  height:100%;
-  background:#050509;
-  padding:90px 25px;
-  transition:.4s;
-  z-index:3000;
-}
-
-.sidebar.active{
-  left:0;
-}
-
-.sidebar a{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:20px 0;
-  cursor:pointer;
-  font-size:16px;
-  color:#fff;
-  opacity:.9;
-}
-
-.sidebar a:hover{
-  color:var(--accent);
-}
-
-/* ================= MAIN ================= */
+/* ===== MAIN ===== */
 
 main{
-  padding:100px 25px 40px;
-  max-width:1200px;
-  margin:auto;
+padding:90px 20px 100px;
+max-width:1200px;
+margin:auto;
 }
 
-.hero{
-  text-align:center;
-  margin-bottom:40px;
+/* ===== BATCH HEADER ===== */
+
+.batch{
+background:var(--card);
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
 }
 
-.hero h1{
-  font-size:36px;
-  margin-bottom:10px;
+.batch small{color:var(--muted);}
+.batch h2{margin-top:5px;font-size:20px;}
+
+/* ===== DASH CARDS ===== */
+
+.quick{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+margin-bottom:20px;
 }
 
-.hero p{
-  color:var(--muted);
-  font-size:16px;
-  max-width:600px;
-  margin:auto;
+.qcard{
+background:var(--card);
+padding:20px;
+border-radius:18px;
+cursor:pointer;
+transition:.3s;
 }
 
-.section-title{
-  margin:30px 0 15px;
-  font-size:22px;
+.qcard:hover{
+transform:translateY(-4px);
+box-shadow:0 0 20px rgba(0,255,255,.2);
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
+/* ===== EVENTS ===== */
+
+.events{
+background:var(--card);
+padding:30px;
+border-radius:20px;
+text-align:center;
+margin-bottom:20px;
 }
 
-.card{
-  background:var(--card);
-  padding:20px;
-  border-radius:18px;
-  cursor:pointer;
-  transition:.3s;
-  text-align:center;
-  border:1px solid rgba(255,255,255,0.05);
+.events h3{margin-bottom:10px;}
+.events p{color:var(--muted);}
+
+/* ===== CONTINUE ===== */
+
+.continue{
+background:var(--soft);
+padding:15px;
+border-radius:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 20px rgba(0,255,255,.2);
+.continue button{
+background:var(--grad);
+border:none;
+padding:8px 16px;
+border-radius:20px;
+color:#fff;
+cursor:pointer;
 }
 
-/* ================= STOPWATCH ================= */
+/* ===== BOTTOM NAV ===== */
 
-.stopwatch{
-  text-align:center;
-  margin-top:30px;
+.bottom{
+position:fixed;
+bottom:0;
+width:100%;
+height:70px;
+background:#0b0b10;
+display:flex;
+justify-content:space-around;
+align-items:center;
+border-top:1px solid rgba(255,255,255,.05);
 }
 
-.time{
-  font-size:40px;
-  margin-bottom:20px;
+.bottom div{
+font-size:13px;
+text-align:center;
+color:var(--muted);
+cursor:pointer;
 }
 
-.stopwatch button{
-  margin:5px;
-  padding:10px 18px;
-  border:none;
-  border-radius:20px;
-  background:var(--gradient);
-  color:#fff;
-  cursor:pointer;
-}
+.bottom div:hover{color:var(--accent);}
 
-/* ================= CALCULATOR ================= */
+/* ===== TOOLS ===== */
+
+.section{margin-top:20px;}
 
 .calculator{
-  max-width:350px;
-  margin:30px auto;
+max-width:350px;
+margin:20px auto;
 }
 
 .display{
-  font-size:34px;
-  text-align:right;
-  padding:15px;
-  border-radius:15px;
-  background:#111;
-  margin-bottom:10px;
+font-size:28px;
+text-align:right;
+padding:15px;
+background:#111;
+border-radius:12px;
+margin-bottom:10px;
 }
 
 .calc-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
 }
 
 .calc-grid button{
-  padding:15px;
-  border:none;
-  border-radius:50%;
-  font-size:18px;
-  cursor:pointer;
-  background:#1a1a1a;
-  color:#fff;
+padding:16px;
+border:none;
+border-radius:50%;
+background:#1a1a22;
+color:#fff;
+font-size:16px;
+cursor:pointer;
 }
 
-.calc-grid button.operator{
-  background:var(--gradient);
+.calc-grid .op{
+background:var(--grad);
 }
 
-.zero{
-  grid-column:span 2;
-  border-radius:30px;
+.stopwatch{text-align:center;margin-top:30px;}
+.stopwatch .time{font-size:28px;margin-bottom:10px;}
+.stopwatch button{
+margin:5px;
+padding:8px 16px;
+border:none;
+border-radius:20px;
+background:var(--grad);
+color:#fff;
+cursor:pointer;
+}
+
+/* ===== PDF ===== */
+
+.pdf iframe{
+width:100%;
+height:500px;
+border:none;
+border-radius:15px;
+margin-top:10px;
 }
 
 </style>
 </head>
-
 <body>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="infinity"></div>
-  <div class="loader-text">∞ rahsays</div>
+<div class="topbar">
+<div class="menu">☰</div>
+<div class="title">rahsays</div>
+<div class="top-icons">
+🎁 3 &nbsp; 🔥 556 &nbsp; 🔔
 </div>
-
-<header>
-  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
-  <div class="logo">rahsays</div>
-  <div class="theme-btn">⚡</div>
-</header>
-
-<div class="sidebar" id="sidebar">
-  <a onclick="showHome()">🏠 Home</a>
-  <a onclick="showClasses()">📚 Classes</a>
-  <a onclick="showExams()">🎯 Exams</a>
-  <a onclick="showTools()">🧮 Tools</a>
-  <a onclick="showLibrary()">📖 Library</a>
 </div>
 
 <main id="content"></main>
 
+<div class="bottom">
+<div onclick="home()">Study</div>
+<div onclick="tools()">Tools</div>
+<div onclick="library()">Library</div>
+<div onclick="home()">Batches</div>
+<div onclick="home()">Test</div>
+</div>
+
 <script>
 
-/* LOADER */
-window.onload=function(){
-  setTimeout(()=>{
-    document.getElementById("loader").classList.add("fade-out");
-    setTimeout(()=>{document.getElementById("loader").style.display="none";},1000);
-  },2500);
-  showHome();
-};
+/* ===== HOME DASHBOARD ===== */
 
-/* SIDEBAR */
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("active");
+function home(){
+content.innerHTML=`
+<div class="batch">
+<small>YOUR BATCH</small>
+<h2>BPSC Current Affairs 2026 Patna Hinglish</h2>
+</div>
+
+<div class="quick">
+<div class="qcard">📘 All Classes</div>
+<div class="qcard">❓ My Doubts</div>
+<div class="qcard">✍️ Mains Practice</div>
+</div>
+
+<div class="events">
+<h3>Upcoming Events (0)</h3>
+<p>No upcoming events. Perfect time to catch up on pending work!</p>
+</div>
+
+<div class="continue">
+<span>Current Affairs: Topic (Hindi)</span>
+<button>Resume</button>
+</div>
+`;
 }
 
-/* HOME */
-function showHome(){
-  content.innerHTML=`
-  <div class="hero">
-    <h1>Building The Best Educational Platform</h1>
-    <p>We are designing the most powerful and minimal learning ecosystem combining premium tools, structured content, and advanced productivity systems.</p>
-  </div>
-  `;
+/* ===== TOOLS ===== */
+
+let exp="0";
+
+function tools(){
+content.innerHTML=`
+<h2>🧮 Tools</h2>
+
+<div class="calculator">
+<div class="display" id="display">0</div>
+<div class="calc-grid">
+<button onclick="clearCalc()">AC</button>
+<button onclick="add('%')">%</button>
+<button class="op" onclick="add('/')">÷</button>
+<button class="op" onclick="add('*')">×</button>
+
+<button onclick="add('7')">7</button>
+<button onclick="add('8')">8</button>
+<button onclick="add('9')">9</button>
+<button class="op" onclick="add('-')">−</button>
+
+<button onclick="add('4')">4</button>
+<button onclick="add('5')">5</button>
+<button onclick="add('6')">6</button>
+<button class="op" onclick="add('+')">+</button>
+
+<button onclick="add('1')">1</button>
+<button onclick="add('2')">2</button>
+<button onclick="add('3')">3</button>
+<button class="op" onclick="calc()">=</button>
+
+<button onclick="add('0')" style="grid-column:span 2;border-radius:30px;">0</button>
+<button onclick="add('.')">.</button>
+</div>
+</div>
+
+<div class="stopwatch">
+<div class="time" id="time">00:00:00</div>
+<button onclick="start()">Start</button>
+<button onclick="stop()">Stop</button>
+<button onclick="reset()">Reset</button>
+</div>
+`;
 }
 
-/* CLASSES */
-function showClasses(){
-  content.innerHTML=`
-  <h2 class="section-title">📚 Classes</h2>
-  <div class="grid">
-  ${["Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12"]
-    .map(c=>`<div class="card">${c}</div>`).join("")}
-  </div>`;
+/* ===== LIBRARY ===== */
+
+function library(){
+content.innerHTML=`
+<h2>📖 PDF Library</h2>
+<div class="pdf">
+<input type="file" accept="application/pdf" onchange="loadPDF(event)">
+<iframe id="pdfFrame"></iframe>
+</div>
+`;
 }
 
-/* EXAMS */
-function showExams(){
-  content.innerHTML=`
-  <h2 class="section-title">🎯 Competitive Exams</h2>
-  <div class="grid">
-  ${["IIT / JEE","NEET","UPSC","SSC","BPSC","State PCS"]
-    .map(e=>`<div class="card">${e}</div>`).join("")}
-  </div>`;
+/* ===== CALC ===== */
+
+function add(v){exp=exp==="0"?v:exp+v;display.innerText=exp;}
+function clearCalc(){exp="0";display.innerText=exp;}
+function calc(){try{exp=Function("return "+exp)().toString();display.innerText=exp;}catch{display.innerText="Error";}}
+
+/* ===== STOPWATCH ===== */
+
+let timer,ms=0;
+function start(){timer=setInterval(()=>{ms++;update();},10);}
+function stop(){clearInterval(timer);}
+function reset(){ms=0;update();}
+function update(){
+let total=Math.floor(ms/100);
+let h=Math.floor(total/3600);
+let m=Math.floor((total%3600)/60);
+let s=total%60;
+time.innerText=
+String(h).padStart(2,'0')+":"+
+String(m).padStart(2,'0')+":"+
+String(s).padStart(2,'0');
 }
 
-/* TOOLS */
-function showTools(){
-  content.innerHTML=`
-  <h2 class="section-title">🧮 Tools</h2>
+/* ===== PDF ===== */
 
-  <div class="calculator">
-    <div class="display" id="display">0</div>
-    <div class="calc-grid">
-      <button onclick="clearCalc()">AC</button>
-      <button onclick="append('%')">%</button>
-      <button class="operator" onclick="append('/')">÷</button>
-      <button class="operator" onclick="append('*')">×</button>
-
-      <button onclick="append('7')">7</button>
-      <button onclick="append('8')">8</button>
-      <button onclick="append('9')">9</button>
-      <button class="operator" onclick="append('-')">−</button>
-
-      <button onclick="append('4')">4</button>
-      <button onclick="append('5')">5</button>
-      <button onclick="append('6')">6</button>
-      <button class="operator" onclick="append('+')">+</button>
-
-      <button onclick="append('1')">1</button>
-      <button onclick="append('2')">2</button>
-      <button onclick="append('3')">3</button>
-      <button class="operator" onclick="calculate()">=</button>
-
-      <button class="zero" onclick="append('0')">0</button>
-      <button onclick="append('.')">.</button>
-    </div>
-  </div>
-
-  <div class="stopwatch">
-    <div class="time" id="time">00:00:00</div>
-    <button onclick="start()">Start</button>
-    <button onclick="stop()">Stop</button>
-    <button onclick="reset()">Reset</button>
-  </div>
-  `;
+function loadPDF(e){
+const file=e.target.files[0];
+const reader=new FileReader();
+reader.onload=function(){pdfFrame.src=reader.result;}
+reader.readAsDataURL(file);
 }
 
-/* LIBRARY */
-function showLibrary(){
-  content.innerHTML=`
-  <h2 class="section-title">📖 Library</h2>
-  <div class="card">Premium Study Material Coming Soon</div>`;
-}
-
-/* CALCULATOR */
-let value="0";
-function append(v){ value=value==="0"?v:value+v; display.innerText=value; }
-function clearCalc(){ value="0"; display.innerText=value; }
-function calculate(){ try{ value=eval(value).toString(); display.innerText=value;}catch{display.innerText="Error";} }
-
-/* STOPWATCH */
-let timer,seconds=0;
-function start(){ timer=setInterval(()=>{seconds++;updateTime();},1000); }
-function stop(){ clearInterval(timer); }
-function reset(){ seconds=0;updateTime(); }
-function updateTime(){
-  let h=Math.floor(seconds/3600);
-  let m=Math.floor((seconds%3600)/60);
-  let s=seconds%60;
-  time.innerText=
-  String(h).padStart(2,'0')+":"+
-  String(m).padStart(2,'0')+":"+
-  String(s).padStart(2,'0');
-}
+/* INITIAL LOAD */
+home();
 
 </script>
-
 </body>
 </html>
