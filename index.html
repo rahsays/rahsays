@@ -3,242 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rahsays</title>
+<title>rahsays Calculator</title>
 
 <style>
 :root{
-  --bg:#111;
-  --card:#1c1c1c;
-  --text:#fff;
-  --accent:#00c6ff;
-}
-body{
-  margin:0;
-  font-family:system-ui;
-  background:var(--bg);
-  color:var(--text);
-  transition:0.3s;
-}
-.light{
-  --bg:#f5f5f5;
-  --card:#fff;
-  --text:#111;
-}
-.amoled{
   --bg:#000;
-  --card:#111;
+  --display:#fff;
+  --btn:#1c1c1c;
+  --btn-gray:#a5a5a5;
+  --btn-orange:#ff9500;
+  --radius:50%;
+  --transition:120ms cubic-bezier(.4,0,.2,1);
 }
-header{
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  height:100vh;
   display:flex;
+  justify-content:center;
   align-items:center;
-  justify-content:space-between;
-  padding:15px 20px;
-  border-bottom:1px solid #222;
 }
-.logo{
-  font-size:22px;
-  font-weight:bold;
-  letter-spacing:2px;
-}
-.menu-btn{
-  font-size:22px;
-  cursor:pointer;
-}
-.toggle{
-  cursor:pointer;
-}
-.sidebar{
-  position:fixed;
-  top:0;
-  left:-250px;
-  width:220px;
-  height:100%;
-  background:var(--card);
-  padding:20px;
-  transition:0.3s;
-  z-index:10;
-}
-.sidebar a{
-  display:block;
-  padding:10px 0;
-  text-decoration:none;
-  color:var(--text);
-  cursor:pointer;
-}
-.sidebar.open{
-  left:0;
-}
-.overlay{
-  position:fixed;
+
+.calculator{
   width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  z-index:5;
+  max-width:420px;
+  padding:20px;
 }
-.overlay.show{
-  display:block;
+
+.display{
+  color:var(--display);
+  font-size:64px;
+  text-align:right;
+  padding:20px 10px;
+  min-height:90px;
+  overflow-x:auto;
+  white-space:nowrap;
 }
-.section{
-  padding:30px 20px;
-  display:none;
-}
-.section.active{
-  display:block;
-}
-.grid{
+
+.buttons{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
 }
-.card{
-  background:var(--card);
-  padding:20px;
-  text-align:center;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.2s;
-}
-.card:hover{
-  transform:scale(1.05);
-}
-.btn{
-  padding:10px 20px;
+
+button{
+  height:75px;
   border:none;
-  border-radius:8px;
-  background:var(--accent);
-  color:#000;
+  border-radius:var(--radius);
+  font-size:28px;
+  background:var(--btn);
+  color:white;
   cursor:pointer;
+  transition:var(--transition);
 }
-input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:8px;
-  border:none;
+
+button:active{
+  transform:scale(0.9);
+  filter:brightness(1.2);
 }
-.back{
-  margin-bottom:15px;
-  cursor:pointer;
-  display:inline-block;
+
+.gray{
+  background:var(--btn-gray);
+  color:black;
 }
-iframe{
-  width:100%;
-  height:70vh;
-  border:none;
+
+.orange{
+  background:var(--btn-orange);
 }
-footer{
-  text-align:center;
-  padding:20px;
-  opacity:0.7;
+
+.zero{
+  grid-column:span 2;
+  border-radius:40px;
+  text-align:left;
+  padding-left:30px;
+}
+
+/* Tablet scaling */
+@media(min-width:768px){
+  .calculator{
+    max-width:500px;
+  }
+  button{
+    height:85px;
+    font-size:30px;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<header>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  <div class="logo">rahsays</div>
-  <div class="toggle" onclick="toggleTheme()">Mode</div>
-</header>
+<div class="calculator">
+  <div class="display" id="display">0</div>
 
-<div class="sidebar" id="sidebar">
-  <a onclick="goHome()">Home</a>
-  <a onclick="openSection('classes')">Classes</a>
-  <a onclick="openSection('exams')">Exams</a>
-  <a onclick="openSection('calculator')">Calculator</a>
-  <a onclick="openSection('pdf')">PDF Viewer</a>
-  <a href="https://t.me/6202016384" target="_blank">Telegram</a>
-</div>
+  <div class="buttons" id="buttons">
+    <button class="gray" data-action="clear">AC</button>
+    <button class="gray" data-action="sign">±</button>
+    <button class="gray" data-action="percent">%</button>
+    <button class="orange" data-operator="/">÷</button>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <button data-number="7">7</button>
+    <button data-number="8">8</button>
+    <button data-number="9">9</button>
+    <button class="orange" data-operator="*">×</button>
 
-<!-- HOME -->
-<div class="section active" id="home">
-  <h2>Education Platform</h2>
-  <p>Minimal. Professional. Fast.</p>
-</div>
+    <button data-number="4">4</button>
+    <button data-number="5">5</button>
+    <button data-number="6">6</button>
+    <button class="orange" data-operator="-">−</button>
 
-<!-- CLASSES -->
-<div class="section" id="classes">
-  <div class="back" onclick="goHome()">← Back</div>
-  <h3>School Classes</h3>
-  <div class="grid">
-    <div class="card">Class 6</div>
-    <div class="card">Class 7</div>
-    <div class="card">Class 8</div>
-    <div class="card">Class 9</div>
-    <div class="card">Class 10</div>
-    <div class="card">Class 11</div>
-    <div class="card">Class 12</div>
+    <button data-number="1">1</button>
+    <button data-number="2">2</button>
+    <button data-number="3">3</button>
+    <button class="orange" data-operator="+">+</button>
+
+    <button class="zero" data-number="0">0</button>
+    <button data-number=".">.</button>
+    <button class="orange" data-action="equals">=</button>
   </div>
 </div>
-
-<!-- EXAMS -->
-<div class="section" id="exams">
-  <div class="back" onclick="goHome()">← Back</div>
-  <h3>Competitive Exams</h3>
-  <div class="grid">
-    <div class="card">IIT / JEE</div>
-    <div class="card">NEET</div>
-    <div class="card">UPSC</div>
-    <div class="card">SSC</div>
-    <div class="card">BPSC</div>
-    <div class="card">State PCS</div>
-  </div>
-</div>
-
-<!-- CALCULATOR -->
-<div class="section" id="calculator">
-  <div class="back" onclick="goHome()">← Back</div>
-  <h3>Advanced Calculator</h3>
-  <input type="text" id="calcInput" placeholder="Enter calculation">
-  <button class="btn" onclick="calculate()">Calculate</button>
-  <h2 id="calcResult"></h2>
-</div>
-
-<!-- PDF VIEWER -->
-<div class="section" id="pdf">
-  <div class="back" onclick="goHome()">← Back</div>
-  <h3>PDF Viewer</h3>
-  <iframe src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
-</div>
-
-<footer>
-© 2026 rahsays
-</footer>
 
 <script>
-function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("open");
-  document.getElementById("overlay").classList.toggle("show");
-}
-function openSection(id){
-  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  toggleMenu();
-}
-function goHome(){
-  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-  document.getElementById("home").classList.add("active");
-}
-function toggleTheme(){
-  if(document.body.classList.contains("light")){
-    document.body.classList.remove("light");
-    document.body.classList.add("amoled");
-  } else if(document.body.classList.contains("amoled")){
-    document.body.classList.remove("amoled");
-  } else{
-    document.body.classList.add("light");
+class Calculator {
+  constructor(displayElement){
+    this.displayElement = displayElement
+    this.reset()
+  }
+
+  reset(){
+    this.current = "0"
+    this.previous = null
+    this.operator = null
+    this.shouldResetScreen = false
+    this.updateDisplay()
+  }
+
+  updateDisplay(){
+    this.displayElement.textContent = this.current
+  }
+
+  appendNumber(number){
+    if(this.shouldResetScreen){
+      this.current = number === "." ? "0." : number
+      this.shouldResetScreen = false
+    } else {
+      if(number === "." && this.current.includes(".")) return
+      this.current = this.current === "0" && number !== "." ? number : this.current + number
+    }
+    this.updateDisplay()
+  }
+
+  chooseOperator(operator){
+    if(this.operator !== null) this.compute()
+    this.previous = parseFloat(this.current)
+    this.operator = operator
+    this.shouldResetScreen = true
+  }
+
+  compute(){
+    if(this.operator === null || this.previous === null) return
+
+    const currentValue = parseFloat(this.current)
+    let result
+
+    switch(this.operator){
+      case "+": result = this.previous + currentValue; break
+      case "-": result = this.previous - currentValue; break
+      case "*": result = this.previous * currentValue; break
+      case "/": result = this.previous / currentValue; break
+    }
+
+    this.current = this.format(result)
+    this.operator = null
+    this.previous = null
+    this.shouldResetScreen = true
+    this.updateDisplay()
+  }
+
+  format(number){
+    if(!isFinite(number)) return "Error"
+    return parseFloat(number.toPrecision(12)).toString()
+  }
+
+  toggleSign(){
+    this.current = (parseFloat(this.current) * -1).toString()
+    this.updateDisplay()
+  }
+
+  percent(){
+    this.current = (parseFloat(this.current) / 100).toString()
+    this.updateDisplay()
   }
 }
-function calculate(){
-  try{
-    document.getElementById("calcResult").innerText = eval(document.getElementById("calcInput").value);
-  }catch{
-    document.getElementById("calcResult").innerText="Invalid Expression";
+
+const calculator = new Calculator(document.getElementById("display"))
+const buttons = document.getElementById("buttons")
+
+buttons.addEventListener("click", e=>{
+  const target = e.target
+  if(!target.matches("button")) return
+
+  if(target.dataset.number){
+    calculator.appendNumber(target.dataset.number)
   }
-}
+
+  if(target.dataset.operator){
+    calculator.chooseOperator(target.dataset.operator)
+  }
+
+  if(target.dataset.action){
+    switch(target.dataset.action){
+      case "clear": calculator.reset(); break
+      case "sign": calculator.toggleSign(); break
+      case "percent": calculator.percent(); break
+      case "equals": calculator.compute(); break
+    }
+  }
+})
+
+/* Keyboard Support */
+document.addEventListener("keydown", e=>{
+  if(!isNaN(e.key) || e.key === ".") calculator.appendNumber(e.key)
+  if(["+","-","*","/"].includes(e.key)) calculator.chooseOperator(e.key)
+  if(e.key === "Enter") calculator.compute()
+  if(e.key === "Backspace") calculator.reset()
+})
 </script>
 
 </body>
