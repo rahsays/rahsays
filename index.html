@@ -7,18 +7,38 @@
 
 <style>
 
-/* ================= GLOBAL ================= */
+/* ================= ROOT THEME ================= */
+
+:root{
+--bg:#000;
+--card:#1a1a1a;
+--text:#fff;
+--muted:#888;
+--yellow:#ffcc00;
+}
+
+.light{
+--bg:#ffffff;
+--card:#f1f1f1;
+--text:#111;
+--muted:#666;
+--yellow:#ffb800;
+}
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;}
-body{background:#000;color:#fff;overflow-x:hidden;}
-button{border:none;cursor:pointer}
+
+body{
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+transition:0.3s ease;
+}
 
 /* ================= INFINITY LOADER ================= */
 
 #loader{
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
 background:#000;
 display:flex;
 align-items:center;
@@ -26,7 +46,9 @@ justify-content:center;
 z-index:9999;
 }
 
-.infinity-svg{width:320px;}
+.infinity-svg{
+width:320px;
+}
 
 #infinityPath{
 stroke-dasharray:1000;
@@ -48,23 +70,42 @@ align-items:center;
 padding:18px 25px;
 position:fixed;
 width:100%;
-background:#000;
+background:var(--bg);
 z-index:100;
+border-bottom:1px solid var(--card);
 }
 
-.logo{font-size:22px;letter-spacing:6px;font-weight:600;}
+.logo{
+font-size:20px;
+letter-spacing:6px;
+font-weight:600;
+}
 
-.menu-btn{font-size:26px;background:none;color:#fff}
+.menu-btn{
+font-size:24px;
+background:none;
+color:var(--text);
+border:none;
+cursor:pointer;
+}
+
+.theme-toggle{
+cursor:pointer;
+font-size:18px;
+background:none;
+border:none;
+color:var(--text);
+}
 
 /* ================= SIDEBAR ================= */
 
 .sidebar{
 position:fixed;
 top:0;
-left:-300px;
+left:-260px;
 width:260px;
 height:100%;
-background:#111;
+background:var(--card);
 padding-top:80px;
 transition:0.4s;
 z-index:200;
@@ -75,20 +116,30 @@ z-index:200;
 .sidebar a{
 display:block;
 padding:18px 30px;
-color:#fff;
+color:var(--text);
 text-decoration:none;
 font-size:17px;
 transition:0.3s;
+cursor:pointer;
 }
 
-.sidebar a:hover{background:#222;}
+.sidebar a:hover{background:rgba(0,0,0,0.1);}
 
 /* ================= SECTIONS ================= */
 
-section{padding:120px 20px;min-height:100vh;display:none;}
+section{
+padding:120px 20px;
+min-height:100vh;
+display:none;
+}
+
 section.active{display:block;}
 
-.title{text-align:center;font-size:32px;margin-bottom:40px;}
+.title{
+text-align:center;
+font-size:30px;
+margin-bottom:40px;
+}
 
 .grid{
 display:grid;
@@ -97,7 +148,7 @@ gap:20px;
 }
 
 .card{
-background:#1a1a1a;
+background:var(--card);
 padding:25px;
 border-radius:16px;
 text-align:center;
@@ -112,13 +163,14 @@ margin:auto;
 }
 
 .calc-display{
-background:#000;
+background:var(--bg);
 font-size:48px;
 text-align:right;
 padding:25px;
 border-radius:12px;
 margin-bottom:20px;
 overflow:hidden;
+border:1px solid var(--card);
 }
 
 .calc-grid{
@@ -130,14 +182,16 @@ gap:12px;
 .calc-btn{
 padding:22px;
 border-radius:50px;
-background:#222;
-color:#fff;
-font-size:22px;
+background:var(--card);
+color:var(--text);
+font-size:20px;
 }
 
-.yellow{background:#ffcc00;color:#000;font-weight:bold;}
-.gray{background:#555;}
-.wide{grid-column:span 2;}
+.yellow{
+background:var(--yellow);
+color:#000;
+font-weight:bold;
+}
 
 /* ================= STOPWATCH ================= */
 
@@ -151,13 +205,18 @@ margin-bottom:25px;
 padding:14px 30px;
 border-radius:30px;
 margin:10px;
-background:#222;
-color:#fff;
+background:var(--card);
+color:var(--text);
 }
 
 /* ================= PDF ================= */
 
-iframe{width:100%;height:80vh;border:none;border-radius:12px;}
+iframe{
+width:100%;
+height:80vh;
+border:none;
+border-radius:12px;
+}
 
 </style>
 </head>
@@ -181,7 +240,7 @@ stroke-linecap="round"/>
 <header>
 <button class="menu-btn" onclick="toggleSidebar()">☰</button>
 <div class="logo">rahsays</div>
-<div></div>
+<button class="theme-toggle" onclick="toggleTheme()">◐</button>
 </header>
 
 <!-- ================= SIDEBAR ================= -->
@@ -228,25 +287,25 @@ stroke-linecap="round"/>
 <div class="calc-grid">
 <button class="calc-btn yellow" onclick="clearDisplay()">AC</button>
 <button class="calc-btn yellow" onclick="backspace()">⌫</button>
-<button class="calc-btn gray" onclick="append('%')">%</button>
-<button class="calc-btn gray" onclick="append('/')">÷</button>
+<button class="calc-btn" onclick="append('%')">%</button>
+<button class="calc-btn" onclick="append('/')">÷</button>
 
 <button class="calc-btn" onclick="append('7')">7</button>
 <button class="calc-btn" onclick="append('8')">8</button>
 <button class="calc-btn" onclick="append('9')">9</button>
-<button class="calc-btn gray" onclick="append('*')">×</button>
+<button class="calc-btn" onclick="append('*')">×</button>
 
 <button class="calc-btn" onclick="append('4')">4</button>
 <button class="calc-btn" onclick="append('5')">5</button>
 <button class="calc-btn" onclick="append('6')">6</button>
-<button class="calc-btn gray" onclick="append('-')">−</button>
+<button class="calc-btn" onclick="append('-')">−</button>
 
 <button class="calc-btn" onclick="append('1')">1</button>
 <button class="calc-btn" onclick="append('2')">2</button>
 <button class="calc-btn" onclick="append('3')">3</button>
-<button class="calc-btn gray" onclick="append('+')">+</button>
+<button class="calc-btn" onclick="append('+')">+</button>
 
-<button class="calc-btn wide" onclick="append('0')">0</button>
+<button class="calc-btn" onclick="append('0')">0</button>
 <button class="calc-btn" onclick="append('.')">.</button>
 <button class="calc-btn yellow" onclick="calculate()">=</button>
 </div>
@@ -276,7 +335,7 @@ stroke-linecap="round"/>
 
 setTimeout(()=>{
 document.getElementById("loader").style.display="none";
-if(navigator.vibrate){navigator.vibrate(100);}
+if(navigator.vibrate) navigator.vibrate(120);
 },2500);
 
 /* ================= SIDEBAR ================= */
@@ -289,6 +348,12 @@ function openSection(id){
 document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 document.getElementById("sidebar").classList.remove("active");
+}
+
+/* ================= THEME TOGGLE ================= */
+
+function toggleTheme(){
+document.body.classList.toggle("light");
 }
 
 /* ================= CALCULATOR ================= */
