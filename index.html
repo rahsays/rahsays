@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rahsays</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,sans-serif;}
+body{background:#000;color:#fff;}
+header{padding:20px;text-align:center;font-size:22px;letter-spacing:3px;border-bottom:1px solid #111;}
+nav{display:flex;justify-content:center;gap:20px;padding:15px;border-bottom:1px solid #111;}
+nav a{color:#aaa;text-decoration:none;font-size:14px;cursor:pointer;}
+nav a:hover{color:#fff;}
+.hero{text-align:center;padding:50px 20px;}
+.search{padding:10px;width:80%;max-width:400px;border-radius:25px;border:none;background:#111;color:#fff;margin-top:15px;}
+.section{padding:40px 20px;text-align:center;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:20px;}
+.card{background:#111;padding:20px;border-radius:12px;border:1px solid #222;}
+.btn{display:inline-block;padding:10px 25px;border:1px solid #fff;border-radius:25px;color:#fff;background:none;margin-top:10px;cursor:pointer;}
+.btn:hover{background:#fff;color:#000;}
+footer{text-align:center;padding:20px;font-size:13px;color:#555;border-top:1px solid #111;margin-top:40px;}
+.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;padding:25px;border-radius:15px;border:1px solid #333;display:none;z-index:1000;}
+.popup input{display:block;margin:10px 0;padding:8px;width:200px;background:#000;border:1px solid #333;color:#fff;}
+.overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.8);top:0;left:0;display:none;z-index:999;}
+</style>
+</head>
+
+<body>
+
+<header>rahsays</header>
+
+<nav>
+<a onclick="location.reload()">Home</a>
+<a onclick="showLogin()">Login</a>
+</nav>
+
+<section class="hero">
+<h2>Education Platform</h2>
+<input type="text" class="search" placeholder="Search..." onkeyup="searchFunction(this.value)">
+</section>
+
+<footer>© 2026 rahsays</footer>
+
+<div class="overlay" onclick="closePopup()"></div>
+
+<div class="popup" id="loginPopup">
+<h3>Login / Signup</h3>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button class="btn" onclick="signup()">Signup</button>
+<button class="btn" onclick="login()">Login</button>
+</div>
+
+<!-- 🔥 FIREBASE MODULE VERSION (Corrected) -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD3euxtGl2YO-Blp0jkXCT7PY_OnRlQzSg",
+  authDomain: "rahsays.firebaseapp.com",
+  projectId: "rahsays",
+  storageBucket: "rahsays.firebasestorage.app",
+  messagingSenderId: "54710758290",
+  appId: "1:54710758290:web:1f8d4d298c049f11316f4b",
+  measurementId: "G-PSY28MW1D3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.signup = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Signup Successful!");
+      closePopup();
+    })
+    .catch((error) => alert(error.message));
+}
+
+window.login = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Login Successful!");
+      closePopup();
+    })
+    .catch((error) => alert(error.message));
+}
+
+window.showLogin = function(){
+document.querySelector('.overlay').style.display="block";
+document.getElementById('loginPopup').style.display="block";
+}
+
+window.closePopup = function(){
+document.querySelector('.overlay').style.display="none";
+document.getElementById('loginPopup').style.display="none";
+}
+
+window.searchFunction = function(value){
+let cards=document.querySelectorAll(".card");
+value=value.toLowerCase();
+cards.forEach(card=>{
+card.style.display = card.innerText.toLowerCase().includes(value) ? "block" : "none";
+});
+}
+
+</script>
+
+</body>
+</html>
