@@ -7,26 +7,26 @@
 
 <style>
 
-/* ===============================
-   ROOT VARIABLES
-================================*/
+/* =========================================================
+   ROOT SYSTEM
+=========================================================*/
 :root{
   --bg:#000000;
   --card:#111111;
-  --soft:#1c1c1c;
+  --soft:#1a1a1a;
   --text:#ffffff;
   --muted:#9a9a9a;
   --accent:#ffcc00;
-  --border-glow:rgba(255,255,255,0.5);
+  --glow:rgba(255,255,255,0.5);
 }
 
 body.light{
-  --bg:#f5f5f5;
+  --bg:#f4f4f4;
   --card:#ffffff;
   --soft:#eaeaea;
   --text:#000000;
-  --muted:#555555;
-  --border-glow:rgba(0,0,0,0.2);
+  --muted:#555;
+  --glow:rgba(0,0,0,0.2);
 }
 
 *{
@@ -40,12 +40,12 @@ body{
   background:var(--bg);
   color:var(--text);
   overflow-x:hidden;
-  transition:0.3s;
+  transition:0.4s ease;
 }
 
-/* ===============================
-   INTRO INFINITY
-================================*/
+/* =========================================================
+   INTRO INFINITY (THICK + CURVED + SMOOTH DRAW)
+=========================================================*/
 #intro{
   position:fixed;
   width:100%;
@@ -58,86 +58,86 @@ body{
 }
 
 .infinity{
-  width:600px;
-  height:300px;
+  width:500px;
+  height:250px;
 }
 
 .infinity path{
   fill:none;
   stroke:white;
-  stroke-width:38;
+  stroke-width:40;
   stroke-linecap:round;
   stroke-linejoin:round;
-  filter: drop-shadow(0 0 20px rgba(255,255,255,0.8))
-          drop-shadow(0 0 40px rgba(255,255,255,0.6));
-  stroke-dasharray:2200;
-  stroke-dashoffset:2200;
-  animation:drawInfinity 3s ease forwards;
+  stroke-dasharray:1800;
+  stroke-dashoffset:1800;
+  filter:drop-shadow(0 0 25px white);
+  animation:drawInfinity 3.2s cubic-bezier(.4,.0,.2,1) forwards;
 }
 
 @keyframes drawInfinity{
   to{ stroke-dashoffset:0; }
 }
 
-/* ===============================
+/* =========================================================
    HEADER
-================================*/
+=========================================================*/
 header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:20px;
+  padding:20px 25px;
 }
 
 .menu-btn{
-  font-size:28px;
+  font-size:30px;
   cursor:pointer;
 }
 
 .logo{
-  font-size:22px;
-  letter-spacing:4px;
-  font-weight:bold;
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:5px;
 }
 
 .toggle{
-  width:60px;
-  height:32px;
+  width:80px;
+  height:38px;
   background:var(--soft);
   border-radius:50px;
   position:relative;
   cursor:pointer;
+  transition:0.3s;
 }
 
 .toggle::before{
   content:"";
   position:absolute;
-  width:26px;
-  height:26px;
-  background:white;
+  width:32px;
+  height:32px;
   border-radius:50%;
+  background:white;
   top:3px;
   left:4px;
   transition:0.3s;
 }
 
 body.light .toggle::before{
-  transform:translateX(28px);
+  transform:translateX(40px);
 }
 
-/* ===============================
+/* =========================================================
    SIDEBAR
-================================*/
+=========================================================*/
 .sidebar{
   position:fixed;
-  left:-260px;
+  left:-280px;
   top:0;
-  width:260px;
+  width:280px;
   height:100%;
-  background:var(--card);
-  padding-top:80px;
+  background:linear-gradient(180deg,#0a0a0a,#111);
+  padding-top:90px;
   transition:0.4s;
-  z-index:999;
+  z-index:1000;
 }
 
 .sidebar.active{
@@ -146,7 +146,7 @@ body.light .toggle::before{
 
 .sidebar a{
   display:block;
-  padding:18px 30px;
+  padding:18px 35px;
   font-size:18px;
   text-decoration:none;
   color:var(--text);
@@ -155,62 +155,65 @@ body.light .toggle::before{
 
 .sidebar a:hover{
   background:var(--soft);
+  box-shadow:inset 0 0 10px var(--glow);
 }
 
-/* ===============================
+/* =========================================================
    SECTIONS
-================================*/
+=========================================================*/
 .section{
-  padding:40px 20px;
+  padding:50px 25px;
 }
 
 .section h2{
-  margin-bottom:20px;
+  margin-bottom:25px;
+  font-size:28px;
+  letter-spacing:1px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:18px;
 }
 
 .card{
   background:var(--card);
-  padding:25px;
+  padding:28px;
   text-align:center;
-  border-radius:18px;
-  border:2px solid var(--border-glow);
-  box-shadow:0 0 10px var(--border-glow);
-  transition:0.3s;
+  border-radius:20px;
+  border:2px solid rgba(255,255,255,0.08);
+  transition:0.3s ease;
   cursor:pointer;
 }
 
 .card:hover{
-  box-shadow:0 0 20px var(--border-glow);
+  border:2px solid var(--glow);
+  box-shadow:0 0 20px var(--glow);
 }
 
-/* ===============================
+/* =========================================================
    CALCULATOR
-================================*/
+=========================================================*/
 #calculator{
   display:none;
-  padding:20px;
+  padding:30px;
 }
 
 .calc-display{
   width:100%;
-  font-size:48px;
+  font-size:54px;
   text-align:right;
-  padding:20px;
+  padding:25px;
   background:var(--card);
-  border-radius:12px;
-  margin-bottom:20px;
+  border-radius:18px;
+  margin-bottom:25px;
 }
 
 .calc-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:12px;
+  gap:14px;
 }
 
 .calc-btn{
@@ -221,44 +224,65 @@ body.light .toggle::before{
   background:var(--soft);
   color:var(--text);
   cursor:pointer;
+  transition:0.2s;
+}
+
+.calc-btn:hover{
+  box-shadow:0 0 15px var(--glow);
 }
 
 .yellow{
   background:var(--accent);
-  color:#000;
+  color:black;
   font-weight:bold;
 }
 
-/* ===============================
+/* Scientific buttons (auto landscape) */
+@media (orientation:landscape){
+  .scientific{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:20px;
+  }
+}
+
+/* =========================================================
    STOPWATCH
-================================*/
+=========================================================*/
 #stopwatch{
   display:none;
-  padding:20px;
+  padding:30px;
   text-align:center;
 }
 
 .time{
-  font-size:110px;
-  margin:40px 0;
+  font-size:120px;
+  font-weight:600;
+  margin:50px 0;
 }
 
 .sw-buttons button{
   padding:18px 40px;
-  margin:10px;
-  border-radius:30px;
-  border:2px solid var(--border-glow);
+  margin:15px;
+  border-radius:40px;
+  border:2px solid var(--glow);
   background:transparent;
   color:var(--text);
   font-size:20px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-/* ===============================
+.sw-buttons button:hover{
+  box-shadow:0 0 15px var(--glow);
+}
+
+/* =========================================================
    FOOTER
-================================*/
+=========================================================*/
 footer{
-  padding:20px;
+  padding:25px;
   text-align:center;
   color:var(--muted);
 }
@@ -269,28 +293,28 @@ footer{
 
 <!-- INTRO -->
 <div id="intro">
-<svg class="infinity" viewBox="0 0 800 400">
+<svg class="infinity" viewBox="0 0 600 300">
   <path d="
-    M 150 200
-    C 150 80, 350 80, 400 200
-    C 450 320, 650 320, 650 200
-    C 650 80, 450 80, 400 200
-    C 350 320, 150 320, 150 200
+    M150 150
+    C150 20, 300 20, 300 150
+    C300 280, 450 280, 450 150
+    C450 20, 300 20, 300 150
+    C300 280, 150 280, 150 150
   "/>
 </svg>
 </div>
 
 <header>
-<div class="menu-btn" onclick="openMenu()">☰</div>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 <div class="logo">QUANT</div>
 <div class="toggle" onclick="toggleTheme()"></div>
 </header>
 
 <div class="sidebar" id="sidebar">
-<a href="#" onclick="showHome()">🏠 Home</a>
-<a href="#" onclick="showCalc()">🧮 Calculator</a>
-<a href="#" onclick="showStopwatch()">⏱ Stopwatch</a>
-<a href="#">📚 Library</a>
+<a onclick="showHome()">🏠 Home</a>
+<a onclick="showCalc()">🧮 Calculator</a>
+<a onclick="showStopwatch()">⏱ Stopwatch</a>
+<a onclick="showLibrary()">📚 Library</a>
 </div>
 
 <!-- HOME -->
@@ -323,26 +347,136 @@ footer{
 
 </div>
 
+<!-- CALCULATOR -->
+<div id="calculator">
+<div class="calc-display" id="display">0</div>
+<div class="calc-grid">
+<button class="calc-btn yellow" onclick="clearDisplay()">AC</button>
+<button class="calc-btn yellow" onclick="backspace()">⌫</button>
+<button class="calc-btn yellow" onclick="append('%')">%</button>
+<button class="calc-btn yellow" onclick="append('/')">÷</button>
+
+<button class="calc-btn" onclick="append('7')">7</button>
+<button class="calc-btn" onclick="append('8')">8</button>
+<button class="calc-btn" onclick="append('9')">9</button>
+<button class="calc-btn yellow" onclick="append('*')">×</button>
+
+<button class="calc-btn" onclick="append('4')">4</button>
+<button class="calc-btn" onclick="append('5')">5</button>
+<button class="calc-btn" onclick="append('6')">6</button>
+<button class="calc-btn yellow" onclick="append('-')">−</button>
+
+<button class="calc-btn" onclick="append('1')">1</button>
+<button class="calc-btn" onclick="append('2')">2</button>
+<button class="calc-btn" onclick="append('3')">3</button>
+<button class="calc-btn yellow" onclick="append('+')">+</button>
+
+<button class="calc-btn" onclick="append('0')">0</button>
+<button class="calc-btn" onclick="append('.')">.</button>
+<button class="calc-btn yellow" style="grid-column: span 2;" onclick="calculate()">=</button>
+</div>
+
+<!-- Scientific Auto Landscape -->
+<div class="scientific">
+<button class="calc-btn" onclick="append('Math.sin(')">sin</button>
+<button class="calc-btn" onclick="append('Math.cos(')">cos</button>
+<button class="calc-btn" onclick="append('Math.tan(')">tan</button>
+<button class="calc-btn" onclick="append('Math.sqrt(')">√</button>
+</div>
+
+</div>
+
+<!-- STOPWATCH -->
+<div id="stopwatch">
+<div class="time" id="time">00:00:00</div>
+<div class="sw-buttons">
+<button onclick="startSW()">Start</button>
+<button onclick="stopSW()">Stop</button>
+<button onclick="resetSW()">Reset</button>
+</div>
+</div>
+
 <footer>
-© 2026 QUANT — Elite Educational Platform
+© 2026 Quant — Elite Educational Platform
 </footer>
 
 <script>
-window.onload = function(){
-  setTimeout(()=>{
-    document.getElementById("intro").style.display="none";
-    if(navigator.vibrate) navigator.vibrate(100);
-  },3000);
+
+/* INTRO */
+window.onload=function(){
+setTimeout(()=>{
+document.getElementById("intro").style.display="none";
+if(navigator.vibrate) navigator.vibrate(120);
+},3200);
 };
 
-function openMenu(){
-  document.getElementById("sidebar").classList.toggle("active");
+/* MENU */
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("active");
 }
 
+/* THEME */
 function toggleTheme(){
-  document.body.classList.toggle("light");
+document.body.classList.toggle("light");
 }
-</script>
 
+/* NAV */
+function showHome(){
+home.style.display="block";
+calculator.style.display="none";
+stopwatch.style.display="none";
+sidebar.classList.remove("active");
+}
+
+function showCalc(){
+home.style.display="none";
+calculator.style.display="block";
+stopwatch.style.display="none";
+sidebar.classList.remove("active");
+}
+
+function showStopwatch(){
+home.style.display="none";
+calculator.style.display="none";
+stopwatch.style.display="block";
+sidebar.classList.remove("active");
+}
+
+/* CALCULATOR */
+let display=document.getElementById("display");
+function append(v){
+if(display.innerText==="0") display.innerText="";
+display.innerText+=v;
+}
+function clearDisplay(){display.innerText="0";}
+function backspace(){
+display.innerText=display.innerText.slice(0,-1);
+if(display.innerText==="") display.innerText="0";
+}
+function calculate(){
+try{display.innerText=eval(display.innerText);}
+catch{display.innerText="Error";}
+}
+
+/* STOPWATCH */
+let swInterval;
+let seconds=0;
+function startSW(){
+if(!swInterval){
+swInterval=setInterval(()=>{
+seconds++;
+let h=Math.floor(seconds/3600);
+let m=Math.floor((seconds%3600)/60);
+let s=seconds%60;
+time.innerText=
+String(h).padStart(2,"0")+":"+
+String(m).padStart(2,"0")+":"+
+String(s).padStart(2,"0");
+},1000);
+}}
+function stopSW(){clearInterval(swInterval);swInterval=null;}
+function resetSW(){stopSW();seconds=0;time.innerText="00:00:00";}
+
+</script>
 </body>
 </html>
