@@ -3,238 +3,436 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rahsays Calculator</title>
+<title>rahsays v3</title>
 
 <style>
+
+/* ================= THEME SYSTEM ================= */
+
 :root{
+  --bg:#111;
+  --card:#1c1c1e;
+  --text:#fff;
+  --muted:#888;
+  --accent:#00c6ff;
+}
+
+.light{
+  --bg:#f4f4f4;
+  --card:#ffffff;
+  --text:#111;
+  --muted:#555;
+  --accent:#007aff;
+}
+
+.amoled{
   --bg:#000;
-  --display:#fff;
-  --btn:#1c1c1c;
-  --btn-gray:#a5a5a5;
-  --btn-orange:#ff9500;
-  --radius:50%;
-  --transition:120ms cubic-bezier(.4,0,.2,1);
+  --card:#0f0f0f;
+  --text:#fff;
+  --muted:#777;
+  --accent:#00e5ff;
 }
 
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
 
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   background:var(--bg);
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  color:var(--text);
+  transition:.3s ease;
 }
 
-.calculator{
+/* ================= HEADER ================= */
+
+header{
+  position:fixed;
+  top:0;
   width:100%;
-  max-width:420px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  z-index:1000;
+  background:var(--bg);
+}
+
+.logo{
+  font-size:18px;
+  letter-spacing:2px;
+}
+
+.icon-btn{
+  position:absolute;
+  top:15px;
+  background:none;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+  color:var(--text);
+}
+
+.menu-btn{ left:15px; }
+.theme-btn{ right:15px; }
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-260px;
+  width:240px;
+  height:100%;
+  background:var(--card);
+  padding:80px 20px;
+  transition:.3s ease;
+  z-index:1500;
+}
+
+.sidebar.active{ left:0; }
+
+.sidebar a{
+  display:block;
+  padding:12px 0;
+  text-decoration:none;
+  color:var(--text);
+  cursor:pointer;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  z-index:1400;
+}
+
+.overlay.active{ display:block; }
+
+/* ================= MAIN ================= */
+
+main{
+  padding:90px 20px 40px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.section{
+  display:none;
+  animation:fade .3s ease;
+}
+
+.section.active{ display:block; }
+
+@keyframes fade{
+  from{opacity:0; transform:translateX(10px);}
+  to{opacity:1; transform:translateX(0);}
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:15px;
+}
+
+.card{
+  background:var(--card);
   padding:20px;
+  border-radius:12px;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  background:var(--accent);
+  color:#000;
+}
+
+.back{
+  margin-bottom:15px;
+  cursor:pointer;
+  color:var(--accent);
+}
+
+/* ================= CALCULATOR ================= */
+
+.calc{
+  max-width:400px;
+  margin:20px auto;
 }
 
 .display{
-  color:var(--display);
-  font-size:64px;
+  font-size:40px;
   text-align:right;
-  padding:20px 10px;
-  min-height:90px;
+  padding:15px;
+  border-radius:12px;
+  background:var(--card);
+  margin-bottom:10px;
   overflow-x:auto;
-  white-space:nowrap;
 }
 
-.buttons{
+.calc-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
+  gap:10px;
 }
 
-button{
-  height:75px;
+.calc-grid button{
+  padding:15px;
   border:none;
-  border-radius:var(--radius);
-  font-size:28px;
-  background:var(--btn);
-  color:white;
+  border-radius:50%;
+  font-size:20px;
   cursor:pointer;
-  transition:var(--transition);
 }
 
-button:active{
-  transform:scale(0.9);
-  filter:brightness(1.2);
+.gray{ background:#444; color:#fff; }
+.orange{ background:#ff9500; color:#fff; }
+.zero{ grid-column:span 2; border-radius:30px; }
+
+/* ================= PDF ================= */
+
+iframe{
+  width:100%;
+  height:70vh;
+  border:none;
+  border-radius:12px;
 }
 
-.gray{
-  background:var(--btn-gray);
-  color:black;
+.telegram{
+  text-align:center;
+  margin-top:30px;
 }
 
-.orange{
-  background:var(--btn-orange);
+.telegram a{
+  background:var(--accent);
+  padding:10px 20px;
+  border-radius:20px;
+  color:#000;
+  text-decoration:none;
 }
 
-.zero{
-  grid-column:span 2;
-  border-radius:40px;
-  text-align:left;
-  padding-left:30px;
-}
-
-/* Tablet scaling */
-@media(min-width:768px){
-  .calculator{
-    max-width:500px;
-  }
-  button{
-    height:85px;
-    font-size:30px;
-  }
-}
 </style>
 </head>
 
 <body>
 
-<div class="calculator">
-  <div class="display" id="display">0</div>
+<header>
+  <button class="icon-btn menu-btn" onclick="toggleSidebar()">☰</button>
+  <div class="logo">rahsays</div>
+  <button class="icon-btn theme-btn" onclick="toggleTheme()">🌓</button>
+</header>
 
-  <div class="buttons" id="buttons">
-    <button class="gray" data-action="clear">AC</button>
-    <button class="gray" data-action="sign">±</button>
-    <button class="gray" data-action="percent">%</button>
-    <button class="orange" data-operator="/">÷</button>
+<div class="sidebar" id="sidebar">
+  <a onclick="openSection('home')">Home</a>
+  <a onclick="openSection('classes')">Classes</a>
+  <a onclick="openSection('exams')">Exams</a>
+  <a onclick="openSection('calculator')">Calculator</a>
+  <a onclick="openSection('pdf')">PDF Viewer</a>
+</div>
 
-    <button data-number="7">7</button>
-    <button data-number="8">8</button>
-    <button data-number="9">9</button>
-    <button class="orange" data-operator="*">×</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <button data-number="4">4</button>
-    <button data-number="5">5</button>
-    <button data-number="6">6</button>
-    <button class="orange" data-operator="-">−</button>
+<main>
 
-    <button data-number="1">1</button>
-    <button data-number="2">2</button>
-    <button data-number="3">3</button>
-    <button class="orange" data-operator="+">+</button>
-
-    <button class="zero" data-number="0">0</button>
-    <button data-number=".">.</button>
-    <button class="orange" data-action="equals">=</button>
+<!-- HOME -->
+<div class="section active" id="home">
+  <h2 class="section-title">Education Platform</h2>
+  <div class="telegram">
+    <a href="https://t.me/YOUR_LINK" target="_blank">Join Telegram</a>
   </div>
 </div>
 
+<!-- CLASSES -->
+<div class="section" id="classes">
+  <div class="back" onclick="openSection('home')">← Back</div>
+  <h2 class="section-title">School Classes</h2>
+  <div class="grid">
+    <div class="card">Class 6</div>
+    <div class="card">Class 7</div>
+    <div class="card">Class 8</div>
+    <div class="card">Class 9</div>
+    <div class="card">Class 10</div>
+    <div class="card">Class 11</div>
+    <div class="card">Class 12</div>
+  </div>
+</div>
+
+<!-- EXAMS -->
+<div class="section" id="exams">
+  <div class="back" onclick="openSection('home')">← Back</div>
+  <h2 class="section-title">Competitive Exams</h2>
+  <div class="grid">
+    <div class="card">IIT / JEE</div>
+    <div class="card">NEET</div>
+    <div class="card">UPSC</div>
+    <div class="card">SSC</div>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<div class="section" id="calculator">
+  <div class="back" onclick="openSection('home')">← Back</div>
+  <div class="calc">
+    <div class="display" id="display">0</div>
+    <div class="calc-grid" id="calcButtons">
+      <button class="gray" data-action="clear">AC</button>
+      <button class="gray" data-action="sign">±</button>
+      <button class="gray" data-action="percent">%</button>
+      <button class="orange" data-op="/">÷</button>
+
+      <button data-num="7">7</button>
+      <button data-num="8">8</button>
+      <button data-num="9">9</button>
+      <button class="orange" data-op="*">×</button>
+
+      <button data-num="4">4</button>
+      <button data-num="5">5</button>
+      <button data-num="6">6</button>
+      <button class="orange" data-op="-">−</button>
+
+      <button data-num="1">1</button>
+      <button data-num="2">2</button>
+      <button data-num="3">3</button>
+      <button class="orange" data-op="+">+</button>
+
+      <button class="zero" data-num="0">0</button>
+      <button data-num=".">.</button>
+      <button class="orange" data-action="equals">=</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF -->
+<div class="section" id="pdf">
+  <div class="back" onclick="openSection('home')">← Back</div>
+  <iframe src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
+</div>
+
+</main>
+
 <script>
-class Calculator {
-  constructor(displayElement){
-    this.displayElement = displayElement
-    this.reset()
-  }
 
-  reset(){
-    this.current = "0"
-    this.previous = null
-    this.operator = null
-    this.shouldResetScreen = false
-    this.updateDisplay()
-  }
+/* ================= NAVIGATION ================= */
 
-  updateDisplay(){
-    this.displayElement.textContent = this.current
-  }
+function openSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  toggleSidebar(false);
+}
 
-  appendNumber(number){
-    if(this.shouldResetScreen){
-      this.current = number === "." ? "0." : number
-      this.shouldResetScreen = false
-    } else {
-      if(number === "." && this.current.includes(".")) return
-      this.current = this.current === "0" && number !== "." ? number : this.current + number
-    }
-    this.updateDisplay()
-  }
-
-  chooseOperator(operator){
-    if(this.operator !== null) this.compute()
-    this.previous = parseFloat(this.current)
-    this.operator = operator
-    this.shouldResetScreen = true
-  }
-
-  compute(){
-    if(this.operator === null || this.previous === null) return
-
-    const currentValue = parseFloat(this.current)
-    let result
-
-    switch(this.operator){
-      case "+": result = this.previous + currentValue; break
-      case "-": result = this.previous - currentValue; break
-      case "*": result = this.previous * currentValue; break
-      case "/": result = this.previous / currentValue; break
-    }
-
-    this.current = this.format(result)
-    this.operator = null
-    this.previous = null
-    this.shouldResetScreen = true
-    this.updateDisplay()
-  }
-
-  format(number){
-    if(!isFinite(number)) return "Error"
-    return parseFloat(number.toPrecision(12)).toString()
-  }
-
-  toggleSign(){
-    this.current = (parseFloat(this.current) * -1).toString()
-    this.updateDisplay()
-  }
-
-  percent(){
-    this.current = (parseFloat(this.current) / 100).toString()
-    this.updateDisplay()
+function toggleSidebar(force){
+  const sidebar=document.getElementById('sidebar');
+  const overlay=document.getElementById('overlay');
+  const active=sidebar.classList.contains('active');
+  if(force===false || active){
+    sidebar.classList.remove('active');
+    overlay.classList.remove('active');
+  }else{
+    sidebar.classList.add('active');
+    overlay.classList.add('active');
   }
 }
 
-const calculator = new Calculator(document.getElementById("display"))
-const buttons = document.getElementById("buttons")
+/* ================= THEME ================= */
 
-buttons.addEventListener("click", e=>{
-  const target = e.target
-  if(!target.matches("button")) return
+function toggleTheme(){
+  if(document.body.classList.contains('light')){
+    document.body.classList.remove('light');
+    document.body.classList.add('amoled');
+  }
+  else if(document.body.classList.contains('amoled')){
+    document.body.classList.remove('amoled');
+  }
+  else{
+    document.body.classList.add('light');
+  }
+}
 
-  if(target.dataset.number){
-    calculator.appendNumber(target.dataset.number)
+/* ================= CALCULATOR ================= */
+
+class Calculator{
+  constructor(display){
+    this.display=display;
+    this.reset();
   }
 
-  if(target.dataset.operator){
-    calculator.chooseOperator(target.dataset.operator)
+  reset(){
+    this.current='0';
+    this.previous=null;
+    this.operator=null;
+    this.update();
   }
 
-  if(target.dataset.action){
-    switch(target.dataset.action){
-      case "clear": calculator.reset(); break
-      case "sign": calculator.toggleSign(); break
-      case "percent": calculator.percent(); break
-      case "equals": calculator.compute(); break
+  update(){
+    this.display.textContent=this.current;
+  }
+
+  append(num){
+    if(this.current==='0' && num!=='.') this.current=num;
+    else{
+      if(num==='.' && this.current.includes('.')) return;
+      this.current+=num;
     }
+    this.update();
   }
-})
 
-/* Keyboard Support */
-document.addEventListener("keydown", e=>{
-  if(!isNaN(e.key) || e.key === ".") calculator.appendNumber(e.key)
-  if(["+","-","*","/"].includes(e.key)) calculator.chooseOperator(e.key)
-  if(e.key === "Enter") calculator.compute()
-  if(e.key === "Backspace") calculator.reset()
-})
+  setOperator(op){
+    this.previous=parseFloat(this.current);
+    this.operator=op;
+    this.current='0';
+  }
+
+  compute(){
+    if(!this.operator) return;
+    const current=parseFloat(this.current);
+    let result;
+    switch(this.operator){
+      case '+': result=this.previous+current; break;
+      case '-': result=this.previous-current; break;
+      case '*': result=this.previous*current; break;
+      case '/': result=this.previous/current; break;
+    }
+    this.current=result.toString();
+    this.operator=null;
+    this.previous=null;
+    this.update();
+  }
+
+  percent(){
+    this.current=(parseFloat(this.current)/100).toString();
+    this.update();
+  }
+
+  sign(){
+    this.current=(parseFloat(this.current)*-1).toString();
+    this.update();
+  }
+}
+
+const calc=new Calculator(document.getElementById('display'));
+document.getElementById('calcButtons').addEventListener('click',e=>{
+  const t=e.target;
+  if(t.dataset.num) calc.append(t.dataset.num);
+  if(t.dataset.op) calc.setOperator(t.dataset.op);
+  if(t.dataset.action){
+    if(t.dataset.action==='clear') calc.reset();
+    if(t.dataset.action==='equals') calc.compute();
+    if(t.dataset.action==='percent') calc.percent();
+    if(t.dataset.action==='sign') calc.sign();
+  }
+});
+
 </script>
 
 </body>
