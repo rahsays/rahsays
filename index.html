@@ -3,34 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rahsays v3</title>
+<title>rahsays</title>
 
 <style>
 
 /* ================= THEME SYSTEM ================= */
 
 :root{
-  --bg:#111;
-  --card:#1c1c1e;
-  --text:#fff;
-  --muted:#888;
+  --bg:#0f0f14;
+  --card:#1b1b22;
+  --text:#ffffff;
+  --muted:#9a9a9a;
   --accent:#00c6ff;
+  --gradient:linear-gradient(135deg,#00c6ff,#0072ff);
 }
 
 .light{
-  --bg:#f4f4f4;
+  --bg:#f5f6fa;
   --card:#ffffff;
   --text:#111;
   --muted:#555;
   --accent:#007aff;
+  --gradient:linear-gradient(135deg,#007aff,#00c6ff);
 }
 
 .amoled{
   --bg:#000;
-  --card:#0f0f0f;
+  --card:#0d0d0d;
   --text:#fff;
   --muted:#777;
   --accent:#00e5ff;
+  --gradient:linear-gradient(135deg,#00e5ff,#0084ff);
 }
 
 *{
@@ -43,53 +46,55 @@
 body{
   background:var(--bg);
   color:var(--text);
-  transition:.3s ease;
+  transition:.3s;
 }
 
 /* ================= HEADER ================= */
 
 header{
   position:fixed;
-  top:0;
   width:100%;
   height:60px;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-bottom:1px solid rgba(255,255,255,.05);
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.4);
+  border-bottom:1px solid rgba(255,255,255,0.05);
   z-index:1000;
-  background:var(--bg);
 }
 
 .logo{
   font-size:18px;
   letter-spacing:2px;
+  font-weight:600;
 }
 
-.icon-btn{
+.icon{
   position:absolute;
   top:15px;
+  font-size:20px;
   background:none;
   border:none;
-  font-size:20px;
-  cursor:pointer;
   color:var(--text);
+  cursor:pointer;
 }
 
-.menu-btn{ left:15px; }
-.theme-btn{ right:15px; }
+#menuBtn{ left:15px; }
+#themeBtn{ right:15px; }
 
 /* ================= SIDEBAR ================= */
 
 .sidebar{
   position:fixed;
-  top:0;
   left:-260px;
+  top:0;
   width:240px;
   height:100%;
   background:var(--card);
   padding:80px 20px;
-  transition:.3s ease;
+  transition:.3s;
+  box-shadow:5px 0 20px rgba(0,0,0,0.3);
   z-index:1500;
 }
 
@@ -98,9 +103,13 @@ header{
 .sidebar a{
   display:block;
   padding:12px 0;
-  text-decoration:none;
-  color:var(--text);
   cursor:pointer;
+  color:var(--muted);
+  transition:.2s;
+}
+
+.sidebar a:hover{
+  color:var(--accent);
 }
 
 .overlay{
@@ -121,48 +130,55 @@ main{
   margin:auto;
 }
 
-.section{
-  display:none;
-  animation:fade .3s ease;
-}
-
-.section.active{ display:block; }
+.section{ display:none; }
+.section.active{ display:block; animation:fade .3s ease; }
 
 @keyframes fade{
-  from{opacity:0; transform:translateX(10px);}
-  to{opacity:1; transform:translateX(0);}
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 .section-title{
-  text-align:center;
+  margin-bottom:20px;
+  font-size:22px;
+}
+
+/* ================= SEARCH ================= */
+
+.search{
   margin-bottom:20px;
 }
 
+.search input{
+  width:100%;
+  padding:12px;
+  border-radius:25px;
+  border:none;
+  background:var(--card);
+  color:var(--text);
+}
+
+/* ================= CARDS ================= */
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
   gap:15px;
 }
 
 .card{
   background:var(--card);
   padding:20px;
-  border-radius:12px;
-  text-align:center;
+  border-radius:16px;
   cursor:pointer;
   transition:.2s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
 .card:hover{
-  transform:translateY(-3px);
-  background:var(--accent);
-  color:#000;
-}
-
-.back{
-  margin-bottom:15px;
-  cursor:pointer;
-  color:var(--accent);
+  transform:translateY(-4px);
+  background:var(--gradient);
+  color:#fff;
 }
 
 /* ================= CALCULATOR ================= */
@@ -173,13 +189,12 @@ main{
 }
 
 .display{
-  font-size:40px;
+  font-size:38px;
   text-align:right;
   padding:15px;
   border-radius:12px;
   background:var(--card);
   margin-bottom:10px;
-  overflow-x:auto;
 }
 
 .calc-grid{
@@ -192,12 +207,17 @@ main{
   padding:15px;
   border:none;
   border-radius:50%;
-  font-size:20px;
+  font-size:18px;
   cursor:pointer;
+  background:var(--card);
+  color:var(--text);
 }
 
-.gray{ background:#444; color:#fff; }
-.orange{ background:#ff9500; color:#fff; }
+.calc-grid button:hover{
+  background:var(--accent);
+  color:#000;
+}
+
 .zero{ grid-column:span 2; border-radius:30px; }
 
 /* ================= PDF ================= */
@@ -209,229 +229,179 @@ iframe{
   border-radius:12px;
 }
 
+/* ================= TELEGRAM ================= */
+
 .telegram{
-  text-align:center;
   margin-top:30px;
 }
 
 .telegram a{
-  background:var(--accent);
+  display:inline-block;
   padding:10px 20px;
   border-radius:20px;
-  color:#000;
+  background:var(--gradient);
+  color:#fff;
   text-decoration:none;
 }
 
 </style>
 </head>
-
 <body>
 
 <header>
-  <button class="icon-btn menu-btn" onclick="toggleSidebar()">☰</button>
+  <button id="menuBtn" class="icon">☰</button>
   <div class="logo">rahsays</div>
-  <button class="icon-btn theme-btn" onclick="toggleTheme()">🌓</button>
+  <button id="themeBtn" class="icon">🌓</button>
 </header>
 
-<div class="sidebar" id="sidebar">
-  <a onclick="openSection('home')">Home</a>
-  <a onclick="openSection('classes')">Classes</a>
-  <a onclick="openSection('exams')">Exams</a>
-  <a onclick="openSection('calculator')">Calculator</a>
-  <a onclick="openSection('pdf')">PDF Viewer</a>
+<div id="sidebar" class="sidebar">
+  <a data-route="home">Home</a>
+  <a data-route="classes">Classes</a>
+  <a data-route="exams">Exams</a>
+  <a data-route="tools">Tools</a>
+  <a data-route="pdf">PDF Library</a>
 </div>
 
-<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<div id="overlay" class="overlay"></div>
 
-<main>
-
-<!-- HOME -->
-<div class="section active" id="home">
-  <h2 class="section-title">Education Platform</h2>
-  <div class="telegram">
-    <a href="https://t.me/YOUR_LINK" target="_blank">Join Telegram</a>
-  </div>
-</div>
-
-<!-- CLASSES -->
-<div class="section" id="classes">
-  <div class="back" onclick="openSection('home')">← Back</div>
-  <h2 class="section-title">School Classes</h2>
-  <div class="grid">
-    <div class="card">Class 6</div>
-    <div class="card">Class 7</div>
-    <div class="card">Class 8</div>
-    <div class="card">Class 9</div>
-    <div class="card">Class 10</div>
-    <div class="card">Class 11</div>
-    <div class="card">Class 12</div>
-  </div>
-</div>
-
-<!-- EXAMS -->
-<div class="section" id="exams">
-  <div class="back" onclick="openSection('home')">← Back</div>
-  <h2 class="section-title">Competitive Exams</h2>
-  <div class="grid">
-    <div class="card">IIT / JEE</div>
-    <div class="card">NEET</div>
-    <div class="card">UPSC</div>
-    <div class="card">SSC</div>
-  </div>
-</div>
-
-<!-- CALCULATOR -->
-<div class="section" id="calculator">
-  <div class="back" onclick="openSection('home')">← Back</div>
-  <div class="calc">
-    <div class="display" id="display">0</div>
-    <div class="calc-grid" id="calcButtons">
-      <button class="gray" data-action="clear">AC</button>
-      <button class="gray" data-action="sign">±</button>
-      <button class="gray" data-action="percent">%</button>
-      <button class="orange" data-op="/">÷</button>
-
-      <button data-num="7">7</button>
-      <button data-num="8">8</button>
-      <button data-num="9">9</button>
-      <button class="orange" data-op="*">×</button>
-
-      <button data-num="4">4</button>
-      <button data-num="5">5</button>
-      <button data-num="6">6</button>
-      <button class="orange" data-op="-">−</button>
-
-      <button data-num="1">1</button>
-      <button data-num="2">2</button>
-      <button data-num="3">3</button>
-      <button class="orange" data-op="+">+</button>
-
-      <button class="zero" data-num="0">0</button>
-      <button data-num=".">.</button>
-      <button class="orange" data-action="equals">=</button>
-    </div>
-  </div>
-</div>
-
-<!-- PDF -->
-<div class="section" id="pdf">
-  <div class="back" onclick="openSection('home')">← Back</div>
-  <iframe src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"></iframe>
-</div>
-
-</main>
+<main id="app"></main>
 
 <script>
 
+/* ================= DATA ================= */
+
+const classesData=["Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12"];
+const examsData=["IIT / JEE","NEET","UPSC","SSC","BPSC","State PCS"];
+const pdfLibrary=[{title:"Sample PDF",url:"https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"}];
+
+/* ================= ROUTER ================= */
+
+function render(route){
+  const app=document.getElementById("app");
+
+  switch(route){
+
+    case "classes":
+      app.innerHTML=`
+        <h2 class="section-title">Classes</h2>
+        <div class="search"><input placeholder="Search classes..." oninput="filterCards(this.value)"></div>
+        <div class="grid" id="cardGrid">
+          ${classesData.map(c=>`<div class="card">${c}</div>`).join("")}
+        </div>`;
+      break;
+
+    case "exams":
+      app.innerHTML=`
+        <h2 class="section-title">Exams</h2>
+        <div class="search"><input placeholder="Search exams..." oninput="filterCards(this.value)"></div>
+        <div class="grid" id="cardGrid">
+          ${examsData.map(e=>`<div class="card">${e}</div>`).join("")}
+        </div>`;
+      break;
+
+    case "tools":
+      app.innerHTML=`
+        <h2 class="section-title">Tools</h2>
+        <div class="calc">
+          <div class="display" id="display">0</div>
+          <div class="calc-grid">
+            <button onclick="clearCalc()">AC</button>
+            <button onclick="append('%')">%</button>
+            <button onclick="append('/')">÷</button>
+            <button onclick="append('*')">×</button>
+
+            <button onclick="append('7')">7</button>
+            <button onclick="append('8')">8</button>
+            <button onclick="append('9')">9</button>
+            <button onclick="append('-')">−</button>
+
+            <button onclick="append('4')">4</button>
+            <button onclick="append('5')">5</button>
+            <button onclick="append('6')">6</button>
+            <button onclick="append('+')">+</button>
+
+            <button onclick="append('1')">1</button>
+            <button onclick="append('2')">2</button>
+            <button onclick="append('3')">3</button>
+            <button onclick="calculate()">=</button>
+
+            <button class="zero" onclick="append('0')">0</button>
+            <button onclick="append('.')">.</button>
+          </div>
+        </div>`;
+      break;
+
+    case "pdf":
+      app.innerHTML=`
+        <h2 class="section-title">PDF Library</h2>
+        ${pdfLibrary.map(p=>`
+          <div class="card">
+            <a href="${p.url}" target="_blank">${p.title}</a>
+          </div>`).join("")}`;
+      break;
+
+    default:
+      app.innerHTML=`
+        <h2 class="section-title">Welcome to rahsays</h2>
+        <p style="color:var(--muted);margin-bottom:20px;">Minimal. Modern. Startup ready.</p>
+        <div class="telegram">
+          <a href="https://t.me/YOUR_LINK" target="_blank">Join Telegram</a>
+        </div>`;
+  }
+}
+
+/* ================= SEARCH ================= */
+
+function filterCards(value){
+  const cards=document.querySelectorAll(".card");
+  value=value.toLowerCase();
+  cards.forEach(c=>{
+    c.style.display=c.innerText.toLowerCase().includes(value)?"block":"none";
+  });
+}
+
 /* ================= NAVIGATION ================= */
 
-function openSection(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  toggleSidebar(false);
-}
+document.addEventListener("DOMContentLoaded",()=>{
+  render("home");
 
-function toggleSidebar(force){
-  const sidebar=document.getElementById('sidebar');
-  const overlay=document.getElementById('overlay');
-  const active=sidebar.classList.contains('active');
-  if(force===false || active){
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
-  }else{
-    sidebar.classList.add('active');
-    overlay.classList.add('active');
-  }
-}
+  document.getElementById("menuBtn").onclick=()=>{
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+  };
 
-/* ================= THEME ================= */
+  overlay.onclick=()=>{
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  };
 
-function toggleTheme(){
-  if(document.body.classList.contains('light')){
-    document.body.classList.remove('light');
-    document.body.classList.add('amoled');
-  }
-  else if(document.body.classList.contains('amoled')){
-    document.body.classList.remove('amoled');
-  }
-  else{
-    document.body.classList.add('light');
-  }
-}
+  document.querySelectorAll(".sidebar a").forEach(link=>{
+    link.onclick=()=>{
+      render(link.dataset.route);
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+    };
+  });
+
+  themeBtn.onclick=()=>{
+    if(document.body.classList.contains("light")){
+      document.body.classList.remove("light");
+      document.body.classList.add("amoled");
+    }else if(document.body.classList.contains("amoled")){
+      document.body.classList.remove("amoled");
+    }else{
+      document.body.classList.add("light");
+    }
+  };
+});
 
 /* ================= CALCULATOR ================= */
 
-class Calculator{
-  constructor(display){
-    this.display=display;
-    this.reset();
-  }
-
-  reset(){
-    this.current='0';
-    this.previous=null;
-    this.operator=null;
-    this.update();
-  }
-
-  update(){
-    this.display.textContent=this.current;
-  }
-
-  append(num){
-    if(this.current==='0' && num!=='.') this.current=num;
-    else{
-      if(num==='.' && this.current.includes('.')) return;
-      this.current+=num;
-    }
-    this.update();
-  }
-
-  setOperator(op){
-    this.previous=parseFloat(this.current);
-    this.operator=op;
-    this.current='0';
-  }
-
-  compute(){
-    if(!this.operator) return;
-    const current=parseFloat(this.current);
-    let result;
-    switch(this.operator){
-      case '+': result=this.previous+current; break;
-      case '-': result=this.previous-current; break;
-      case '*': result=this.previous*current; break;
-      case '/': result=this.previous/current; break;
-    }
-    this.current=result.toString();
-    this.operator=null;
-    this.previous=null;
-    this.update();
-  }
-
-  percent(){
-    this.current=(parseFloat(this.current)/100).toString();
-    this.update();
-  }
-
-  sign(){
-    this.current=(parseFloat(this.current)*-1).toString();
-    this.update();
-  }
-}
-
-const calc=new Calculator(document.getElementById('display'));
-document.getElementById('calcButtons').addEventListener('click',e=>{
-  const t=e.target;
-  if(t.dataset.num) calc.append(t.dataset.num);
-  if(t.dataset.op) calc.setOperator(t.dataset.op);
-  if(t.dataset.action){
-    if(t.dataset.action==='clear') calc.reset();
-    if(t.dataset.action==='equals') calc.compute();
-    if(t.dataset.action==='percent') calc.percent();
-    if(t.dataset.action==='sign') calc.sign();
-  }
-});
+let calcValue="0";
+function update(){ document.getElementById("display").innerText=calcValue; }
+function append(v){ calcValue=calcValue==="0"?v:calcValue+v; update(); }
+function clearCalc(){ calcValue="0"; update(); }
+function calculate(){ try{ calcValue=eval(calcValue).toString(); update(); }catch{ calcValue="Error"; update(); } }
 
 </script>
 
