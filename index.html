@@ -16,8 +16,8 @@
   --soft:#1c1c1c;
   --text:#ffffff;
   --muted:#9a9a9a;
-  --accent:#ffcc00;
-  --border-glow:rgba(255,255,255,0.55);
+  --accent:#ffcc00; /* iOS deep yellow */
+  --border-glow:rgba(255,255,255,0.4);
 }
 
 body.light{
@@ -26,7 +26,7 @@ body.light{
   --soft:#eaeaea;
   --text:#000000;
   --muted:#555555;
-  --border-glow:rgba(0,0,0,0.25);
+  --border-glow:rgba(0,0,0,0.2);
 }
 
 *{
@@ -44,7 +44,7 @@ body{
 }
 
 /* ===============================
-   INTRO INFINITY (CURVED V30 STYLE)
+   INTRO INFINITY
 ================================*/
 #intro{
   position:fixed;
@@ -58,20 +58,19 @@ body{
 }
 
 .infinity{
-  width:420px;
-  height:240px;
+  width:360px;
+  height:200px;
 }
 
 .infinity path{
   fill:none;
   stroke:white;
-  stroke-width:34;
+  stroke-width:28;
   stroke-linecap:round;
   stroke-linejoin:round;
-  stroke-dasharray:1800;
-  stroke-dashoffset:1800;
+  stroke-dasharray:1400;
+  stroke-dashoffset:1400;
   animation:drawInfinity 3s ease forwards;
-  filter:drop-shadow(0 0 18px white);
 }
 
 @keyframes drawInfinity{
@@ -178,15 +177,14 @@ body.light .toggle::before{
   padding:25px;
   text-align:center;
   border-radius:18px;
-  border:2px solid var(--border-glow);
-  box-shadow:0 0 12px var(--border-glow);
+  border:2px solid transparent;
   transition:0.3s;
   cursor:pointer;
 }
 
 .card:hover{
-  box-shadow:0 0 20px var(--border-glow);
-  transform:translateY(-4px);
+  border:2px solid var(--border-glow);
+  box-shadow:0 0 15px var(--border-glow);
 }
 
 /* ===============================
@@ -274,13 +272,13 @@ footer{
 
 <!-- INTRO -->
 <div id="intro">
-<svg class="infinity" viewBox="0 0 600 300">
+<svg class="infinity" viewBox="0 0 500 250">
   <path d="
-    M 150 150
-    C 150 40, 300 40, 300 150
-    C 300 260, 450 260, 450 150
-    C 450 40, 300 40, 300 150
-    C 300 260, 150 260, 150 150
+    M 125 125
+    C 125 40, 250 40, 250 125
+    C 250 210, 375 210, 375 125
+    C 375 40, 250 40, 250 125
+    C 250 210, 125 210, 125 125
   "/>
 </svg>
 </div>
@@ -374,87 +372,111 @@ footer{
 
 <script>
 
-window.onload=function(){
-setTimeout(()=>{
-document.getElementById("intro").style.display="none";
-if(navigator.vibrate) navigator.vibrate(80);
-},3000);
+/* ===============================
+   INTRO EXIT + VIBRATION
+================================*/
+window.onload = function(){
+  setTimeout(()=>{
+    document.getElementById("intro").style.display="none";
+    if(navigator.vibrate) navigator.vibrate(80);
+  },3000);
 };
 
+/* ===============================
+   MENU
+================================*/
 function openMenu(){
-document.getElementById("sidebar").classList.toggle("active");
+  document.getElementById("sidebar").classList.toggle("active");
 }
 
+/* ===============================
+   THEME
+================================*/
 function toggleTheme(){
-document.body.classList.toggle("light");
+  document.body.classList.toggle("light");
 }
 
+/* ===============================
+   NAVIGATION
+================================*/
 function showHome(){
-document.getElementById("home").style.display="block";
-document.getElementById("calculator").style.display="none";
-document.getElementById("stopwatch").style.display="none";
-document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("home").style.display="block";
+  document.getElementById("calculator").style.display="none";
+  document.getElementById("stopwatch").style.display="none";
+  document.getElementById("sidebar").classList.remove("active");
 }
 
 function showCalc(){
-document.getElementById("home").style.display="none";
-document.getElementById("calculator").style.display="block";
-document.getElementById("stopwatch").style.display="none";
-document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("home").style.display="none";
+  document.getElementById("calculator").style.display="block";
+  document.getElementById("stopwatch").style.display="none";
+  document.getElementById("sidebar").classList.remove("active");
 }
 
 function showStopwatch(){
-document.getElementById("home").style.display="none";
-document.getElementById("calculator").style.display="none";
-document.getElementById("stopwatch").style.display="block";
-document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("home").style.display="none";
+  document.getElementById("calculator").style.display="none";
+  document.getElementById("stopwatch").style.display="block";
+  document.getElementById("sidebar").classList.remove("active");
 }
 
+/* ===============================
+   CALCULATOR LOGIC
+================================*/
 let display=document.getElementById("display");
 
 function append(val){
-if(display.innerText==="0") display.innerText="";
-display.innerText+=val;
+  if(display.innerText==="0") display.innerText="";
+  display.innerText+=val;
 }
 
-function clearDisplay(){ display.innerText="0"; }
+function clearDisplay(){
+  display.innerText="0";
+}
 
 function backspace(){
-display.innerText=display.innerText.slice(0,-1)||"0";
+  display.innerText=display.innerText.slice(0,-1);
+  if(display.innerText==="") display.innerText="0";
 }
 
 function calculate(){
-try{ display.innerText=eval(display.innerText); }
-catch{ display.innerText="Error"; }
+  try{
+    display.innerText=eval(display.innerText);
+  }catch{
+    display.innerText="Error";
+  }
 }
 
+/* ===============================
+   STOPWATCH LOGIC
+================================*/
 let swInterval;
 let seconds=0;
 
 function startSW(){
-if(!swInterval){
-swInterval=setInterval(()=>{
-seconds++;
-let h=Math.floor(seconds/3600);
-let m=Math.floor((seconds%3600)/60);
-let s=seconds%60;
-document.getElementById("time").innerText=
-String(h).padStart(2,"0")+":"+
-String(m).padStart(2,"0")+":"+
-String(s).padStart(2,"0");
-},1000);
-}
+  if(!swInterval){
+    swInterval=setInterval(()=>{
+      seconds++;
+      let h=Math.floor(seconds/3600);
+      let m=Math.floor((seconds%3600)/60);
+      let s=seconds%60;
+      document.getElementById("time").innerText=
+        String(h).padStart(2,"0")+":"+
+        String(m).padStart(2,"0")+":"+
+        String(s).padStart(2,"0");
+    },1000);
+  }
 }
 
 function stopSW(){
-clearInterval(swInterval);
-swInterval=null;
+  clearInterval(swInterval);
+  swInterval=null;
 }
 
 function resetSW(){
-stopSW();
-seconds=0;
-document.getElementById("time").innerText="00:00:00";
+  stopSW();
+  seconds=0;
+  document.getElementById("time").innerText="00:00:00";
 }
 
 </script>
