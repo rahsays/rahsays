@@ -5,195 +5,242 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rahsays</title>
 
+<!-- PREMIUM FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
 
-/* ================= THEME SYSTEM ================= */
+/* ================= ROOT ================= */
 
 :root{
-  --bg:#0f0f14;
-  --card:#1b1b22;
+  --bg:#000000;
+  --card:#0a0a0f;
   --text:#ffffff;
-  --muted:#9a9a9a;
-  --accent:#00c6ff;
-  --gradient:linear-gradient(135deg,#00c6ff,#0072ff);
-}
-
-.light{
-  --bg:#f5f6fa;
-  --card:#ffffff;
-  --text:#111;
-  --muted:#555;
-  --accent:#007aff;
-  --gradient:linear-gradient(135deg,#007aff,#00c6ff);
-}
-
-.amoled{
-  --bg:#000;
-  --card:#0d0d0d;
-  --text:#fff;
-  --muted:#777;
-  --accent:#00e5ff;
-  --gradient:linear-gradient(135deg,#00e5ff,#0084ff);
+  --muted:#b5b5b5;
+  --accent:#00f2ff;
+  --gradient:linear-gradient(135deg,#00f2ff,#00aaff);
 }
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-family:'Inter',sans-serif;
 }
 
 body{
   background:var(--bg);
   color:var(--text);
-  transition:.3s;
+  overflow-x:hidden;
+}
+
+/* ================= LOADING SCREEN ================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:5000;
+  flex-direction:column;
+}
+
+.infinity{
+  width:120px;
+  height:60px;
+  position:relative;
+}
+
+.infinity::before,
+.infinity::after{
+  content:"";
+  position:absolute;
+  width:60px;
+  height:60px;
+  border:6px solid var(--accent);
+  border-radius:50%;
+  animation:spin 1.8s linear infinite;
+}
+
+.infinity::after{
+  left:50px;
+  animation-delay:.9s;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+.loader-text{
+  margin-top:20px;
+  letter-spacing:3px;
+  font-weight:600;
+  color:var(--accent);
+}
+
+.fade-out{
+  opacity:0;
+  transition:1s;
 }
 
 /* ================= HEADER ================= */
 
 header{
   position:fixed;
+  top:0;
   width:100%;
-  height:60px;
+  height:70px;
   display:flex;
   align-items:center;
   justify-content:center;
-  backdrop-filter:blur(10px);
-  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.6);
   border-bottom:1px solid rgba(255,255,255,0.05);
-  z-index:1000;
+  z-index:2000;
 }
 
 .logo{
-  font-size:18px;
-  letter-spacing:2px;
-  font-weight:600;
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:#fff;
 }
 
-.icon{
+.menu-btn{
   position:absolute;
-  top:15px;
-  font-size:20px;
-  background:none;
-  border:none;
-  color:var(--text);
+  left:20px;
+  font-size:22px;
   cursor:pointer;
 }
 
-#menuBtn{ left:15px; }
-#themeBtn{ right:15px; }
+.theme-btn{
+  position:absolute;
+  right:20px;
+  cursor:pointer;
+}
 
 /* ================= SIDEBAR ================= */
 
 .sidebar{
   position:fixed;
-  left:-260px;
+  left:-280px;
   top:0;
-  width:240px;
+  width:260px;
   height:100%;
-  background:var(--card);
-  padding:80px 20px;
-  transition:.3s;
-  box-shadow:5px 0 20px rgba(0,0,0,0.3);
-  z-index:1500;
+  background:#050509;
+  padding:90px 25px;
+  transition:.4s;
+  z-index:3000;
 }
 
-.sidebar.active{ left:0; }
+.sidebar.active{
+  left:0;
+}
 
 .sidebar a{
-  display:block;
-  padding:12px 0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:20px 0;
   cursor:pointer;
-  color:var(--muted);
-  transition:.2s;
+  font-size:16px;
+  color:#fff;
+  opacity:.9;
 }
 
 .sidebar a:hover{
   color:var(--accent);
 }
 
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  z-index:1400;
-}
-
-.overlay.active{ display:block; }
-
 /* ================= MAIN ================= */
 
 main{
-  padding:90px 20px 40px;
-  max-width:1100px;
+  padding:100px 25px 40px;
+  max-width:1200px;
   margin:auto;
 }
 
-.section{ display:none; }
-.section.active{ display:block; animation:fade .3s ease; }
+.hero{
+  text-align:center;
+  margin-bottom:40px;
+}
 
-@keyframes fade{
-  from{opacity:0; transform:translateY(10px);}
-  to{opacity:1; transform:translateY(0);}
+.hero h1{
+  font-size:36px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:16px;
+  max-width:600px;
+  margin:auto;
 }
 
 .section-title{
-  margin-bottom:20px;
+  margin:30px 0 15px;
   font-size:22px;
 }
 
-/* ================= SEARCH ================= */
-
-.search{
-  margin-bottom:20px;
-}
-
-.search input{
-  width:100%;
-  padding:12px;
-  border-radius:25px;
-  border:none;
-  background:var(--card);
-  color:var(--text);
-}
-
-/* ================= CARDS ================= */
-
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
   gap:15px;
 }
 
 .card{
   background:var(--card);
   padding:20px;
-  border-radius:16px;
+  border-radius:18px;
   cursor:pointer;
-  transition:.2s;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  transition:.3s;
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.05);
 }
 
 .card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px);
+  box-shadow:0 0 20px rgba(0,255,255,.2);
+}
+
+/* ================= STOPWATCH ================= */
+
+.stopwatch{
+  text-align:center;
+  margin-top:30px;
+}
+
+.time{
+  font-size:40px;
+  margin-bottom:20px;
+}
+
+.stopwatch button{
+  margin:5px;
+  padding:10px 18px;
+  border:none;
+  border-radius:20px;
   background:var(--gradient);
   color:#fff;
+  cursor:pointer;
 }
 
 /* ================= CALCULATOR ================= */
 
-.calc{
-  max-width:400px;
-  margin:20px auto;
+.calculator{
+  max-width:350px;
+  margin:30px auto;
 }
 
 .display{
-  font-size:38px;
+  font-size:34px;
   text-align:right;
   padding:15px;
-  border-radius:12px;
-  background:var(--card);
+  border-radius:15px;
+  background:#111;
   margin-bottom:10px;
 }
 
@@ -209,199 +256,161 @@ main{
   border-radius:50%;
   font-size:18px;
   cursor:pointer;
-  background:var(--card);
-  color:var(--text);
-}
-
-.calc-grid button:hover{
-  background:var(--accent);
-  color:#000;
-}
-
-.zero{ grid-column:span 2; border-radius:30px; }
-
-/* ================= PDF ================= */
-
-iframe{
-  width:100%;
-  height:70vh;
-  border:none;
-  border-radius:12px;
-}
-
-/* ================= TELEGRAM ================= */
-
-.telegram{
-  margin-top:30px;
-}
-
-.telegram a{
-  display:inline-block;
-  padding:10px 20px;
-  border-radius:20px;
-  background:var(--gradient);
+  background:#1a1a1a;
   color:#fff;
-  text-decoration:none;
+}
+
+.calc-grid button.operator{
+  background:var(--gradient);
+}
+
+.zero{
+  grid-column:span 2;
+  border-radius:30px;
 }
 
 </style>
 </head>
+
 <body>
 
-<header>
-  <button id="menuBtn" class="icon">☰</button>
-  <div class="logo">rahsays</div>
-  <button id="themeBtn" class="icon">🌓</button>
-</header>
-
-<div id="sidebar" class="sidebar">
-  <a data-route="home">Home</a>
-  <a data-route="classes">Classes</a>
-  <a data-route="exams">Exams</a>
-  <a data-route="tools">Tools</a>
-  <a data-route="pdf">PDF Library</a>
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="infinity"></div>
+  <div class="loader-text">∞ rahsays</div>
 </div>
 
-<div id="overlay" class="overlay"></div>
+<header>
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+  <div class="logo">rahsays</div>
+  <div class="theme-btn">⚡</div>
+</header>
 
-<main id="app"></main>
+<div class="sidebar" id="sidebar">
+  <a onclick="showHome()">🏠 Home</a>
+  <a onclick="showClasses()">📚 Classes</a>
+  <a onclick="showExams()">🎯 Exams</a>
+  <a onclick="showTools()">🧮 Tools</a>
+  <a onclick="showLibrary()">📖 Library</a>
+</div>
+
+<main id="content"></main>
 
 <script>
 
-/* ================= DATA ================= */
+/* LOADER */
+window.onload=function(){
+  setTimeout(()=>{
+    document.getElementById("loader").classList.add("fade-out");
+    setTimeout(()=>{document.getElementById("loader").style.display="none";},1000);
+  },2500);
+  showHome();
+};
 
-const classesData=["Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12"];
-const examsData=["IIT / JEE","NEET","UPSC","SSC","BPSC","State PCS"];
-const pdfLibrary=[{title:"Sample PDF",url:"https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"}];
-
-/* ================= ROUTER ================= */
-
-function render(route){
-  const app=document.getElementById("app");
-
-  switch(route){
-
-    case "classes":
-      app.innerHTML=`
-        <h2 class="section-title">Classes</h2>
-        <div class="search"><input placeholder="Search classes..." oninput="filterCards(this.value)"></div>
-        <div class="grid" id="cardGrid">
-          ${classesData.map(c=>`<div class="card">${c}</div>`).join("")}
-        </div>`;
-      break;
-
-    case "exams":
-      app.innerHTML=`
-        <h2 class="section-title">Exams</h2>
-        <div class="search"><input placeholder="Search exams..." oninput="filterCards(this.value)"></div>
-        <div class="grid" id="cardGrid">
-          ${examsData.map(e=>`<div class="card">${e}</div>`).join("")}
-        </div>`;
-      break;
-
-    case "tools":
-      app.innerHTML=`
-        <h2 class="section-title">Tools</h2>
-        <div class="calc">
-          <div class="display" id="display">0</div>
-          <div class="calc-grid">
-            <button onclick="clearCalc()">AC</button>
-            <button onclick="append('%')">%</button>
-            <button onclick="append('/')">÷</button>
-            <button onclick="append('*')">×</button>
-
-            <button onclick="append('7')">7</button>
-            <button onclick="append('8')">8</button>
-            <button onclick="append('9')">9</button>
-            <button onclick="append('-')">−</button>
-
-            <button onclick="append('4')">4</button>
-            <button onclick="append('5')">5</button>
-            <button onclick="append('6')">6</button>
-            <button onclick="append('+')">+</button>
-
-            <button onclick="append('1')">1</button>
-            <button onclick="append('2')">2</button>
-            <button onclick="append('3')">3</button>
-            <button onclick="calculate()">=</button>
-
-            <button class="zero" onclick="append('0')">0</button>
-            <button onclick="append('.')">.</button>
-          </div>
-        </div>`;
-      break;
-
-    case "pdf":
-      app.innerHTML=`
-        <h2 class="section-title">PDF Library</h2>
-        ${pdfLibrary.map(p=>`
-          <div class="card">
-            <a href="${p.url}" target="_blank">${p.title}</a>
-          </div>`).join("")}`;
-      break;
-
-    default:
-      app.innerHTML=`
-        <h2 class="section-title">Welcome to rahsays</h2>
-        <p style="color:var(--muted);margin-bottom:20px;">Minimal. Modern. Startup ready.</p>
-        <div class="telegram">
-          <a href="https://t.me/YOUR_LINK" target="_blank">Join Telegram</a>
-        </div>`;
-  }
+/* SIDEBAR */
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("active");
 }
 
-/* ================= SEARCH ================= */
-
-function filterCards(value){
-  const cards=document.querySelectorAll(".card");
-  value=value.toLowerCase();
-  cards.forEach(c=>{
-    c.style.display=c.innerText.toLowerCase().includes(value)?"block":"none";
-  });
+/* HOME */
+function showHome(){
+  content.innerHTML=`
+  <div class="hero">
+    <h1>Building The Best Educational Platform</h1>
+    <p>We are designing the most powerful and minimal learning ecosystem combining premium tools, structured content, and advanced productivity systems.</p>
+  </div>
+  `;
 }
 
-/* ================= NAVIGATION ================= */
+/* CLASSES */
+function showClasses(){
+  content.innerHTML=`
+  <h2 class="section-title">📚 Classes</h2>
+  <div class="grid">
+  ${["Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12"]
+    .map(c=>`<div class="card">${c}</div>`).join("")}
+  </div>`;
+}
 
-document.addEventListener("DOMContentLoaded",()=>{
-  render("home");
+/* EXAMS */
+function showExams(){
+  content.innerHTML=`
+  <h2 class="section-title">🎯 Competitive Exams</h2>
+  <div class="grid">
+  ${["IIT / JEE","NEET","UPSC","SSC","BPSC","State PCS"]
+    .map(e=>`<div class="card">${e}</div>`).join("")}
+  </div>`;
+}
 
-  document.getElementById("menuBtn").onclick=()=>{
-    sidebar.classList.toggle("active");
-    overlay.classList.toggle("active");
-  };
+/* TOOLS */
+function showTools(){
+  content.innerHTML=`
+  <h2 class="section-title">🧮 Tools</h2>
 
-  overlay.onclick=()=>{
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-  };
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="calc-grid">
+      <button onclick="clearCalc()">AC</button>
+      <button onclick="append('%')">%</button>
+      <button class="operator" onclick="append('/')">÷</button>
+      <button class="operator" onclick="append('*')">×</button>
 
-  document.querySelectorAll(".sidebar a").forEach(link=>{
-    link.onclick=()=>{
-      render(link.dataset.route);
-      sidebar.classList.remove("active");
-      overlay.classList.remove("active");
-    };
-  });
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('-')">−</button>
 
-  themeBtn.onclick=()=>{
-    if(document.body.classList.contains("light")){
-      document.body.classList.remove("light");
-      document.body.classList.add("amoled");
-    }else if(document.body.classList.contains("amoled")){
-      document.body.classList.remove("amoled");
-    }else{
-      document.body.classList.add("light");
-    }
-  };
-});
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('+')">+</button>
 
-/* ================= CALCULATOR ================= */
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="operator" onclick="calculate()">=</button>
 
-let calcValue="0";
-function update(){ document.getElementById("display").innerText=calcValue; }
-function append(v){ calcValue=calcValue==="0"?v:calcValue+v; update(); }
-function clearCalc(){ calcValue="0"; update(); }
-function calculate(){ try{ calcValue=eval(calcValue).toString(); update(); }catch{ calcValue="Error"; update(); } }
+      <button class="zero" onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+    </div>
+  </div>
+
+  <div class="stopwatch">
+    <div class="time" id="time">00:00:00</div>
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+    <button onclick="reset()">Reset</button>
+  </div>
+  `;
+}
+
+/* LIBRARY */
+function showLibrary(){
+  content.innerHTML=`
+  <h2 class="section-title">📖 Library</h2>
+  <div class="card">Premium Study Material Coming Soon</div>`;
+}
+
+/* CALCULATOR */
+let value="0";
+function append(v){ value=value==="0"?v:value+v; display.innerText=value; }
+function clearCalc(){ value="0"; display.innerText=value; }
+function calculate(){ try{ value=eval(value).toString(); display.innerText=value;}catch{display.innerText="Error";} }
+
+/* STOPWATCH */
+let timer,seconds=0;
+function start(){ timer=setInterval(()=>{seconds++;updateTime();},1000); }
+function stop(){ clearInterval(timer); }
+function reset(){ seconds=0;updateTime(); }
+function updateTime(){
+  let h=Math.floor(seconds/3600);
+  let m=Math.floor((seconds%3600)/60);
+  let s=seconds%60;
+  time.innerText=
+  String(h).padStart(2,'0')+":"+
+  String(m).padStart(2,'0')+":"+
+  String(s).padStart(2,'0');
+}
 
 </script>
 
