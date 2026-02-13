@@ -14,7 +14,7 @@
   --text: #fff;
   --muted: #aaa;
   --accent: #00f5ff;
-  --glow: 0 0 30px rgba(0, 245, 255, 0.35);
+  --glow: 0 0 30px rgba(0, 245, 255, 0.3);
   --gradient: linear-gradient(135deg, #00f5ff, #ff00c3);
 }
 
@@ -23,8 +23,8 @@
   --card: #ffffff;
   --text: #111;
   --muted: #555;
-  --accent: #0066cc;
-  --glow: 0 0 20px rgba(0, 102, 204, 0.2);
+  --accent: #00b8d4;
+  --glow: none;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
@@ -48,10 +48,10 @@ header {
   border-bottom:1px solid rgba(255,255,255,0.05);
 }
 .logo {
-  font-weight:300; font-size:32px; letter-spacing:10px; text-transform:lowercase;
-  background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  font-weight:200; font-size:28px; letter-spacing:8px; text-transform:lowercase;
+  background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; opacity:0.95;
 }
-.menu-btn { font-size:28px; cursor:pointer; padding:8px; }
+.menu-btn { font-size:26px; cursor:pointer; padding:8px; }
 .mode-toggle {
   width:74px; height:38px; background:var(--card); border-radius:30px;
   display:flex; align-items:center; padding:4px; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3);
@@ -69,11 +69,11 @@ header {
   display:block; padding:20px 32px; text-decoration:none; color:var(--text);
   font-weight:500; font-size:17px; transition:0.2s;
 }
-.sidebar a:hover { background:rgba(0,245,255,0.12); padding-left:40px; }
+.sidebar a:hover { background:rgba(0,245,255,0.08); padding-left:40px; }
 
-main, #subject-detail { padding:130px 24px 80px; }
+main, #subject-detail { padding:130px 24px 100px; }
 .section { margin-bottom:60px; }
-.section h2 { margin-bottom:28px; font-size:28px; font-weight:700; letter-spacing:-0.5px; }
+.section h2 { margin-bottom:28px; font-size:28px; font-weight:600; letter-spacing:-0.5px; }
 
 .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:20px; }
 
@@ -107,9 +107,8 @@ main, #subject-detail { padding:130px 24px 80px; }
 #search-input {
   width:100%; padding:14px 20px; margin:20px 0 32px;
   border-radius:50px; border:1px solid var(--accent); background:var(--card);
-  color:var(--text); font-size:16px; outline:none; transition:0.3s;
+  color:var(--text); font-size:16px; outline:none;
 }
-#search-input:focus { box-shadow:0 0 0 4px rgba(0,245,255,0.2); }
 
 .recent-section { margin-bottom:60px; }
 .recent-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:16px; }
@@ -138,11 +137,11 @@ main, #subject-detail { padding:130px 24px 80px; }
   backdrop-filter:blur(10px);
 }
 .progress-bar {
-  height:8px; background:rgba(255,255,255,0.12); border-radius:4px;
-  margin:12px 0; overflow:hidden;
+  height:6px; background:rgba(255,255,255,0.1); border-radius:3px;
+  margin-top:12px; overflow:hidden;
 }
 .progress-fill {
-  height:100%; background:var(--accent); width:0%; transition:width 0.5s ease;
+  height:100%; background:var(--accent); width:0%; transition:width 0.4s;
 }
 .progress-text { font-size:13px; color:var(--muted); text-align:center; margin-top:4px; }
 
@@ -168,6 +167,38 @@ main, #subject-detail { padding:130px 24px 80px; }
 .sw-buttons button { padding:16px 36px; border-radius:50px; border:none; background:var(--card); color:var(--text); font-size:17px; cursor:pointer; }
 
 #pdfViewer { width:100%; height:82vh; border-radius:24px; margin-top:28px; border:none; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+
+/* ── Floating AI Doubt Solver Button ── */
+#ai-float-btn {
+  position:fixed; bottom:30px; right:30px; z-index:1000;
+  width:70px; height:70px; border-radius:50%;
+  background:var(--accent); color:#000;
+  display:flex; align-items:center; justify-content:center;
+  font-size:32px; font-weight:bold; cursor:pointer;
+  box-shadow:0 8px 30px rgba(0,245,255,0.5);
+  transition:0.3s;
+}
+#ai-float-btn:hover { transform:scale(1.15); box-shadow:0 12px 40px rgba(0,245,255,0.7); }
+
+/* ── AI Modal ── */
+#ai-modal {
+  position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999;
+  display:none; align-items:center; justify-content:center;
+}
+.ai-modal-content {
+  background:var(--card); width:90%; max-width:600px; border-radius:24px;
+  padding:32px; position:relative; border:1px solid var(--accent);
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+}
+.ai-close {
+  position:absolute; top:16px; right:24px; font-size:32px; cursor:pointer;
+  color:var(--muted); transition:0.2s;
+}
+.ai-close:hover { color:var(--accent); transform:rotate(90deg); }
+#ai-answer {
+  margin-top:24px; padding:20px; background:rgba(0,245,255,0.08);
+  border-radius:16px; min-height:120px; white-space:pre-wrap;
+}
 </style>
 </head>
 <body>
@@ -253,6 +284,21 @@ main, #subject-detail { padding:130px 24px 80px; }
         <button class="back-btn" onclick="backToSubjects()" style="padding:10px 24px; font-size:15px;">← Subjects</button>
       </div>
       <ul id="chapters-list" class="chapters-list"></ul>
+
+      <!-- AI Doubt Solver Section inside chapter view -->
+      <div id="ai-doubt-section" style="margin-top:48px; padding:28px; background:rgba(0,245,255,0.08); border-radius:20px; border:1px solid var(--accent);">
+        <h3 style="margin-bottom:20px; color:var(--accent);">🤖 Ask Your Doubt to AI</h3>
+        <textarea id="ai-doubt-text" placeholder="Type your question here..." rows="4" style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--accent); background:transparent; color:var(--text); resize:vertical; font-size:16px;"></textarea>
+        
+        <div style="margin:20px 0;">
+          <label style="display:block; margin-bottom:10px; font-size:15px;">Or upload photo of question:</label>
+          <input type="file" id="ai-doubt-photo" accept="image/*" style="color:var(--text); font-size:15px;">
+        </div>
+
+        <button onclick="solveAIDoubt()" style="padding:14px 40px; background:var(--accent); color:#000; border:none; border-radius:50px; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 4px 15px rgba(0,245,255,0.4); transition:0.3s;">Solve Now</button>
+
+        <div id="ai-doubt-answer" style="margin-top:28px; padding:20px; background:var(--card); border-radius:16px; min-height:120px; white-space:pre-wrap; border:1px dashed var(--muted);"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -298,6 +344,27 @@ main, #subject-detail { padding:130px 24px 80px; }
   <input type="file" accept="application/pdf" onchange="loadPDF(event)" style="margin-bottom:20px;">
   <iframe id="pdfViewer"></iframe>
 </section>
+
+<!-- Floating AI Button -->
+<div id="ai-float-btn" onclick="openAIDoubtModal()">AI</div>
+
+<!-- AI Modal -->
+<div id="ai-modal" onclick="closeAIDoubtModal()">
+  <div class="ai-modal-content" onclick="event.stopPropagation()">
+    <span class="ai-close" onclick="closeAIDoubtModal()">×</span>
+    <h2 style="margin-bottom:24px; color:var(--accent);">Ask Anything – AI Doubt Solver</h2>
+    <textarea id="ai-text" placeholder="Paste your doubt / question here..." rows="5" style="width:100%; padding:16px; border-radius:16px; border:1px solid var(--accent); background:transparent; color:var(--text); font-size:16px; resize:vertical;"></textarea>
+    
+    <div style="margin:24px 0;">
+      <label style="display:block; margin-bottom:12px; font-size:15px;">Or upload photo of question:</label>
+      <input type="file" id="ai-photo" accept="image/*" style="color:var(--text); font-size:15px;">
+    </div>
+
+    <button onclick="solveAIDoubt()" style="padding:14px 48px; background:var(--accent); color:#000; border:none; border-radius:50px; font-weight:700; font-size:17px; cursor:pointer; box-shadow:0 6px 20px rgba(0,245,255,0.5);">Solve Doubt</button>
+
+    <div id="ai-answer" style="margin-top:32px; padding:24px; background:rgba(0,245,255,0.1); border-radius:16px; min-height:160px; white-space:pre-wrap; border:1px dashed var(--muted);"></div>
+  </div>
+</div>
 
 <script>
 // ==================== LOADER ====================
@@ -360,7 +427,7 @@ const subjectsData = {
   ]},
   "class-7": { title: "Class 7", subjects: [
     { name: "Mathematics", icon: "📊", weightage: "Essential", chapters: ["Integers","Fractions and Decimals","Data Handling","Simple Equations","Lines and Angles","The Triangle and its Properties","Congruence of Triangles","Comparing Quantities","Rational Numbers","Practical Geometry","Perimeter and Area","Algebraic Expressions","Exponents and Powers","Symmetry","Visualising Solid Shapes"] },
-    { name: "Science", icon: "🧬", weightage: "Essential", chapters: ["Nutrition in Plants","Nutrition in Animals","Fibre to Fabric","Heat","Acids, Bases and Salts","Physical and Chemical Changes","Weather, Climate and Adaptations of Animals of Climate","Winds, Storms and Cyclones","Soil","Respiration in Organisms","Transportation in Animals and Plants","Reproduction in Plants","Motion and Time","Electric Current and its Effects","Light","Water – A Precious Resource","Forests – Our Lifeline","Wastewater Story"] },
+    { name: "Science", icon: "🧬", weightage: "Essential", chapters: ["Nutrition in Plants","Nutrition in Animals","Fibre to Fabric","Heat","Acids, Bases and Salts","Physical and Chemical Changes","Weather, Climate and Adaptations of Animals to Climate","Winds, Storms and Cyclones","Soil","Respiration in Organisms","Transportation in Animals and Plants","Reproduction in Plants","Motion and Time","Electric Current and its Effects","Light","Water: A Precious Resource","Forests: Our Lifeline","Wastewater Story"] },
     { name: "Social Science – History", icon: "📜", weightage: "Essential", chapters: ["Tracing Changes Through a Thousand Years","New Kings and Kingdoms","The Delhi Sultans","The Mughal Empire","Rulers and Buildings","Towns, Traders and Craftspersons","Tribes, Nomads and Settled Communities","Devotional Paths to the Divine","The Making of Regional Cultures","Eighteenth-Century Political Formations"] },
     { name: "Social Science – Geography", icon: "🌍", weightage: "Essential", chapters: ["Environment","Inside Our Earth","Our Changing Earth","Air","Water","Natural Vegetation and Wildlife","Human Environment – Settlement, Transport and Communication","Human Environment Interactions – The Tropical and Subtropical Region","Life in the Deserts"] },
     { name: "Social Science – Civics", icon: "⚖️", weightage: "Essential", chapters: ["On Equality","Role of the Government in Health","How the State Government Works","Growing up as Boys and Girls","Women Change the World","Understanding Media","Markets Around Us","A Shirt in the Market","Struggles for Equality"] },
@@ -405,7 +472,7 @@ const subjectsData = {
     { name: "Hindi", icon: "हिं", weightage: "Essential", chapters: ["आरोह – भाग 1","आरोह – भाग 2","वितान – भाग 1","वितान – भाग 2"] }
   ]},
   "class-12": { title: "Class 12 (PCM/PCB)", subjects: [
-    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics: Materials, Devices and Simple Circuits"] },
+    { name: "Physics", icon: "⚡", weightage: "33%", chapters: ["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics"] },
     { name: "Chemistry", icon: "🧪", weightage: "33%", chapters: ["Solutions","Electrochemistry","Chemical Kinetics","The d- and f-Block Elements","Coordination Compounds","Haloalkanes and Haloarenes","Alcohols, Phenols and Ethers","Aldehydes, Ketones and Carboxylic Acids","Amines","Biomolecules","Polymers","Chemistry in Everyday Life"] },
     { name: "Mathematics", icon: "📐", weightage: "33%", chapters: ["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Application of Derivatives","Integrals","Application of Integrals","Differential Equations","Vector Algebra","Three Dimensional Geometry","Linear Programming","Probability"] },
     { name: "Biology", icon: "🧬", weightage: "33%", chapters: ["Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health","Principles of Inheritance and Variation","Molecular Basis of Inheritance","Evolution","Human Health and Disease","Microbes in Human Welfare","Biotechnology: Principles and Processes","Biotechnology and its Applications","Organisms and Populations","Ecosystem","Biodiversity and Conservation","Environmental Issues"] },
@@ -420,7 +487,7 @@ const subjectsData = {
   "neet": { title: "NEET UG", subjects: [
     { name: "Physics", icon: "⚡", weightage: "25%", chapters: ["Kinematics","Laws of Motion","Work Energy Power","Rotational Motion","Gravitation","Thermodynamics","Electrostatics","Current Electricity","Magnetism","Optics","Modern Physics"] },
     { name: "Chemistry", icon: "🧪", weightage: "25%", chapters: ["Atomic Structure","Chemical Bonding","States of Matter","Thermodynamics","Equilibrium","Redox","Electrochemistry","Kinetics","Periodic Table","Coordination Compounds","Organic Chemistry","Hydrocarbons","Biomolecules"] },
-    { name: "Biology", icon: "🧬", weightage: "50%", chapters: ["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Cell: The Unit of Life","Biomolecules","Cell Cycle and Cell Division","Photosynthesis in Higher Plants","Respiration in Plants","Plant Growth and Development","Human Physiology","Reproduction","Genetics and Evolution","Biology and Human Welfare","Biotechnology","Ecology and Environment"] }
+    { name: "Biology", icon: "🧬", weightage: "50%", chapters: ["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Cell: Unit of Life","Biomolecules","Cell Cycle & Division","Photosynthesis","Respiration","Human Physiology","Reproduction","Genetics","Evolution","Human Health & Disease","Biotechnology"] }
   ]},
   "upsc": { title: "UPSC CSE", subjects: [
     { name: "General Studies Paper 1", icon: "📜", weightage: "25%", chapters: ["Indian Heritage & Culture","History & Geography of the World","Society"] },
@@ -430,7 +497,7 @@ const subjectsData = {
     { name: "CSAT", icon: "📊", weightage: "Qualifying", chapters: ["Comprehension","Interpersonal Skills","Logical Reasoning","Analytical Ability","Decision Making","Problem Solving","Basic Numeracy","Data Interpretation"] }
   ]},
   "ssc": { title: "SSC CGL / CHSL", subjects: [
-    { name: "Quantitative Aptitude", icon: "📊", weightage: "25%", chapters: ["Number System","Percentage","Profit & Loss","Simple & Compound Interest","Ratio & Proportion","Time & Work","Time & Distance","Geometry","Mensuration","Trigonometry","Algebra","Data Interpretation"] },
+    { name: "Quantitative Aptitude", icon: "📊", weightage: "25%", chapters: ["Number System","Percentage","Profit Loss","Simple & Compound Interest","Ratio & Proportion","Time & Work","Time & Distance","Geometry","Mensuration","Trigonometry","Algebra","Data Interpretation"] },
     { name: "English", icon: "📖", weightage: "25%", chapters: ["Grammar","Vocabulary","Reading Comprehension","Cloze Test","Sentence Improvement","Error Spotting","Para Jumbles","Fill in the Blanks"] },
     { name: "Reasoning", icon: "🧠", weightage: "25%", chapters: ["Analogy","Classification","Series","Coding-Decoding","Blood Relations","Direction Sense","Logical Venn Diagrams","Syllogism","Non-Verbal Reasoning"] },
     { name: "General Awareness", icon: "🌐", weightage: "25%", chapters: ["History","Geography","Polity","Economy","General Science","Current Affairs","Static GK"] }
@@ -440,7 +507,7 @@ const subjectsData = {
     { name: "CSAT", icon: "🧠", weightage: "Qualifying", chapters: ["Comprehension","Logical Reasoning","Quantitative Aptitude","Decision Making"] }
   ]},
   "bpsc": { title: "BPSC", subjects: [
-    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["History of India & Bihar","Geography of India & Bihar","Indian Polity","Indian Economy","Environment & Ecology","General Science","Current Affairs","Bihar Specific GK"] },
+    { name: "General Studies", icon: "📜", weightage: "50%", chapters: ["History of India & Bihar","Geography of India & Bihar","Indian Polity","Indian Economy","Environment & Ecology","Science & Technology","Current Affairs","Bihar Specific GK"] },
     { name: "CSAT", icon: "🧠", weightage: "20%", chapters: ["Quantitative Aptitude","Logical Reasoning","Reading Comprehension"] },
     { name: "Bihar GK", icon: "🌾", weightage: "30%", chapters: ["Bihar History & Culture","Bihar Geography","Bihar Economy","Bihar Polity & Administration","Current Affairs Bihar"] }
   ]}
@@ -638,6 +705,46 @@ function loadPDF(event) {
   const file = event.target.files[0];
   if (file) document.getElementById("pdfViewer").src = URL.createObjectURL(file);
 }
+
+// ==================== AI DOUBT SOLVER (Floating Button & Modal) ====================
+function openAIDoubtModal() {
+  document.getElementById("ai-modal").style.display = "flex";
+  document.getElementById("ai-text").focus();
+}
+
+function closeAIDoubtModal() {
+  document.getElementById("ai-modal").style.display = "none";
+  document.getElementById("ai-answer").innerHTML = "";
+}
+
+async function solveAIDoubt() {
+  const text = document.getElementById("ai-text").value.trim();
+  const photo = document.getElementById("ai-photo").files[0];
+  const answerDiv = document.getElementById("ai-answer");
+
+  if (!text && !photo) {
+    answerDiv.innerHTML = '<p style="color:#ff6666;">Please type a question or upload a photo.</p>';
+    return;
+  }
+
+  answerDiv.innerHTML = '<p style="color:var(--accent); font-weight:600;">Solving your doubt... please wait...</p>';
+
+  // Placeholder AI response (replace with real API later)
+  setTimeout(() => {
+    let response = "AI is thinking step by step...\n\n1. Understanding the question\n2. Recalling concept\n3. Solving with explanation\n\n**Answer:** 42 (example result)";
+
+    if (text.toLowerCase().includes("force")) {
+      response = "Newton's Second Law: F = m × a\nExample: mass = 5 kg, acceleration = 4 m/s² → Force = 20 N";
+    }
+
+    answerDiv.innerHTML = `<div style="white-space:pre-wrap; line-height:1.6;">${response}</div>`;
+  }, 1800);
+}
+
+// Close modal when clicking outside content
+document.getElementById("ai-modal").addEventListener("click", e => {
+  if (e.target === document.getElementById("ai-modal")) closeAIDoubtModal();
+});
 
 // ==================== INITIAL CALL ====================
 updateRecent();
