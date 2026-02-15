@@ -8,12 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
-:root{--bg:#000;--card:#111;--text:#fff;--muted:#aaa;--accent:#00f5ff;--accent2:#ff00c3;--accent3:#00ff88;--glow:0 0 30px rgba(0,245,255,0.3);--gradient:linear-gradient(135deg,#00f5ff,#ff00c3)}
-.light-mode{--bg:#f8f9fc;--card:#fff;--text:#111;--muted:#555;--accent:#00b8d4;--glow:none}
-.cyberpunk-theme{--bg:#0a0e27;--card:#1a1f3a;--text:#00ff41;--muted:#8b95c9;--accent:#ff2a6d;--accent2:#05d9e8;--accent3:#00ff41;--glow:0 0 30px rgba(255,42,109,0.4);--gradient:linear-gradient(135deg,#ff2a6d,#05d9e8,#00ff41)}
-.ocean-theme{--bg:#001021;--card:#0a2540;--text:#e0f4ff;--muted:#7fa5c8;--accent:#00d4ff;--accent2:#0a84ff;--accent3:#00ffc8;--glow:0 0 30px rgba(0,212,255,0.3);--gradient:linear-gradient(135deg,#00d4ff,#0a84ff)}
-.forest-theme{--bg:#0d1b0d;--card:#1a2e1a;--text:#e8f5e9;--muted:#81c784;--accent:#4caf50;--accent2:#8bc34a;--accent3:#00e676;--glow:0 0 30px rgba(76,175,80,0.3);--gradient:linear-gradient(135deg,#4caf50,#8bc34a)}
-.amoled-theme{--bg:#000000;--card:#0a0a0a;--text:#ffffff;--muted:#888888;--accent:#bb86fc;--accent2:#03dac6;--accent3:#cf6679;--glow:0 0 30px rgba(187,134,252,0.3);--gradient:linear-gradient(135deg,#bb86fc,#03dac6)}
+:root{--bg:#000000;--card:#0f0f0f;--text:#ffffff;--muted:#888888;--accent:#bb86fc;--accent2:#03dac6;--accent3:#cf6679;--glow:0 0 30px rgba(187,134,252,0.3);--gradient:linear-gradient(135deg,#bb86fc,#03dac6);--shadow:0 8px 32px rgba(0,0,0,0.4)}
+.light-mode{--bg:#f5f5f5;--card:#ffffff;--text:#1a1a1a;--muted:#666666;--accent:#6200ea;--accent2:#00b8d4;--accent3:#d32f2f;--glow:0 4px 20px rgba(98,0,234,0.2);--gradient:linear-gradient(135deg,#6200ea,#00b8d4);--shadow:0 4px 20px rgba(0,0,0,0.08)}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 #loader{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.8s}
@@ -39,10 +35,10 @@ main,#subject-detail{padding:130px 24px 100px}
 .section{margin-bottom:60px}
 .section h2{margin-bottom:28px;font-size:32px;font-weight:700;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
-.card{background:var(--card);padding:32px 24px;border-radius:24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s;font-weight:600;font-size:18px;border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden;will-change:transform;transform:translateZ(0);backface-visibility:hidden}
-.card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,245,255,0.1),transparent 70%);opacity:0;transition:opacity 0.4s,transform 0.6s;will-change:opacity,transform}
+.card{background:var(--card);padding:32px 24px;border-radius:20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s,background 0.3s;font-weight:600;font-size:18px;border:2px solid transparent;position:relative;overflow:hidden;will-change:transform;transform:translateZ(0);backface-visibility:hidden;box-shadow:var(--shadow)}
+.card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(187,134,252,0.15),transparent 70%);opacity:0;transition:opacity 0.4s,transform 0.6s;will-change:opacity,transform}
 .card:hover::before{opacity:1;transform:scale(1.5)}
-.card:hover{transform:translateY(-12px)scale(1.02)translateZ(0);box-shadow:var(--glow);border-color:var(--accent)}
+.card:hover{transform:translateY(-8px)translateZ(0);box-shadow:var(--glow);border-color:var(--accent);background:linear-gradient(135deg,var(--card),rgba(187,134,252,0.05))}
 .card .arrow{font-size:32px;color:var(--accent);transition:0.4s}
 .card:hover .arrow{transform:translateX(12px)rotate(-45deg)}
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:40px}
@@ -59,9 +55,9 @@ main,#subject-detail{padding:130px 24px 100px}
 #search-input{width:100%;padding:16px 24px;margin:20px 0 32px;border-radius:50px;border:2px solid var(--accent);background:var(--card);color:var(--text);font-size:16px;outline:none;transition:0.3s}
 #search-input:focus{box-shadow:0 0 20px rgba(0,245,255,0.3);transform:scale(1.02)}
 .subjects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-.subject-card{background:var(--card);padding:32px 28px;border-radius:24px;display:flex;flex-direction:column;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s;border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden;cursor:pointer;will-change:transform;transform:translateZ(0)}
-.subject-card:hover{transform:translateY(-14px)scale(1.02)translateZ(0);box-shadow:0 20px 60px rgba(0,245,255,0.3)}
-.subject-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--gradient);opacity:0;transition:opacity 0.3s;will-change:opacity}
+.subject-card{background:var(--card);padding:32px 28px;border-radius:20px;display:flex;flex-direction:column;transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s,background 0.3s;border:2px solid transparent;position:relative;overflow:hidden;cursor:pointer;will-change:transform;transform:translateZ(0);box-shadow:var(--shadow)}
+.subject-card:hover{transform:translateY(-10px)translateZ(0);box-shadow:var(--glow);border-color:var(--accent);background:linear-gradient(135deg,var(--card),rgba(187,134,252,0.05))}
+.subject-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:var(--gradient);opacity:0;transition:opacity 0.3s;will-change:opacity;border-radius:20px 20px 0 0}
 .subject-card:hover::before{opacity:1}
 .subject-icon{font-size:52px;margin-bottom:20px}
 .subject-name{font-size:22px;font-weight:700;margin-bottom:8px}
@@ -109,7 +105,9 @@ main,#subject-detail{padding:130px 24px 100px}
 .note-delete:hover{background:#ff4444;color:#000;transform:rotate(90deg)}
 .add-note-btn{position:fixed;bottom:100px;right:30px;width:60px;height:60px;border-radius:50%;background:var(--gradient);color:#fff;border:none;font-size:32px;cursor:pointer;box-shadow:0 8px 30px rgba(0,245,255,0.5);transition:0.3s;z-index:999}
 .add-note-btn:hover{transform:scale(1.15)rotate(90deg)}
-.quiz-card{background:var(--card);padding:40px;border-radius:24px;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 60px rgba(0,0,0,0.5);max-width:800px;margin:0 auto}
+.quiz-card{background:var(--card);padding:40px;border-radius:20px;border:2px solid transparent;box-shadow:var(--shadow);max-width:900px;margin:0 auto}
+.quiz-category-card{background:var(--card);padding:32px 24px;border-radius:20px;border:2px solid transparent;cursor:pointer;transition:all 0.3s;text-align:center;box-shadow:var(--shadow)}
+.quiz-category-card:hover{transform:translateY(-8px);box-shadow:var(--glow);border-color:var(--accent);background:linear-gradient(135deg,var(--card),rgba(187,134,252,0.05))}
 .quiz-progress{font-size:18px;color:var(--accent);font-weight:600}
 .quiz-question{font-size:24px;font-weight:700;margin-bottom:30px}
 .quiz-options{display:flex;flex-direction:column;gap:15px;margin-bottom:30px}
@@ -129,15 +127,19 @@ main,#subject-detail{padding:130px 24px 100px}
 .timer-stat{text-align:center}
 .timer-stat-value{font-size:36px;font-weight:800;color:var(--accent)}
 .timer-stat-label{font-size:14px;color:var(--muted);margin-top:8px}
-#periodic-table{perspective:2000px;background:radial-gradient(ellipse at center,#0a0a0a,#000)}
-#periodic-table h2{text-align:center;margin:40px 0;font-size:48px;background:linear-gradient(90deg,#00f5ff,#ff00c3,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
-#periodic-grid{display:grid;grid-template-columns:repeat(18,70px);gap:4px;min-width:1300px}
-.element-cell{width:70px;height:70px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.25s cubic-bezier(0.4,0,0.2,1),box-shadow 0.25s;border:2px solid rgba(255,255,255,0.1);position:relative;will-change:transform;transform:translateZ(0);backface-visibility:hidden}
-.element-cell:hover{transform:translateY(-8px)scale(1.1)translateZ(0);box-shadow:0 10px 30px rgba(0,245,255,0.5);z-index:10}
-.element-number{font-size:10px;color:var(--muted);position:absolute;top:4px;left:6px}
-.element-symbol{font-size:24px;font-weight:800;margin:8px 0}
-.element-name{font-size:9px;color:var(--muted)}
-.element-mass{font-size:8px;color:var(--muted);position:absolute;bottom:4px}
+#periodic-table{perspective:2000px;background:var(--bg)}
+#periodic-table h2{text-align:center;margin:40px 0;font-size:48px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+.filter-btn{padding:12px 24px;border-radius:12px;border:2px solid transparent;background:var(--card);color:var(--text);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s;box-shadow:var(--shadow)}
+.filter-btn:hover{transform:translateY(-3px);box-shadow:var(--glow);border-color:var(--accent)}
+.filter-btn.active{border-color:var(--accent);box-shadow:var(--glow);transform:scale(1.05)}
+#periodic-grid{display:grid;grid-template-columns:repeat(18,74px);gap:5px;min-width:1360px}
+.element-cell{width:74px;height:74px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);border:2px solid rgba(255,255,255,0.15);position:relative;will-change:transform;transform:translateZ(0) perspective(1000px);backface-visibility:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+.element-cell:hover{transform:translateY(-10px) rotateX(10deg) rotateY(5deg) scale(1.15) translateZ(20px);box-shadow:0 15px 40px rgba(187,134,252,0.6),0 0 30px var(--accent);z-index:100;border-color:var(--accent)}
+.element-cell.filtered{opacity:0.2;transform:scale(0.9);pointer-events:none}
+.element-number{font-size:10px;color:var(--muted);position:absolute;top:6px;left:8px;font-weight:600}
+.element-symbol{font-size:26px;font-weight:900;margin:10px 0 2px;text-shadow:0 2px 8px rgba(0,0,0,0.4)}
+.element-name{font-size:9px;color:var(--muted);font-weight:500}
+.element-mass{font-size:8px;color:var(--muted);position:absolute;bottom:6px;font-weight:500}
 .alkali-metal{background:linear-gradient(135deg,#ff6b6b,#ee5a6f)}
 .alkaline-earth{background:linear-gradient(135deg,#ffd93d,#fcbf49)}
 .transition-metal{background:linear-gradient(135deg,#f77062,#fe5196)}
@@ -178,30 +180,18 @@ main,#subject-detail{padding:130px 24px 100px}
 
 <header>
 <div class="menu-btn" onclick="toggleSidebar()">☰</div>
-<div class="logo" onclick="showHome()">Quantum</div>
-<div style="display:flex;gap:15px;align-items:center">
-<select id="theme-selector" onchange="changeTheme(this.value)" style="background:var(--card);color:var(--text);border:1px solid var(--accent);border-radius:20px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer;outline:none">
-<option value="dark">Dark</option>
-<option value="light">Light</option>
-<option value="cyberpunk">Cyberpunk</option>
-<option value="ocean">Ocean</option>
-<option value="forest">Forest</option>
-<option value="amoled">AMOLED</option>
-</select>
+<div class="logo" onclick="showHome()">QUANTUM</div>
 <div class="mode-toggle" onclick="toggleMode()"><div class="mode-ball"></div></div>
-</div>
 </header>
 
 <div class="sidebar" id="sidebar">
 <a href="#" onclick="showHome()">🏠 Home</a>
 <a href="#" onclick="showCalculator()">🧮 Calculator</a>
 <a href="#" onclick="showScientificCalc()">🔬 Scientific Calculator</a>
-<a href="#" onclick="showStopwatch()">⏱ Stopwatch</a>
 <a href="#" onclick="showPeriodicTable()">🧪 Periodic Table</a>
-<a href="#" onclick="showLibrary()">📚 Smart Library</a>
+<a href="#" onclick="showLibrary()">📚 PDF Library</a>
 <a href="#" onclick="showNotes()">📝 Notes</a>
-<a href="#" onclick="showQuiz()">🎯 Quiz</a>
-<a href="#" onclick="showPYQ()">📋 Previous Year Papers</a>
+<a href="#" onclick="showQuiz()">🎯 Practice & Tests</a>
 <a href="#" onclick="showVideoLibrary()">📺 Video Library</a>
 <a href="#" onclick="showStudyTimer()">⏲️ Study Timer</a>
 </div>
@@ -320,26 +310,27 @@ main,#subject-detail{padding:130px 24px 100px}
 </div>
 </section>
 
-<section id="stopwatch">
-<button class="back-btn" onclick="showHome()">← Back</button>
-<div style="max-width:500px;margin:0 auto;text-align:center">
-<div class="time" id="time">00:00:00</div>
-<div class="sw-buttons">
-<button onclick="startSW()">▶ Start</button>
-<button onclick="stopSW()">⏸ Stop</button>
-<button onclick="resetSW()">↻ Reset</button>
-<button onclick="lapSW()">🏁 Lap</button>
-</div>
-<div class="laps-container" id="laps" style="display:none"><h3 style="color:var(--accent);margin-bottom:15px">Lap Times</h3><div id="lap-list"></div></div>
-</div>
-</section>
-
 <section id="periodic-table">
 <button class="back-btn" onclick="showHome()">← Back</button>
-<h2>⚛️ 3D Periodic Table - All 118 Elements ⚛️</h2>
-<p style="text-align:center;font-size:18px;margin-bottom:30px;color:var(--muted)">Click any element to view detailed information</p>
-<div id="periodic-container" style="overflow-x:auto;padding:20px;background:var(--card);border-radius:20px;margin-bottom:30px">
+<h2 style="text-align:center;margin:20px 0 10px;font-size:48px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900">⚛️ Interactive Periodic Table</h2>
+<p style="text-align:center;color:var(--muted);margin-bottom:30px;font-size:16px">All 118 elements with detailed specifications</p>
+<div style="max-width:1400px;margin:0 auto">
+<div id="element-filters" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;padding:20px;background:var(--card);border-radius:20px;box-shadow:var(--shadow)">
+<button class="filter-btn active" onclick="filterElements('all')" data-category="all">All Elements</button>
+<button class="filter-btn" onclick="filterElements('alkali-metal')" data-category="alkali-metal" style="background:linear-gradient(135deg,#ff6b6b,#ee5a6f)">Alkali Metals</button>
+<button class="filter-btn" onclick="filterElements('alkaline-earth')" data-category="alkaline-earth" style="background:linear-gradient(135deg,#ffd93d,#fcbf49)">Alkaline Earth</button>
+<button class="filter-btn" onclick="filterElements('transition-metal')" data-category="transition-metal" style="background:linear-gradient(135deg,#f77062,#fe5196)">Transition Metals</button>
+<button class="filter-btn" onclick="filterElements('post-transition')" data-category="post-transition" style="background:linear-gradient(135deg,#a8dadc,#457b9d)">Post-transition</button>
+<button class="filter-btn" onclick="filterElements('metalloid')" data-category="metalloid" style="background:linear-gradient(135deg,#4ecdc4,#44a08d)">Metalloids</button>
+<button class="filter-btn" onclick="filterElements('nonmetal')" data-category="nonmetal" style="background:linear-gradient(135deg,#95e1d3,#38ada9)">Nonmetals</button>
+<button class="filter-btn" onclick="filterElements('halogen')" data-category="halogen" style="background:linear-gradient(135deg,#f38181,#aa96da)">Halogens</button>
+<button class="filter-btn" onclick="filterElements('noble-gas')" data-category="noble-gas" style="background:linear-gradient(135deg,#c7b2de,#9370db)">Noble Gases</button>
+<button class="filter-btn" onclick="filterElements('lanthanide')" data-category="lanthanide" style="background:linear-gradient(135deg,#ff9ff3,#feca57)">Lanthanides</button>
+<button class="filter-btn" onclick="filterElements('actinide')" data-category="actinide" style="background:linear-gradient(135deg,#ff6348,#ff4757)">Actinides</button>
+</div>
+<div id="periodic-container" style="overflow-x:auto;padding:20px;background:var(--card);border-radius:20px;box-shadow:var(--shadow)">
 <div id="periodic-grid"></div>
+</div>
 </div>
 </section>
 
@@ -392,35 +383,67 @@ main,#subject-detail{padding:130px 24px 100px}
 
 <section id="quiz-app">
 <button class="back-btn" onclick="showHome()">← Back</button>
+<div style="max-width:1200px;margin:0 auto">
+<h1 style="font-size:42px;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;text-align:center">🎯 Practice & Tests</h1>
+<p style="text-align:center;color:var(--muted);margin-bottom:40px;font-size:16px">Choose your class or exam to practice questions & access previous year papers</p>
+
+<div id="quiz-selection" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:40px">
+<div class="quiz-category-card" onclick="startQuizForCategory('class-10')">
+<div style="font-size:48px;margin-bottom:15px">📚</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">Class 10</div>
+<div style="font-size:14px;color:var(--muted)">CBSE Board Questions</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('class-12')">
+<div style="font-size:48px;margin-bottom:15px">🎓</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">Class 12</div>
+<div style="font-size:14px;color:var(--muted)">CBSE Board Questions</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('jee')">
+<div style="font-size:48px;margin-bottom:15px">🔬</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">JEE Main & Advanced</div>
+<div style="font-size:14px;color:var(--muted)">Engineering Entrance</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('neet')">
+<div style="font-size:48px;margin-bottom:15px">🧬</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">NEET</div>
+<div style="font-size:14px;color:var(--muted)">Medical Entrance</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('general')">
+<div style="font-size:48px;margin-bottom:15px">🧠</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">General Knowledge</div>
+<div style="font-size:14px;color:var(--muted)">Mixed Topics</div>
+</div>
+</div>
+
+<div id="quiz-interface" style="display:none">
 <div class="quiz-card">
 <div style="display:flex;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;align-items:center">
-<h2 style="color:var(--accent)">🎯 Quiz Master</h2>
-<div style="display:flex;gap:15px;align-items:center">
+<h2 style="color:var(--accent)" id="quiz-category-title">🎯 Quiz</h2>
+<div style="display:flex;gap:15px;align-items:center;flex-wrap:wrap">
 <div class="quiz-progress" id="quiz-progress">Question 1</div>
 <div style="font-size:18px;font-weight:700">Score: <span id="quiz-score-display" style="color:var(--accent)">0</span></div>
 </div>
 </div>
 <div class="quiz-question" id="quiz-question">Loading quiz...</div>
 <div class="quiz-options" id="quiz-options"></div>
-<div style="display:flex;gap:15px;margin-top:20px">
+<div style="display:flex;gap:15px;margin-top:20px;flex-wrap:wrap">
 <button class="quiz-submit" onclick="nextQuestion()" id="next-btn" style="flex:1">Next Question →</button>
-<button class="quiz-submit" onclick="resetQuiz()" style="flex:1;background:var(--card);border:2px solid var(--accent)">Restart Quiz</button>
+<button class="quiz-submit" onclick="showQuizSelection()" style="flex:1;background:var(--card);border:2px solid var(--accent)">← Back to Categories</button>
 </div>
-<div id="quiz-stats" style="margin-top:30px;padding:20px;background:rgba(0,245,255,0.05);border-radius:16px;border:1px solid rgba(0,245,255,0.2)">
+<div id="quiz-stats" style="margin-top:30px;padding:25px;background:linear-gradient(135deg,rgba(187,134,252,0.1),rgba(3,218,198,0.1));border-radius:16px;border:2px solid var(--accent);box-shadow:var(--glow)">
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;text-align:center">
-<div><div style="font-size:28px;font-weight:800;color:#00ff88" id="correct-count">0</div><div style="font-size:12px;color:var(--muted)">Correct</div></div>
-<div><div style="font-size:28px;font-weight:800;color:#ff4444" id="wrong-count">0</div><div style="font-size:12px;color:var(--muted)">Wrong</div></div>
-<div><div style="font-size:28px;font-weight:800;color:var(--accent)" id="total-count">0</div><div style="font-size:12px;color:var(--muted)">Total</div></div>
+<div><div style="font-size:32px;font-weight:900;color:#00ff88" id="correct-count">0</div><div style="font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:600">Correct</div></div>
+<div><div style="font-size:32px;font-weight:900;color:#ff4444" id="wrong-count">0</div><div style="font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:600">Wrong</div></div>
+<div><div style="font-size:32px;font-weight:900;color:var(--accent)" id="total-count">0</div><div style="font-size:12px;color:var(--muted);text-transform:uppercase;font-weight:600">Total</div></div>
 </div>
 </div>
 </div>
-</section>
 
-<section id="pyq">
-<button class="back-btn" onclick="showHome()">← Back</button>
-<h1 style="font-size:42px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:30px;text-align:center">📋 Previous Year Question Papers</h1>
-<div style="max-width:1200px;margin:0 auto">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px" id="pyq-grid"></div>
+<div id="pyq-section" style="margin-top:50px;padding:30px;background:var(--card);border-radius:20px;box-shadow:var(--shadow)">
+<h3 style="font-size:28px;font-weight:700;margin-bottom:20px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent">📋 Previous Year Question Papers</h3>
+<div id="pyq-links" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px"></div>
+</div>
+</div>
 </div>
 </section>
 
@@ -500,12 +523,10 @@ function hideAll(){
   document.getElementById('subject-detail').style.display='none';
   document.getElementById('calculator').style.display='none';
   document.getElementById('scientific-calc').style.display='none';
-  document.getElementById('stopwatch').style.display='none';
   document.getElementById('periodic-table').style.display='none';
   document.getElementById('library').style.display='none';
   document.getElementById('notes-app').style.display='none';
   document.getElementById('quiz-app').style.display='none';
-  document.getElementById('pyq').style.display='none';
   document.getElementById('video-library').style.display='none';
   document.getElementById('study-timer').style.display='none';
   document.getElementById('sidebar').classList.remove('open');
@@ -514,12 +535,10 @@ function hideAll(){
 function showHome(){hideAll();document.getElementById('home').style.display='block';updateStats()}
 function showCalculator(){hideAll();document.getElementById('calculator').style.display='block'}
 function showScientificCalc(){hideAll();document.getElementById('scientific-calc').style.display='block'}
-function showStopwatch(){hideAll();document.getElementById('stopwatch').style.display='block'}
 function showPeriodicTable(){hideAll();document.getElementById('periodic-table').style.display='block';requestAnimationFrame(()=>renderPeriodicTable())}
 function showLibrary(){hideAll();document.getElementById('library').style.display='block'}
 function showNotes(){hideAll();document.getElementById('notes-app').style.display='block';renderNotes()}
-function showQuiz(){hideAll();document.getElementById('quiz-app').style.display='block';loadQuiz()}
-function showPYQ(){hideAll();document.getElementById('pyq').style.display='block';loadPYQ()}
+function showQuiz(){hideAll();document.getElementById('quiz-app').style.display='block';showQuizSelection()}
 function showVideoLibrary(){hideAll();document.getElementById('video-library').style.display='block';loadVideoLibrary()}
 function showStudyTimer(){hideAll();document.getElementById('study-timer').style.display='block'}
 
@@ -736,21 +755,12 @@ document.getElementById('search-input').addEventListener('input',e=>{
   });
 });
 
-// ==================== THEME MANAGEMENT ====================
-function changeTheme(theme){
-  document.body.className='';
-  if(theme==='light')document.body.classList.add('light-mode');
-  else if(theme==='cyberpunk')document.body.classList.add('cyberpunk-theme');
-  else if(theme==='ocean')document.body.classList.add('ocean-theme');
-  else if(theme==='forest')document.body.classList.add('forest-theme');
-  else if(theme==='amoled')document.body.classList.add('amoled-theme');
-  localStorage.setItem('quantum-theme',theme);
+// ==================== THEME MANAGEMENT (SIMPLIFIED) ====================
+if(localStorage.getItem('quantum-theme')==='light')document.body.classList.add('light-mode');
+function toggleMode(){
+  document.body.classList.toggle('light-mode');
+  localStorage.setItem('quantum-theme',document.body.classList.contains('light-mode')?'light':'dark');
 }
-
-// Load saved theme
-const savedTheme=localStorage.getItem('quantum-theme')||'dark';
-document.getElementById('theme-selector').value=savedTheme;
-changeTheme(savedTheme);
 
 // ==================== CALCULATOR ====================
 let display=document.getElementById('display');
@@ -804,34 +814,6 @@ function sciCalculate(){
     sciDisplay.innerText='Error';
     setTimeout(()=>sciDisplay.innerText='0',1200);
   }
-}
-
-// ==================== STOPWATCH ====================
-let swInterval,seconds=0,laps=[];
-function startSW(){if(swInterval)return;swInterval=setInterval(()=>{seconds++;updateSWTime()},1000)}
-function stopSW(){clearInterval(swInterval);swInterval=null}
-function resetSW(){stopSW();seconds=0;laps=[];updateSWTime();document.getElementById('laps').style.display='none'}
-function lapSW(){
-  const lapTime=formatTime(seconds);
-  laps.push(lapTime);
-  const lapList=document.getElementById('lap-list');
-  const item=document.createElement('div');
-  item.className='lap-item';
-  item.innerHTML=`<span>Lap ${laps.length}</span><span>${lapTime}</span>`;
-  lapList.appendChild(item);
-  document.getElementById('laps').style.display='block';
-}
-function updateSWTime(){
-  let h=String(Math.floor(seconds/3600)).padStart(2,'0');
-  let m=String(Math.floor((seconds%3600)/60)).padStart(2,'0');
-  let s=String(seconds%60).padStart(2,'0');
-  document.getElementById('time').innerText=`${h}:${m}:${s}`;
-}
-function formatTime(sec){
-  let h=String(Math.floor(sec/3600)).padStart(2,'0');
-  let m=String(Math.floor((sec%3600)/60)).padStart(2,'0');
-  let s=String(sec%60).padStart(2,'0');
-  return `${h}:${m}:${s}`;
 }
 
 // ==================== PDF LIBRARY (PROFESSIONAL ADOBE-LEVEL) ====================
@@ -1251,68 +1233,6 @@ async function solveAIDoubt(){
   }
 }
 
-// ==================== PREVIOUS YEAR QUESTIONS (PYQ) ====================
-const pyqData={
-  'CBSE Class 10':[
-    {year:2024,subject:'Mathematics',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Maths+2024+solutions'},
-    {year:2024,subject:'Science',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Science+2024+solutions'},
-    {year:2023,subject:'Mathematics',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Maths+2023+solutions'},
-    {year:2023,subject:'Science',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Science+2023+solutions'},
-    {year:2022,subject:'Mathematics',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Maths+2022+solutions'},
-    {year:2022,subject:'Science',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Science+2022+solutions'}
-  ],
-  'CBSE Class 12':[
-    {year:2024,subject:'Physics',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Physics+2024+solutions'},
-    {year:2024,subject:'Chemistry',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Chemistry+2024+solutions'},
-    {year:2024,subject:'Mathematics',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Maths+2024+solutions'},
-    {year:2023,subject:'Physics',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Physics+2023+solutions'},
-    {year:2023,subject:'Chemistry',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Chemistry+2023+solutions'},
-    {year:2023,subject:'Mathematics',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Maths+2023+solutions'}
-  ],
-  'JEE Main':[
-    {year:2024,session:'Jan',link:'https://www.youtube.com/results?search_query=JEE+Main+2024+January+solutions'},
-    {year:2024,session:'Apr',link:'https://www.youtube.com/results?search_query=JEE+Main+2024+April+solutions'},
-    {year:2023,session:'Jan',link:'https://www.youtube.com/results?search_query=JEE+Main+2023+January+solutions'},
-    {year:2023,session:'Apr',link:'https://www.youtube.com/results?search_query=JEE+Main+2023+April+solutions'}
-  ],
-  'JEE Advanced':[
-    {year:2024,paper:'Paper 1',link:'https://www.youtube.com/results?search_query=JEE+Advanced+2024+Paper+1+solutions'},
-    {year:2024,paper:'Paper 2',link:'https://www.youtube.com/results?search_query=JEE+Advanced+2024+Paper+2+solutions'},
-    {year:2023,paper:'Paper 1',link:'https://www.youtube.com/results?search_query=JEE+Advanced+2023+Paper+1+solutions'},
-    {year:2023,paper:'Paper 2',link:'https://www.youtube.com/results?search_query=JEE+Advanced+2023+Paper+2+solutions'}
-  ],
-  'NEET':[
-    {year:2024,link:'https://www.youtube.com/results?search_query=NEET+2024+solutions+all+questions'},
-    {year:2023,link:'https://www.youtube.com/results?search_query=NEET+2023+solutions+all+questions'},
-    {year:2022,link:'https://www.youtube.com/results?search_query=NEET+2022+solutions+all+questions'}
-  ]
-};
-
-function loadPYQ(){
-  const grid=document.getElementById('pyq-grid');
-  grid.innerHTML='';
-  Object.keys(pyqData).forEach(exam=>{
-    const section=document.createElement('div');
-    section.style.marginBottom='40px';
-    const heading=document.createElement('h3');
-    heading.style.cssText='font-size:24px;font-weight:700;margin-bottom:20px;color:var(--accent)';
-    heading.textContent=exam;
-    grid.appendChild(heading);
-    
-    pyqData[exam].forEach(paper=>{
-      const card=document.createElement('div');
-      card.className='note-card';
-      card.style.cursor='pointer';
-      card.innerHTML=`
-        <div style="font-size:20px;font-weight:700;color:var(--accent);margin-bottom:8px">${paper.year}${paper.session?' - '+paper.session:''}${paper.subject?' - '+paper.subject:''}${paper.paper?' - '+paper.paper:''}</div>
-        <div style="font-size:14px;color:var(--muted)">Click to view solutions</div>
-      `;
-      card.onclick=()=>window.open(paper.link,'_blank');
-      grid.appendChild(card);
-    });
-  });
-}
-
 // ==================== VIDEO LIBRARY ====================
 const videoLibraryData={
   'Class 10 Maths':[
@@ -1602,16 +1522,105 @@ function closeElementModal(){
 
 document.getElementById('element-modal').onclick=closeElementModal;
 
+// ==================== PERIODIC TABLE FILTERS ====================
+function filterElements(category){
+  document.querySelectorAll('.filter-btn').forEach(btn=>btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  document.querySelectorAll('.element-cell').forEach(cell=>{
+    if(category==='all'||cell.classList.contains(category)){
+      cell.classList.remove('filtered');
+    }else{
+      cell.classList.add('filtered');
+    }
+  });
+}
+
+// ==================== QUIZ WITH CATEGORY SELECTION ====================
+let currentCategory='general';
+
+function showQuizSelection(){
+  document.getElementById('quiz-selection').style.display='grid';
+  document.getElementById('quiz-interface').style.display='none';
+  loadPYQForCategory(currentCategory);
+}
+
+function startQuizForCategory(category){
+  currentCategory=category;
+  document.getElementById('quiz-selection').style.display='none';
+  document.getElementById('quiz-interface').style.display='block';
+  document.getElementById('quiz-category-title').textContent=getCategoryTitle(category);
+  loadQuiz();
+  loadPYQForCategory(category);
+}
+
+function getCategoryTitle(category){
+  const titles={
+    'class-10':'🎯 Class 10 Quiz',
+    'class-12':'🎯 Class 12 Quiz',
+    'jee':'🎯 JEE Quiz',
+    'neet':'🎯 NEET Quiz',
+    'general':'🎯 General Knowledge Quiz'
+  };
+  return titles[category]||'🎯 Quiz';
+}
+
+function loadPYQForCategory(category){
+  const pyqLinks=document.getElementById('pyq-links');
+  if(!pyqLinks)return;
+  pyqLinks.innerHTML='';
+  
+  const pyqData={
+    'class-10':[
+      {year:2024,subject:'Maths',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Maths+2024+solutions'},
+      {year:2024,subject:'Science',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Science+2024+solutions'},
+      {year:2023,subject:'Maths',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Maths+2023+solutions'},
+      {year:2023,subject:'Science',link:'https://www.youtube.com/results?search_query=CBSE+Class+10+Science+2023+solutions'}
+    ],
+    'class-12':[
+      {year:2024,subject:'Physics',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Physics+2024+solutions'},
+      {year:2024,subject:'Chemistry',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Chemistry+2024+solutions'},
+      {year:2023,subject:'Physics',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Physics+2023+solutions'},
+      {year:2023,subject:'Chemistry',link:'https://www.youtube.com/results?search_query=CBSE+Class+12+Chemistry+2023+solutions'}
+    ],
+    'jee':[
+      {year:2024,session:'Jan',link:'https://www.youtube.com/results?search_query=JEE+Main+2024+January+solutions'},
+      {year:2024,session:'Apr',link:'https://www.youtube.com/results?search_query=JEE+Main+2024+April+solutions'},
+      {year:2023,session:'Jan',link:'https://www.youtube.com/results?search_query=JEE+Main+2023+January+solutions'}
+    ],
+    'neet':[
+      {year:2024,link:'https://www.youtube.com/results?search_query=NEET+2024+solutions'},
+      {year:2023,link:'https://www.youtube.com/results?search_query=NEET+2023+solutions'},
+      {year:2022,link:'https://www.youtube.com/results?search_query=NEET+2022+solutions'}
+    ]
+  };
+  
+  const papers=pyqData[category]||[];
+  papers.forEach(paper=>{
+    const card=document.createElement('div');
+    card.style.cssText='padding:20px;background:linear-gradient(135deg,rgba(187,134,252,0.1),rgba(3,218,198,0.1));border-radius:12px;cursor:pointer;border:2px solid var(--accent);transition:all 0.3s';
+    card.innerHTML=`
+      <div style="font-size:18px;font-weight:700;color:var(--accent);margin-bottom:8px">${paper.year}${paper.session?' - '+paper.session:''}${paper.subject?' - '+paper.subject:''}</div>
+      <div style="font-size:14px;color:var(--muted)">Click to view solutions →</div>
+    `;
+    card.onclick=()=>window.open(paper.link,'_blank');
+    card.onmouseenter=()=>{card.style.transform='translateY(-5px)';card.style.boxShadow='var(--glow)'};
+    card.onmouseleave=()=>{card.style.transform='';card.style.boxShadow=''};
+    pyqLinks.appendChild(card);
+  });
+}
+
 // ==================== INITIALIZE ====================
 updateRecent();
 updateStats();
-console.log('✅ Quantum Platform v2.1 - ENHANCED EDITION!');
-console.log('🎯 NEW: Unlimited Quiz Questions with Instant Feedback!');
-console.log('📚 NEW: Professional PDF Viewer with Fullscreen & Smooth Navigation!');
-console.log('✅ All Previous Features: Themes, Calculator, Periodic Table, Video Library, PYQ');
-console.log('🚀 Performance Optimized - Buttery Smooth Experience!');
-console.log('💡 PDF Controls: Arrow keys to navigate, +/- to zoom, F for fullscreen');
-console.log('🎮 Quiz: Answer questions to see instant green (correct) or red (wrong) feedback!');
+console.log('✨ QUANTUM PLATFORM v3.0 - POLISHED & PERFECTED! ✨');
+console.log('🎨 Clean UI: AMOLED Black & Light themes only');
+console.log('⚛️ God-Level Periodic Table: 3D effects + category filters');
+console.log('🎯 Practice & Tests: Choose your class/exam, unlimited questions + PYQ');
+console.log('📚 Adobe-Level PDF Viewer: Fullscreen, rotation, smooth navigation');
+console.log('🚀 Performance: GPU accelerated, buttery smooth animations');
+console.log('✅ All Features Intact: Subjects, Chapters, Calculators, Notes, Videos');
+console.log('💡 Streamlined: Removed redundant features, kept what matters!');
 </script>
 
 </body>
