@@ -356,14 +356,30 @@ main,#subject-detail{padding:130px 24px 100px}
 <label for="pdf-file-input" class="file-input-label">📄 Upload PDF</label>
 <input type="file" id="pdf-file-input" accept="application/pdf" onchange="loadPDFFile(event)">
 <div id="pdf-viewer" style="display:none;margin-top:30px">
-<div class="pdf-controls">
-<button class="pdf-btn" onclick="prevPage()" id="prev-btn">◀ Prev</button>
-<span style="color:var(--accent);font-weight:600"><span id="page-num">1</span> / <span id="page-count">1</span></span>
+<div class="pdf-controls" style="background:var(--card);padding:20px;border-radius:16px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.1)">
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:15px">
+<button class="pdf-btn" onclick="prevPage()" id="prev-btn">◀ Previous</button>
 <button class="pdf-btn" onclick="nextPage()" id="next-btn">Next ▶</button>
-<button class="pdf-btn" onclick="zoomIn()">🔍+</button>
-<button class="pdf-btn" onclick="zoomOut()">🔍-</button>
+<button class="pdf-btn" onclick="firstPage()">⏮ First</button>
+<button class="pdf-btn" onclick="lastPage()">Last ⏭</button>
 </div>
-<div id="pdf-canvas-container"><canvas id="pdf-canvas"></canvas></div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:15px">
+<button class="pdf-btn" onclick="zoomIn()">🔍 Zoom In</button>
+<button class="pdf-btn" onclick="zoomOut()">🔍 Zoom Out</button>
+<button class="pdf-btn" onclick="resetZoom()">↻ Reset Zoom</button>
+<button class="pdf-btn" onclick="fitToWidth()">↔️ Fit Width</button>
+<button class="pdf-btn" onclick="fitToPage()">⬜ Fit Page</button>
+</div>
+<div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap">
+<span style="color:var(--accent);font-weight:600;font-size:16px">Page <span id="page-num">1</span> / <span id="page-count">1</span></span>
+<span style="color:var(--muted)">|</span>
+<span style="color:var(--accent);font-weight:600;font-size:16px">Zoom: <span id="zoom-level">150</span>%</span>
+<span style="color:var(--muted)">|</span>
+<button class="pdf-btn" onclick="toggleFullscreen()" id="fullscreen-btn">⛶ Fullscreen</button>
+<button class="pdf-btn" onclick="rotatePage()">🔄 Rotate</button>
+</div>
+</div>
+<div id="pdf-canvas-container" style="overflow:auto;max-height:75vh;display:flex;justify-content:center;background:#2a2a2a;border-radius:16px;padding:30px;position:relative"><canvas id="pdf-canvas" style="box-shadow:0 10px 40px rgba(0,0,0,0.8);border-radius:4px"></canvas></div>
 </div>
 </section>
 
@@ -377,10 +393,26 @@ main,#subject-detail{padding:130px 24px 100px}
 <section id="quiz-app">
 <button class="back-btn" onclick="showHome()">← Back</button>
 <div class="quiz-card">
-<div style="display:flex;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap"><h2 style="color:var(--accent)">🎯 Quiz Master</h2><div class="quiz-progress" id="quiz-progress">Question 1/5</div></div>
+<div style="display:flex;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;align-items:center">
+<h2 style="color:var(--accent)">🎯 Quiz Master</h2>
+<div style="display:flex;gap:15px;align-items:center">
+<div class="quiz-progress" id="quiz-progress">Question 1</div>
+<div style="font-size:18px;font-weight:700">Score: <span id="quiz-score-display" style="color:var(--accent)">0</span></div>
+</div>
+</div>
 <div class="quiz-question" id="quiz-question">Loading quiz...</div>
 <div class="quiz-options" id="quiz-options"></div>
-<button class="quiz-submit" onclick="submitQuiz()">Submit Answer</button>
+<div style="display:flex;gap:15px;margin-top:20px">
+<button class="quiz-submit" onclick="nextQuestion()" id="next-btn" style="flex:1">Next Question →</button>
+<button class="quiz-submit" onclick="resetQuiz()" style="flex:1;background:var(--card);border:2px solid var(--accent)">Restart Quiz</button>
+</div>
+<div id="quiz-stats" style="margin-top:30px;padding:20px;background:rgba(0,245,255,0.05);border-radius:16px;border:1px solid rgba(0,245,255,0.2)">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;text-align:center">
+<div><div style="font-size:28px;font-weight:800;color:#00ff88" id="correct-count">0</div><div style="font-size:12px;color:var(--muted)">Correct</div></div>
+<div><div style="font-size:28px;font-weight:800;color:#ff4444" id="wrong-count">0</div><div style="font-size:12px;color:var(--muted)">Wrong</div></div>
+<div><div style="font-size:28px;font-weight:800;color:var(--accent)" id="total-count">0</div><div style="font-size:12px;color:var(--muted)">Total</div></div>
+</div>
+</div>
 </div>
 </section>
 
@@ -802,9 +834,10 @@ function formatTime(sec){
   return `${h}:${m}:${s}`;
 }
 
-// ==================== PDF LIBRARY ====================
-let pdfDoc=null,pageNum=1,scale=1.5;
+// ==================== PDF LIBRARY (PROFESSIONAL ADOBE-LEVEL) ====================
+let pdfDoc=null,pageNum=1,scale=1.5,pageRendering=false,pageNumPending=null,rotation=0;
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
 function loadPDFFile(event){
   const file=event.target.files[0];
   if(!file)return;
@@ -814,27 +847,159 @@ function loadPDFFile(event){
     pdfjsLib.getDocument(typedarray).promise.then(pdf=>{
       pdfDoc=pdf;
       document.getElementById('page-count').textContent=pdf.numPages;
+      pageNum=1;
       renderPage(pageNum);
       document.getElementById('pdf-viewer').style.display='block';
+    }).catch(err=>{
+      alert('Error loading PDF: '+err.message);
     });
   };
   fileReader.readAsArrayBuffer(file);
 }
+
 function renderPage(num){
+  pageRendering=true;
   pdfDoc.getPage(num).then(page=>{
-    const viewport=page.getViewport({scale:scale});
     const canvas=document.getElementById('pdf-canvas');
     const context=canvas.getContext('2d');
+    const viewport=page.getViewport({scale:scale,rotation:rotation});
+    
     canvas.height=viewport.height;
     canvas.width=viewport.width;
-    page.render({canvasContext:context,viewport:viewport});
+    
+    const renderContext={
+      canvasContext:context,
+      viewport:viewport,
+      enableWebGL:true,
+      renderInteractiveForms:true
+    };
+    
+    const renderTask=page.render(renderContext);
+    renderTask.promise.then(()=>{
+      pageRendering=false;
+      if(pageNumPending!==null){
+        renderPage(pageNumPending);
+        pageNumPending=null;
+      }
+    });
+    
     document.getElementById('page-num').textContent=num;
+    document.getElementById('zoom-level').textContent=Math.round(scale*100);
   });
 }
-function prevPage(){if(pageNum<=1)return;pageNum--;renderPage(pageNum)}
-function nextPage(){if(pageNum>=pdfDoc.numPages)return;pageNum++;renderPage(pageNum)}
-function zoomIn(){scale+=0.2;renderPage(pageNum)}
-function zoomOut(){if(scale<=0.5)return;scale-=0.2;renderPage(pageNum)}
+
+function queueRenderPage(num){
+  if(pageRendering){
+    pageNumPending=num;
+  }else{
+    renderPage(num);
+  }
+}
+
+function prevPage(){
+  if(pageNum<=1)return;
+  pageNum--;
+  queueRenderPage(pageNum);
+}
+
+function nextPage(){
+  if(pageNum>=pdfDoc.numPages)return;
+  pageNum++;
+  queueRenderPage(pageNum);
+}
+
+function firstPage(){
+  pageNum=1;
+  queueRenderPage(pageNum);
+}
+
+function lastPage(){
+  pageNum=pdfDoc.numPages;
+  queueRenderPage(pageNum);
+}
+
+function zoomIn(){
+  scale+=0.25;
+  if(scale>5)scale=5;
+  queueRenderPage(pageNum);
+}
+
+function zoomOut(){
+  scale-=0.25;
+  if(scale<0.5)scale=0.5;
+  queueRenderPage(pageNum);
+}
+
+function resetZoom(){
+  scale=1.5;
+  queueRenderPage(pageNum);
+}
+
+function fitToWidth(){
+  const container=document.getElementById('pdf-canvas-container');
+  const containerWidth=container.clientWidth-60;
+  pdfDoc.getPage(pageNum).then(page=>{
+    const viewport=page.getViewport({scale:1});
+    scale=containerWidth/viewport.width;
+    queueRenderPage(pageNum);
+  });
+}
+
+function fitToPage(){
+  const container=document.getElementById('pdf-canvas-container');
+  const containerWidth=container.clientWidth-60;
+  const containerHeight=container.clientHeight-60;
+  pdfDoc.getPage(pageNum).then(page=>{
+    const viewport=page.getViewport({scale:1});
+    const scaleX=containerWidth/viewport.width;
+    const scaleY=containerHeight/viewport.height;
+    scale=Math.min(scaleX,scaleY);
+    queueRenderPage(pageNum);
+  });
+}
+
+function rotatePage(){
+  rotation=(rotation+90)%360;
+  queueRenderPage(pageNum);
+}
+
+function toggleFullscreen(){
+  const container=document.getElementById('pdf-canvas-container');
+  if(!document.fullscreenElement){
+    container.requestFullscreen().then(()=>{
+      document.getElementById('fullscreen-btn').textContent='⛶ Exit Fullscreen';
+      container.style.maxHeight='100vh';
+      setTimeout(()=>fitToPage(),100);
+    }).catch(err=>{
+      alert('Error entering fullscreen: '+err.message);
+    });
+  }else{
+    document.exitFullscreen().then(()=>{
+      document.getElementById('fullscreen-btn').textContent='⛶ Fullscreen';
+      container.style.maxHeight='75vh';
+    });
+  }
+}
+
+document.addEventListener('fullscreenchange',()=>{
+  const container=document.getElementById('pdf-canvas-container');
+  if(!document.fullscreenElement){
+    document.getElementById('fullscreen-btn').textContent='⛶ Fullscreen';
+    container.style.maxHeight='75vh';
+  }
+});
+
+document.addEventListener('keydown',(e)=>{
+  if(!pdfDoc)return;
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')prevPage();
+  else if(e.key==='ArrowRight'||e.key==='ArrowDown')nextPage();
+  else if(e.key==='Home')firstPage();
+  else if(e.key==='End')lastPage();
+  else if(e.key==='+')zoomIn();
+  else if(e.key==='-')zoomOut();
+  else if(e.key==='0')resetZoom();
+  else if(e.key==='f'||e.key==='F11'){e.preventDefault();toggleFullscreen();}
+});
 
 // ==================== NOTES APP ====================
 let notes=JSON.parse(localStorage.getItem('quantum_notes')||'[]');
@@ -871,51 +1036,150 @@ function deleteNote(index){
   renderNotes();
 }
 
-// ==================== QUIZ APP ====================
-const quizData=[
+// ==================== QUIZ APP (UNLIMITED WITH INSTANT FEEDBACK) ====================
+const quizQuestions=[
   {q:"What is 2+2?",options:["3","4","5","6"],correct:1},
   {q:"Capital of France?",options:["London","Berlin","Paris","Rome"],correct:2},
   {q:"Smallest prime number?",options:["0","1","2","3"],correct:2},
   {q:"Photosynthesis occurs in?",options:["Roots","Stems","Leaves","Flowers"],correct:2},
-  {q:"Speed of light?",options:["3×10⁸ m/s","3×10⁶ m/s","3×10⁷ m/s","3×10⁹ m/s"],correct:0}
+  {q:"Speed of light?",options:["3×10⁸ m/s","3×10⁶ m/s","3×10⁷ m/s","3×10⁹ m/s"],correct:0},
+  {q:"Chemical symbol for Gold?",options:["Go","Gd","Au","Ag"],correct:2},
+  {q:"Who wrote Romeo and Juliet?",options:["Dickens","Shakespeare","Austen","Hemingway"],correct:1},
+  {q:"Largest planet in solar system?",options:["Saturn","Jupiter","Neptune","Uranus"],correct:1},
+  {q:"What is H₂O?",options:["Hydrogen","Oxygen","Water","Peroxide"],correct:2},
+  {q:"Mitochondria is the ___ of cell?",options:["Brain","Powerhouse","Nucleus","Membrane"],correct:1},
+  {q:"Pythagoras theorem: a² + b² = ?",options:["c","c²","2c","c³"],correct:1},
+  {q:"Value of π (pi)?",options:["3.14159","2.71828","1.41421","1.61803"],correct:0},
+  {q:"Newton's first law is about?",options:["Gravity","Inertia","Energy","Force"],correct:1},
+  {q:"Chemical formula for water?",options:["H₂O","CO₂","O₂","H₂O₂"],correct:0},
+  {q:"DNA stands for?",options:["Deoxyribonucleic Acid","Diatomic Nucleic Acid","Dextrose Nuclear Acid","None"],correct:0},
+  {q:"Atomic number of Carbon?",options:["4","6","8","12"],correct:1},
+  {q:"What is 15% of 200?",options:["20","25","30","35"],correct:2},
+  {q:"Square root of 144?",options:["11","12","13","14"],correct:1},
+  {q:"Who discovered Gravity?",options:["Einstein","Newton","Galileo","Tesla"],correct:1},
+  {q:"Boiling point of water?",options:["90°C","100°C","110°C","120°C"],correct:1},
+  {q:"Number of bones in human body?",options:["196","206","216","226"],correct:1},
+  {q:"What is the powerhouse of cell?",options:["Nucleus","Ribosome","Mitochondria","Chloroplast"],correct:2},
+  {q:"Chemical symbol for Sodium?",options:["S","So","Na","Sd"],correct:2},
+  {q:"Who painted Mona Lisa?",options:["Van Gogh","Da Vinci","Picasso","Monet"],correct:1},
+  {q:"Largest ocean on Earth?",options:["Atlantic","Indian","Arctic","Pacific"],correct:3},
+  {q:"How many continents are there?",options:["5","6","7","8"],correct:2},
+  {q:"What is 12×12?",options:["124","134","144","154"],correct:2},
+  {q:"Hardest natural substance?",options:["Gold","Iron","Diamond","Steel"],correct:2},
+  {q:"Speed of sound in air?",options:["343 m/s","300 m/s","400 m/s","500 m/s"],correct:0},
+  {q:"Chemical symbol for Iron?",options:["Ir","Fe","In","Fr"],correct:1},
+  {q:"Year India got independence?",options:["1945","1946","1947","1948"],correct:2},
+  {q:"National animal of India?",options:["Lion","Tiger","Elephant","Peacock"],correct:1},
+  {q:"Father of Computer?",options:["Bill Gates","Steve Jobs","Charles Babbage","Alan Turing"],correct:2},
+  {q:"What is the value of e?",options:["2.71828","3.14159","1.41421","1.61803"],correct:0},
+  {q:"Which gas do plants absorb?",options:["Oxygen","Nitrogen","CO₂","Hydrogen"],correct:2},
+  {q:"Human heart has ___ chambers?",options:["2","3","4","5"],correct:2},
+  {q:"Smallest bone in human body?",options:["Stapes","Femur","Radius","Tibia"],correct:0},
+  {q:"What is the study of stars?",options:["Biology","Geology","Astronomy","Astrology"],correct:2},
+  {q:"Freezing point of water?",options:["-10°C","0°C","10°C","100°C"],correct:1},
+  {q:"Who invented telephone?",options:["Edison","Bell","Tesla","Marconi"],correct:1},
+  {q:"National bird of India?",options:["Parrot","Peacock","Sparrow","Eagle"],correct:1},
+  {q:"Which is NOT a primary color?",options:["Red","Green","Blue","Yellow"],correct:1},
+  {q:"Earth's atmosphere is mostly?",options:["Oxygen","Nitrogen","CO₂","Hydrogen"],correct:1},
+  {q:"What is 20% of 500?",options:["50","75","100","125"],correct:2},
+  {q:"Who wrote Hamlet?",options:["Shakespeare","Milton","Byron","Wordsworth"],correct:0},
+  {q:"Chemical formula for Salt?",options:["NaCl","KCl","CaCl₂","MgCl₂"],correct:0},
+  {q:"Fastest land animal?",options:["Lion","Cheetah","Leopard","Tiger"],correct:1},
+  {q:"What is 7×8?",options:["54","56","58","60"],correct:1},
+  {q:"Largest desert in world?",options:["Sahara","Gobi","Arabian","Thar"],correct:0},
+  {q:"Number of sides in hexagon?",options:["4","5","6","7"],correct:2}
 ];
-let currentQ=0,score=0,selectedAns=-1;
+
+let currentQuizIndex=0;
+let quizScore=0;
+let correctAnswers=0;
+let wrongAnswers=0;
+let totalQuestions=0;
+let hasAnswered=false;
+
 function loadQuiz(){
-  currentQ=0;score=0;selectedAns=-1;
-  displayQuestion();
+  currentQuizIndex=0;
+  quizScore=0;
+  correctAnswers=0;
+  wrongAnswers=0;
+  totalQuestions=0;
+  hasAnswered=false;
+  updateQuizStats();
+  displayQuizQuestion();
 }
-function displayQuestion(){
-  if(currentQ>=quizData.length){showResults();return}
-  const q=quizData[currentQ];
+
+function displayQuizQuestion(){
+  hasAnswered=false;
+  const q=quizQuestions[currentQuizIndex];
   document.getElementById('quiz-question').textContent=q.q;
-  document.getElementById('quiz-progress').textContent=`Question ${currentQ+1}/${quizData.length}`;
+  document.getElementById('quiz-progress').textContent=`Question ${currentQuizIndex+1}`;
+  
   const opts=document.getElementById('quiz-options');
   opts.innerHTML='';
+  
   q.options.forEach((opt,i)=>{
     const div=document.createElement('div');
     div.className='quiz-option';
     div.textContent=opt;
-    div.onclick=()=>{
-      document.querySelectorAll('.quiz-option').forEach(o=>o.classList.remove('selected'));
-      div.classList.add('selected');
-      selectedAns=i;
-    };
+    div.onclick=()=>selectQuizAnswer(i,div);
     opts.appendChild(div);
   });
 }
-function submitQuiz(){
-  if(selectedAns===-1){alert('Please select an answer');return}
-  if(selectedAns===quizData[currentQ].correct)score++;
-  currentQ++;
-  selectedAns=-1;
-  displayQuestion();
+
+function selectQuizAnswer(selectedIndex,element){
+  if(hasAnswered)return;
+  hasAnswered=true;
+  totalQuestions++;
+  
+  const q=quizQuestions[currentQuizIndex];
+  const allOptions=document.querySelectorAll('.quiz-option');
+  
+  if(selectedIndex===q.correct){
+    element.classList.add('correct');
+    element.style.background='rgba(0,255,136,0.3)';
+    element.style.borderColor='#00ff88';
+    element.style.transform='translateX(10px)';
+    quizScore++;
+    correctAnswers++;
+  }else{
+    element.classList.add('incorrect');
+    element.style.background='rgba(255,68,68,0.3)';
+    element.style.borderColor='#ff4444';
+    element.style.transform='translateX(10px)';
+    wrongAnswers++;
+    
+    allOptions[q.correct].classList.add('correct');
+    allOptions[q.correct].style.background='rgba(0,255,136,0.3)';
+    allOptions[q.correct].style.borderColor='#00ff88';
+  }
+  
+  allOptions.forEach(opt=>opt.style.pointerEvents='none');
+  updateQuizStats();
 }
-function showResults(){
-  document.getElementById('quiz-question').textContent=`You scored ${score}/${quizData.length}`;
-  document.getElementById('quiz-options').innerHTML='';
-  document.getElementById('quiz-progress').textContent='Quiz Complete!';
-  localStorage.setItem('quiz-score',score);
-  updateStats();
+
+function nextQuestion(){
+  currentQuizIndex++;
+  if(currentQuizIndex>=quizQuestions.length)currentQuizIndex=0;
+  displayQuizQuestion();
+}
+
+function resetQuiz(){
+  currentQuizIndex=0;
+  quizScore=0;
+  correctAnswers=0;
+  wrongAnswers=0;
+  totalQuestions=0;
+  hasAnswered=false;
+  updateQuizStats();
+  displayQuizQuestion();
+}
+
+function updateQuizStats(){
+  document.getElementById('quiz-score-display').textContent=quizScore;
+  document.getElementById('correct-count').textContent=correctAnswers;
+  document.getElementById('wrong-count').textContent=wrongAnswers;
+  document.getElementById('total-count').textContent=totalQuestions;
+  localStorage.setItem('quiz-score',quizScore);
 }
 
 // ==================== STUDY TIMER ====================
@@ -1341,12 +1605,13 @@ document.getElementById('element-modal').onclick=closeElementModal;
 // ==================== INITIALIZE ====================
 updateRecent();
 updateStats();
-console.log('✅ Quantum Platform v2.0 - FULLY OPTIMIZED!');
-console.log('✅ New Features: Scientific Calculator, PYQ Papers, Video Library');
-console.log('✅ 5 Beautiful Themes: Dark, Light, Cyberpunk, Ocean, Forest, AMOLED');
-console.log('✅ Performance Optimized: GPU acceleration, requestAnimationFrame');
-console.log('✅ All Previous Features Intact: Classes, Chapters, Periodic Table, etc.');
-console.log('🚀 Smooth as butter! Enjoy learning!');
+console.log('✅ Quantum Platform v2.1 - ENHANCED EDITION!');
+console.log('🎯 NEW: Unlimited Quiz Questions with Instant Feedback!');
+console.log('📚 NEW: Professional PDF Viewer with Fullscreen & Smooth Navigation!');
+console.log('✅ All Previous Features: Themes, Calculator, Periodic Table, Video Library, PYQ');
+console.log('🚀 Performance Optimized - Buttery Smooth Experience!');
+console.log('💡 PDF Controls: Arrow keys to navigate, +/- to zoom, F for fullscreen');
+console.log('🎮 Quiz: Answer questions to see instant green (correct) or red (wrong) feedback!');
 </script>
 
 </body>
