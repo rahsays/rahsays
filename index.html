@@ -500,13 +500,6 @@ pointer-events:none;
 </div>
 </div>
 
-<script>
-document.getElementById('ai-photo').addEventListener('change',function(e){
-const fileName=e.target.files[0]?e.target.files[0].name:'';
-document.getElementById('file-name').textContent=fileName?'Selected: '+fileName:'';
-});
-</script>
-
 <div class="modal" id="note-modal">
 <div class="modal-content">
 <h2 style="margin-bottom:24px;color:var(--accent)">Create Note</h2>
@@ -520,6 +513,18 @@ document.getElementById('file-name').textContent=fileName?'Selected: '+fileName:
 <script>
 // LOADER
 setTimeout(()=>{document.getElementById('loader').style.opacity='0';setTimeout(()=>document.getElementById('loader').style.display='none',800)},2800);
+
+// FILE INPUT HANDLER
+setTimeout(function(){
+const photoInput=document.getElementById('ai-photo');
+const fileNameSpan=document.getElementById('file-name');
+if(photoInput&&fileNameSpan){
+photoInput.addEventListener('change',function(e){
+const fileName=e.target.files[0]?e.target.files[0].name:'';
+fileNameSpan.textContent=fileName?'Selected: '+fileName:'';
+});
+}
+},100);
 
 // THEME
 if(localStorage.getItem('quantum-theme')==='light')document.body.classList.add('light-mode');
