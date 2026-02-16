@@ -512,7 +512,7 @@ pointer-events:none;
 
 <script>
 // LOADER
-setTimeout(()=>{document.getElementById('loader').style.opacity='0';setTimeout(()=>document.getElementById('loader').style.display='none',800)},2800);
+setTimeout(function(){document.getElementById('loader').style.opacity='0';setTimeout(function(){document.getElementById('loader').style.display='none'},800)},2800);
 
 // FILE INPUT HANDLER
 setTimeout(function(){
@@ -532,7 +532,7 @@ function toggleMode(){document.body.classList.toggle('light-mode');localStorage.
 
 // SIDEBAR
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
-document.addEventListener('click',e=>{const sidebar=document.getElementById('sidebar');if(!sidebar.contains(e.target)&&!e.target.closest('.menu-btn'))sidebar.classList.remove('open')});
+document.addEventListener('click',function(e){const sidebar=document.getElementById('sidebar');if(!sidebar.contains(e.target)&&!e.target.closest('.menu-btn'))sidebar.classList.remove('open')});
 
 // NAVIGATION
 function hideAll(){
@@ -695,25 +695,21 @@ const layout=[
 function renderPeriodicTable(){
 const grid=document.getElementById('periodic-grid');
 grid.innerHTML='';
-layout.forEach(row=>{
-row.forEach(num=>{
+layout.forEach(function(row){
+row.forEach(function(num){
 const cell=document.createElement('div');
 if(num===0){
 cell.className='element-cell empty-cell';
 }else if(num===999||num===998){
 cell.className='element-cell';
 cell.style.background='linear-gradient(135deg,#667eea,#764ba2)';
-cell.innerHTML=`<div style="font-size:18px;font-weight:900">${num===999?'57-71':'89-103'}</div>`;
+cell.innerHTML='<div style="font-size:18px;font-weight:900">'+(num===999?'57-71':'89-103')+'</div>';
 }else{
-const el=periodicElements.find(e=>e.num===num);
+const el=periodicElements.find(function(e){return e.num===num});
 if(el){
-cell.className=`element-cell ${el.category}`;
-cell.innerHTML=`
-<div class="element-number">${el.num}</div>
-<div class="element-symbol">${el.symbol}</div>
-<div class="element-name">${el.name}</div>
-<div class="element-mass">${el.mass}</div>`;
-cell.onclick=()=>showElementDetails(el);
+cell.className='element-cell '+el.category;
+cell.innerHTML='<div class="element-number">'+el.num+'</div><div class="element-symbol">'+el.symbol+'</div><div class="element-name">'+el.name+'</div><div class="element-mass">'+el.mass+'</div>';
+cell.onclick=function(){showElementDetails(el)};
 }
 }
 grid.appendChild(cell);
@@ -723,31 +719,16 @@ grid.appendChild(cell);
 
 function showElementDetails(el){
 document.getElementById('element-modal').style.display='flex';
-document.getElementById('element-details').innerHTML=`
-<div class="element-detail-header">
-<div class="element-detail-symbol">${el.symbol}</div>
-<div class="element-detail-name">${el.name}</div>
-<div style="font-size:18px;color:var(--muted)">${el.category.replace(/-/g,' ').toUpperCase()}</div>
-</div>
-<div class="element-detail-grid">
-<div class="element-detail-item"><div class="element-detail-label">Atomic Number</div><div class="element-detail-value">${el.num}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Atomic Mass</div><div class="element-detail-value">${el.mass}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Config</div><div class="element-detail-value">${el.config}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Oxidation</div><div class="element-detail-value">${el.oxidation}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Density</div><div class="element-detail-value">${el.density}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Melt (°C)</div><div class="element-detail-value">${el.melt}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Boil (°C)</div><div class="element-detail-value">${el.boil}</div></div>
-<div class="element-detail-item"><div class="element-detail-label">Discovery</div><div class="element-detail-value">${el.discovery}</div></div>
-</div>`;
+document.getElementById('element-details').innerHTML='<div class="element-detail-header"><div class="element-detail-symbol">'+el.symbol+'</div><div class="element-detail-name">'+el.name+'</div><div style="font-size:18px;color:var(--muted)">'+el.category.replace(/-/g,' ').toUpperCase()+'</div></div><div class="element-detail-grid"><div class="element-detail-item"><div class="element-detail-label">Atomic Number</div><div class="element-detail-value">'+el.num+'</div></div><div class="element-detail-item"><div class="element-detail-label">Atomic Mass</div><div class="element-detail-value">'+el.mass+'</div></div><div class="element-detail-item"><div class="element-detail-label">Config</div><div class="element-detail-value">'+el.config+'</div></div><div class="element-detail-item"><div class="element-detail-label">Oxidation</div><div class="element-detail-value">'+el.oxidation+'</div></div><div class="element-detail-item"><div class="element-detail-label">Density</div><div class="element-detail-value">'+el.density+'</div></div><div class="element-detail-item"><div class="element-detail-label">Melt (°C)</div><div class="element-detail-value">'+el.melt+'</div></div><div class="element-detail-item"><div class="element-detail-label">Boil (°C)</div><div class="element-detail-value">'+el.boil+'</div></div><div class="element-detail-item"><div class="element-detail-label">Discovery</div><div class="element-detail-value">'+el.discovery+'</div></div></div>';
 }
 
 function closeElementModal(){document.getElementById('element-modal').style.display='none'}
 document.getElementById('element-modal').onclick=closeElementModal;
 
 function filterElements(cat){
-document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
 event.target.classList.add('active');
-document.querySelectorAll('.element-cell').forEach(c=>{
+document.querySelectorAll('.element-cell').forEach(function(c){
 if(cat==='all'||c.classList.contains(cat))c.classList.remove('filtered');
 else c.classList.add('filtered');
 });
@@ -867,14 +848,10 @@ initializeBPSCNotes();
 function renderNotes(){
 const grid=document.getElementById('notes-grid');
 grid.innerHTML='';
-notes.forEach((note,i)=>{
+notes.forEach(function(note,i){
 const card=document.createElement('div');
 card.className='note-card';
-card.innerHTML=`
-<button class="note-delete" onclick="deleteNote(${i})">×</button>
-<div class="note-title">${note.title}</div>
-<div class="note-content">${note.content}</div>
-<div style="font-size:12px;color:var(--muted)">${note.date}</div>`;
+card.innerHTML='<button class="note-delete" onclick="deleteNote('+i+')">×</button><div class="note-title">'+note.title+'</div><div class="note-content">'+note.content+'</div><div style="font-size:12px;color:var(--muted)">'+note.date+'</div>';
 grid.appendChild(card);
 });
 }
@@ -980,8 +957,8 @@ updateStudyTime();
 let timerInt,timerSec=1500,timerMode='focus';
 const timerModes={focus:1500,short:300,long:900};
 function setTimerMode(m){timerMode=m;timerSec=timerModes[m];updateTimerDisplay();document.querySelectorAll('.timer-mode-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active')}
-function updateTimerDisplay(){const m=Math.floor(timerSec/60);const s=timerSec%60;document.getElementById('timer-display').textContent=`${m}:${s.toString().padStart(2,'0')}`}
-function startTimer(){if(timerInt)return;timerInt=setInterval(()=>{timerSec--;updateTimerDisplay();if(timerSec<=0){pauseTimer();alert('Time up!')}},1000)}
+function updateTimerDisplay(){const m=Math.floor(timerSec/60);const s=timerSec%60;document.getElementById('timer-display').textContent=m+':'+s.toString().padStart(2,'0')}
+function startTimer(){if(timerInt)return;timerInt=setInterval(function(){timerSec--;updateTimerDisplay();if(timerSec<=0){pauseTimer();alert('Time up!')}},1000)}
 function pauseTimer(){clearInterval(timerInt);timerInt=null}
 function resetTimer(){pauseTimer();timerSec=timerModes[timerMode];updateTimerDisplay()}
 document.getElementById('pomodoros').textContent=localStorage.getItem('pomodoros')||'0';
@@ -1058,7 +1035,7 @@ answerDiv.innerHTML=’<div style="color:#ff6666">Error parsing response. Please
 }
 function copyAIAnswer(){
 const answer=document.getElementById(‘ai-answer’).innerText;
-navigator.clipboard.writeText(answer).then(()=>{
+navigator.clipboard.writeText(answer).then(function(){
 alert(‘Answer copied to clipboard!’);
 });
 }
