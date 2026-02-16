@@ -13,7 +13,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;will-change:scroll-position}
 html{scroll-behavior:smooth}
-#loader{position:fixed;inset:0;background:#000;display:none;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.8s}
+#loader{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.8s}
 .infinity-svg{width:260px;height:120px;margin-bottom:30px}
 .infinity-path{fill:none;stroke:#ffffff;stroke-width:16;stroke-linecap:round;stroke-dasharray:800;stroke-dashoffset:800;animation:draw 2.5s ease forwards;filter:drop-shadow(0 0 15px rgba(255,255,255,0.3))}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -68,52 +68,6 @@ main,#subject-detail{padding:130px 24px 100px}
 .fav-btn{position:absolute;top:12px;left:12px;background:none;border:none;font-size:24px;cursor:pointer;color:#888;transition:0.3s}
 .fav-btn.active{color:#ff3366;animation:heartBeat 0.5s}
 @keyframes heartBeat{0%,100%{transform:scale(1)}25%{transform:scale(1.3)}50%{transform:scale(1.1)}}
-.bookmark-ribbon{
-position:relative;
-width:24px;
-height:32px;
-background:linear-gradient(145deg,#ef4444,#b91c1c);
-cursor:pointer;
-transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
-box-shadow:0 2px 8px rgba(0,0,0,0.3),0 4px 16px rgba(239,68,68,0.4),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.2);
-clip-path:polygon(0 0,100% 0,100% 75%,50% 100%,0 75%);
-border:none;
-transform-style:preserve-3d;
-}
-.bookmark-ribbon::after{
-content:'';
-position:absolute;
-inset:0;
-background:linear-gradient(145deg,rgba(255,255,255,0.4) 0%,transparent 50%,rgba(0,0,0,0.3) 100%);
-clip-path:polygon(0 0,100% 0,100% 75%,50% 100%,0 75%);
-pointer-events:none;
-}
-.bookmark-ribbon:hover{
-transform:translateY(-4px) scale(1.08);
-box-shadow:0 4px 12px rgba(0,0,0,0.4),0 8px 24px rgba(239,68,68,0.6),inset 0 2px 0 rgba(255,255,255,0.3),inset 0 -2px 0 rgba(0,0,0,0.3);
-}
-.bookmark-ribbon.active{
-background:linear-gradient(145deg,#3b82f6,#1e40af);
-box-shadow:0 2px 8px rgba(0,0,0,0.3),0 4px 16px rgba(59,130,246,0.5),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.2);
-}
-.bookmark-ribbon.active::after{
-background:linear-gradient(145deg,rgba(255,255,255,0.4) 0%,transparent 50%,rgba(0,0,0,0.2) 100%);
-}
-.bookmark-ribbon.active:hover{
-transform:translateY(-4px) scale(1.08);
-box-shadow:0 4px 12px rgba(0,0,0,0.4),0 8px 24px rgba(59,130,246,0.7),inset 0 2px 0 rgba(255,255,255,0.3),inset 0 -2px 0 rgba(0,0,0,0.3);
-}
-.bookmark-ribbon::before{
-content:'';
-position:absolute;
-top:2px;
-left:2px;
-right:2px;
-height:30%;
-background:linear-gradient(180deg,rgba(255,255,255,0.5),transparent);
-clip-path:polygon(0 0,100% 0,100% 80%,50% 100%,0 80%);
-pointer-events:none;
-}
 #chapters-view{display:none;margin-top:40px}
 #chapters-list{list-style:none;padding:0}
 #chapters-list li{padding:16px 20px;margin:12px 0;background:var(--card);border-radius:16px;border-left:4px solid var(--accent);cursor:pointer;transition:0.3s;display:flex;justify-content:space-between;align-items:center;border:1px solid #30363d}
@@ -141,10 +95,10 @@ pointer-events:none;
 #pdf-prev-arrow{bottom:30px;left:30px}
 #pdf-next-arrow{bottom:30px;right:30px}
 .notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.note-card{background:var(--card);padding:24px;border-radius:20px;border:1px solid #30363d;cursor:pointer;transition:0.3s;position:relative}
-.note-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(47,129,247,0.3);border-color:var(--accent)}
+.note-card{background:var(--card);padding:24px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:0.3s;position:relative}
+.note-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,245,255,0.2);border-color:var(--accent)}
 .note-title{font-size:20px;font-weight:700;margin-bottom:12px;color:var(--accent)}
-.note-content{font-size:14px;line-height:1.6;color:var(--muted);margin-bottom:12px;white-space:pre-wrap;max-height:200px;overflow-y:auto}
+.note-content{font-size:14px;line-height:1.6;color:var(--muted);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .note-delete{position:absolute;top:12px;right:12px;background:rgba(255,0,0,0.2);color:#ff4444;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;transition:0.3s}
 .note-delete:hover{background:#ff4444;color:#000;transform:rotate(90deg)}
 .add-note-btn{position:fixed;bottom:100px;right:30px;width:60px;height:60px;border-radius:50%;background:var(--gradient);color:#fff;border:none;font-size:32px;cursor:pointer;box-shadow:0 8px 30px rgba(0,245,255,0.5);transition:0.3s;z-index:999}
@@ -204,8 +158,8 @@ pointer-events:none;
 .element-detail-item{background:rgba(0,245,255,0.05);padding:15px;border-radius:12px;border:1px solid rgba(255,255,255,0.1)}
 .element-detail-label{font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
 .element-detail-value{font-size:18px;font-weight:600;color:var(--accent)}
-#ai-float-btn{position:fixed;bottom:30px;right:30px;z-index:1000;width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold;cursor:pointer;box-shadow:0 8px 30px rgba(59,130,246,0.6);transition:0.3s}
-#ai-float-btn:hover{transform:scale(1.15)rotate(10deg);box-shadow:0 12px 40px rgba(59,130,246,0.8)}
+#ai-float-btn{position:fixed;bottom:30px;right:30px;z-index:1000;width:70px;height:70px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold;cursor:pointer;box-shadow:0 8px 30px rgba(0,245,255,0.5);transition:0.3s}
+#ai-float-btn:hover{transform:scale(1.15)rotate(10deg)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
 .modal-content{background:var(--card);width:90%;max-width:700px;border-radius:24px;padding:40px;position:relative;border:2px solid var(--accent);max-height:90vh;overflow-y:auto}
 .modal-close{position:absolute;top:16px;right:24px;font-size:32px;cursor:pointer;color:var(--muted);transition:0.2s}
@@ -233,7 +187,8 @@ pointer-events:none;
 <a href="#" onclick="showPeriodicTable()">🧪 Periodic Table</a>
 <a href="#" onclick="showLibrary()">📚 PDF Library</a>
 <a href="#" onclick="showNotes()">📝 Notes</a>
-<a href="#" onclick="showMCQPractice()">🎯 Practice & Tests</a>
+<a href="#" onclick="showQuiz()">🎯 Practice & Tests</a>
+<a href="#" onclick="showMCQPractice()">📝 MCQ Practice</a>
 <a href="#" onclick="showVideoLibrary()">📺 Video Library</a>
 <a href="#" onclick="showStudyTimer()">⏲️ Study Timer</a>
 </div>
@@ -242,7 +197,7 @@ pointer-events:none;
 <div class="stats-grid">
 <div class="stat-card"><div class="stat-number" id="total-progress">0%</div><div class="stat-label">Progress</div></div>
 <div class="stat-card"><div class="stat-number" id="study-streak">0</div><div class="stat-label">Streak 🔥</div></div>
-<div class="stat-card"><div class="stat-number" id="study-time-display">00:00:00</div><div class="stat-label">Today's Study Time</div></div>
+<div class="stat-card"><div class="stat-number" id="study-time-display">00:00:00</div><div class="stat-label">Study Time</div></div>
 <div class="stat-card"><div class="stat-number" id="quiz-score">0</div><div class="stat-label">Quiz Score</div></div>
 </div>
 
@@ -404,6 +359,46 @@ pointer-events:none;
 <button class="add-note-btn" onclick="openNoteModal()">+</button>
 </section>
 
+<section id="quiz-app">
+<button class="back-btn" onclick="showHome()">← Back</button>
+<div style="max-width:1200px;margin:0 auto">
+<h1 style="font-size:42px;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;text-align:center">🎯 Practice & Tests</h1>
+<p style="text-align:center;color:var(--muted);margin-bottom:40px;font-size:16px">Choose your class or exam to practice questions</p>
+
+<div id="quiz-selection" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+<div class="quiz-category-card" onclick="startQuizForCategory('class-10')">
+<div style="font-size:48px;margin-bottom:15px">📚</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">Class 10</div>
+<div style="font-size:14px;color:var(--muted)">CBSE Board Questions</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('class-12')">
+<div style="font-size:48px;margin-bottom:15px">🎓</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">Class 12</div>
+<div style="font-size:14px;color:var(--muted)">CBSE Board Questions</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('jee')">
+<div style="font-size:48px;margin-bottom:15px">🔬</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">JEE</div>
+<div style="font-size:14px;color:var(--muted)">Engineering Entrance</div>
+</div>
+<div class="quiz-category-card" onclick="startQuizForCategory('neet')">
+<div style="font-size:48px;margin-bottom:15px">🧬</div>
+<div style="font-size:22px;font-weight:700;margin-bottom:8px">NEET</div>
+<div style="font-size:14px;color:var(--muted)">Medical Entrance</div>
+</div>
+</div>
+
+<div id="quiz-interface" style="display:none">
+<div class="quiz-card">
+<div class="quiz-progress" id="quiz-progress">Question 1</div>
+<div class="quiz-question" id="quiz-question">Loading...</div>
+<div class="quiz-options" id="quiz-options"></div>
+<button class="quiz-submit" onclick="nextQuestion()">Next →</button>
+</div>
+</div>
+</div>
+</section>
+
 <section id="video-library">
 <button class="back-btn" onclick="showHome()">← Back</button>
 <h1 style="font-size:42px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:40px">📺 Video Library</h1>
@@ -438,7 +433,7 @@ pointer-events:none;
 <section id="mcq-practice" style="display:none">
 <button class="back-btn" onclick="showHome()">← Back</button>
 <div style="max-width:900px;margin:0 auto">
-<h1 style="font-size:42px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:40px">🎯 Practice & Tests</h1>
+<h1 style="font-size:42px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:40px">🎯 MCQ Practice</h1>
 
 <div id="mcq-selection" style="display:block">
 <h3 style="margin-bottom:20px;font-size:24px">Select Exam</h3>
@@ -485,18 +480,13 @@ pointer-events:none;
 <div id="ai-float-btn" onclick="openAIModal()">AI</div>
 
 <div class="modal" id="ai-modal">
-<div class="modal-content" style="max-width:700px">
+<div class="modal-content">
 <span class="modal-close" onclick="closeAIModal()">×</span>
-<h2 style="margin-bottom:24px;color:var(--accent);display:flex;align-items:center;gap:12px"><span style="font-size:32px">🤖</span> AI Doubt Solver</h2>
-<p style="color:var(--muted);margin-bottom:20px;font-size:14px">Ask any question or upload an image of your problem. The AI will help you understand and solve it step-by-step.</p>
-<textarea id="ai-text" placeholder="Ask your question here... (e.g., 'Explain Pythagoras theorem' or 'Solve: x² + 5x + 6 = 0')" rows="5" style="width:100%;padding:16px;border-radius:16px;border:1px solid #30363d;background:var(--card);color:var(--text);font-size:16px;resize:vertical;margin-bottom:16px"></textarea>
-<div style="margin-bottom:20px">
-<label for="ai-photo" style="display:inline-block;padding:12px 24px;background:var(--card);color:var(--accent);border:1px solid var(--accent);border-radius:12px;cursor:pointer;font-weight:600;transition:0.3s">📷 Upload Image (Optional)</label>
-<input type="file" id="ai-photo" accept="image/*" style="display:none">
-<span id="file-name" style="margin-left:12px;color:var(--muted);font-size:14px"></span>
-</div>
-<button onclick="solveAIDoubt()" style="padding:14px 48px;background:var(--accent);color:#fff;border:none;border-radius:50px;font-weight:700;cursor:pointer;font-size:16px;transition:0.3s;box-shadow:0 4px 15px rgba(47,129,247,0.4)">✨ Solve with AI</button>
-<div id="ai-answer" style="margin-top:24px;padding:24px;background:var(--card);border-radius:16px;min-height:100px;border:1px solid #30363d"></div>
+<h2 style="margin-bottom:24px;color:var(--accent)">🤖 AI Doubt Solver</h2>
+<textarea id="ai-text" placeholder="Ask anything..." rows="5" style="width:100%;padding:16px;border-radius:16px;border:1px solid var(--accent);background:transparent;color:var(--text);font-size:16px;resize:vertical"></textarea>
+<div style="margin:24px 0"><input type="file" id="ai-photo" accept="image/*" style="color:var(--text)"></div>
+<button onclick="solveAIDoubt()" style="padding:14px 48px;background:var(--accent);color:#000;border:none;border-radius:50px;font-weight:700;cursor:pointer">Solve</button>
+<div id="ai-answer" style="margin-top:24px;padding:24px;background:rgba(0,245,255,0.08);border-radius:16px;min-height:100px"></div>
 </div>
 </div>
 
@@ -511,26 +501,8 @@ pointer-events:none;
 </div>
 
 <script>
-// LOADER - DISABLED
-setTimeout(function(){
-var loader = document.getElementById('loader');
-if(loader) {
-loader.style.opacity='0';
-setTimeout(function(){loader.style.display='none'},300);
-}
-},100);
-
-// FILE INPUT HANDLER
-setTimeout(function(){
-const photoInput=document.getElementById('ai-photo');
-const fileNameSpan=document.getElementById('file-name');
-if(photoInput&&fileNameSpan){
-photoInput.addEventListener('change',function(e){
-const fileName=e.target.files[0]?e.target.files[0].name:'';
-fileNameSpan.textContent=fileName?'Selected: '+fileName:'';
-});
-}
-},100);
+// LOADER
+setTimeout(()=>{document.getElementById('loader').style.opacity='0';setTimeout(()=>document.getElementById('loader').style.display='none',800)},2800);
 
 // THEME
 if(localStorage.getItem('quantum-theme')==='light')document.body.classList.add('light-mode');
@@ -538,11 +510,11 @@ function toggleMode(){document.body.classList.toggle('light-mode');localStorage.
 
 // SIDEBAR
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
-document.addEventListener('click',function(e){const sidebar=document.getElementById('sidebar');if(!sidebar.contains(e.target)&&!e.target.closest('.menu-btn'))sidebar.classList.remove('open')});
+document.addEventListener('click',e=>{const sidebar=document.getElementById('sidebar');if(!sidebar.contains(e.target)&&!e.target.closest('.menu-btn'))sidebar.classList.remove('open')});
 
 // NAVIGATION
 function hideAll(){
-['home','subject-detail','calculator','periodic-table','library','notes-app','video-library','study-timer','mcq-practice'].forEach(function(id){document.getElementById(id).style.display='none'});
+['home','subject-detail','calculator','periodic-table','library','notes-app','quiz-app','video-library','study-timer','mcq-practice'].forEach(function(id){document.getElementById(id).style.display='none'});
 document.getElementById('sidebar').classList.remove('open');
 }
 function showHome(){hideAll();document.getElementById('home').style.display='block'}
@@ -550,6 +522,7 @@ function showCalculator(){hideAll();document.getElementById('calculator').style.
 function showPeriodicTable(){hideAll();document.getElementById('periodic-table').style.display='block';renderPeriodicTable()}
 function showLibrary(){hideAll();document.getElementById('library').style.display='block'}
 function showNotes(){hideAll();document.getElementById('notes-app').style.display='block';renderNotes()}
+function showQuiz(){hideAll();document.getElementById('quiz-app').style.display='block'}
 function showMCQPractice(){hideAll();document.getElementById('mcq-practice').style.display='block';resetMCQView()}
 function showVideoLibrary(){hideAll();document.getElementById('video-library').style.display='block';loadVideoLibrary()}
 function showStudyTimer(){hideAll();document.getElementById('study-timer').style.display='block'}
@@ -701,21 +674,25 @@ const layout=[
 function renderPeriodicTable(){
 const grid=document.getElementById('periodic-grid');
 grid.innerHTML='';
-layout.forEach(function(row){
-row.forEach(function(num){
+layout.forEach(row=>{
+row.forEach(num=>{
 const cell=document.createElement('div');
 if(num===0){
 cell.className='element-cell empty-cell';
 }else if(num===999||num===998){
 cell.className='element-cell';
 cell.style.background='linear-gradient(135deg,#667eea,#764ba2)';
-cell.innerHTML='<div style="font-size:18px;font-weight:900">'+(num===999?'57-71':'89-103')+'</div>';
+cell.innerHTML=`<div style="font-size:18px;font-weight:900">${num===999?'57-71':'89-103'}</div>`;
 }else{
-const el=periodicElements.find(function(e){return e.num===num});
+const el=periodicElements.find(e=>e.num===num);
 if(el){
-cell.className='element-cell '+el.category;
-cell.innerHTML='<div class="element-number">'+el.num+'</div><div class="element-symbol">'+el.symbol+'</div><div class="element-name">'+el.name+'</div><div class="element-mass">'+el.mass+'</div>';
-cell.onclick=function(){showElementDetails(el)};
+cell.className=`element-cell ${el.category}`;
+cell.innerHTML=`
+<div class="element-number">${el.num}</div>
+<div class="element-symbol">${el.symbol}</div>
+<div class="element-name">${el.name}</div>
+<div class="element-mass">${el.mass}</div>`;
+cell.onclick=()=>showElementDetails(el);
 }
 }
 grid.appendChild(cell);
@@ -725,19 +702,31 @@ grid.appendChild(cell);
 
 function showElementDetails(el){
 document.getElementById('element-modal').style.display='flex';
-document.getElementById('element-details').innerHTML='<div class="element-detail-header"><div class="element-detail-symbol">'+el.symbol+'</div><div class="element-detail-name">'+el.name+'</div><div style="font-size:18px;color:var(--muted)">'+el.category.replace(/-/g,' ').toUpperCase()+'</div></div><div class="element-detail-grid"><div class="element-detail-item"><div class="element-detail-label">Atomic Number</div><div class="element-detail-value">'+el.num+'</div></div><div class="element-detail-item"><div class="element-detail-label">Atomic Mass</div><div class="element-detail-value">'+el.mass+'</div></div><div class="element-detail-item"><div class="element-detail-label">Config</div><div class="element-detail-value">'+el.config+'</div></div><div class="element-detail-item"><div class="element-detail-label">Oxidation</div><div class="element-detail-value">'+el.oxidation+'</div></div><div class="element-detail-item"><div class="element-detail-label">Density</div><div class="element-detail-value">'+el.density+'</div></div><div class="element-detail-item"><div class="element-detail-label">Melt (°C)</div><div class="element-detail-value">'+el.melt+'</div></div><div class="element-detail-item"><div class="element-detail-label">Boil (°C)</div><div class="element-detail-value">'+el.boil+'</div></div><div class="element-detail-item"><div class="element-detail-label">Discovery</div><div class="element-detail-value">'+el.discovery+'</div></div></div>';
+document.getElementById('element-details').innerHTML=`
+<div class="element-detail-header">
+<div class="element-detail-symbol">${el.symbol}</div>
+<div class="element-detail-name">${el.name}</div>
+<div style="font-size:18px;color:var(--muted)">${el.category.replace(/-/g,' ').toUpperCase()}</div>
+</div>
+<div class="element-detail-grid">
+<div class="element-detail-item"><div class="element-detail-label">Atomic Number</div><div class="element-detail-value">${el.num}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Atomic Mass</div><div class="element-detail-value">${el.mass}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Config</div><div class="element-detail-value">${el.config}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Oxidation</div><div class="element-detail-value">${el.oxidation}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Density</div><div class="element-detail-value">${el.density}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Melt (°C)</div><div class="element-detail-value">${el.melt}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Boil (°C)</div><div class="element-detail-value">${el.boil}</div></div>
+<div class="element-detail-item"><div class="element-detail-label">Discovery</div><div class="element-detail-value">${el.discovery}</div></div>
+</div>`;
 }
 
 function closeElementModal(){document.getElementById('element-modal').style.display='none'}
-setTimeout(function(){
-var modal=document.getElementById('element-modal');
-if(modal)modal.onclick=closeElementModal;
-},100);
+document.getElementById('element-modal').onclick=closeElementModal;
 
 function filterElements(cat){
-document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
 event.target.classList.add('active');
-document.querySelectorAll('.element-cell').forEach(function(c){
+document.querySelectorAll('.element-cell').forEach(c=>{
 if(cat==='all'||c.classList.contains(cat))c.classList.remove('filtered');
 else c.classList.add('filtered');
 });
@@ -857,10 +846,14 @@ initializeBPSCNotes();
 function renderNotes(){
 const grid=document.getElementById('notes-grid');
 grid.innerHTML='';
-notes.forEach(function(note,i){
+notes.forEach((note,i)=>{
 const card=document.createElement('div');
 card.className='note-card';
-card.innerHTML='<button class="note-delete" onclick="deleteNote('+i+')">×</button><div class="note-title">'+note.title+'</div><div class="note-content">'+note.content+'</div><div style="font-size:12px;color:var(--muted)">'+note.date+'</div>';
+card.innerHTML=`
+<button class="note-delete" onclick="deleteNote(${i})">×</button>
+<div class="note-title">${note.title}</div>
+<div class="note-content">${note.content}</div>
+<div style="font-size:12px;color:var(--muted)">${note.date}</div>`;
 grid.appendChild(card);
 });
 }
@@ -877,66 +870,46 @@ closeNoteModal();
 }
 function deleteNote(i){if(!confirm('Delete?'))return;notes.splice(i,1);localStorage.setItem('quantum_notes',JSON.stringify(notes));renderNotes()}
 
+// QUIZ
+const quizzes={
+'class-10':[{q:"HCF of 12,18?",o:["2","3","6","9"],c:2}],
+'class-12':[{q:"Electric field in conductor?",o:["Max","Min","Zero","Infinite"],c:2}],
+'jee':[{q:"Moment of inertia solid sphere?",o:["MR²","2/5MR²","1/2MR²","2/3MR²"],c:1}],
+'neet':[{q:"Mitosis results?",o:["2 haploid","2 diploid","4 haploid","4 diploid"],c:1}]
+};
+let curCat='class-10',curIdx=0,curQs=[];
+function startQuizForCategory(c){curCat=c;curQs=quizzes[c]||[];curIdx=0;document.getElementById('quiz-selection').style.display='none';document.getElementById('quiz-interface').style.display='block';displayQ()}
+function displayQ(){
+const q=curQs[curIdx];
+document.getElementById('quiz-question').textContent=q.q;
+document.getElementById('quiz-progress').textContent=`Question ${curIdx+1} of ${curQs.length}`;
+const opts=document.getElementById('quiz-options');
+opts.innerHTML='';
+q.o.forEach((o,i)=>{
+const d=document.createElement('div');
+d.className='quiz-option';
+d.textContent=o;
+d.onclick=()=>{if(i===q.c)d.style.background='rgba(0,255,136,0.3)';else d.style.background='rgba(255,0,0,0.3)'};
+opts.appendChild(d);
+});
+}
+function nextQuestion(){curIdx++;if(curIdx>=curQs.length)curIdx=0;displayQ()}
 
 // VIDEO LIBRARY
 function loadVideoLibrary(){
 const g=document.getElementById('video-grid');
 g.innerHTML='';
-const videoPlaylists=[
-{title:'Class 6 - All Subjects',icon:'📚',playlist:'PLm_MSClsnwm_DzqQfaIOmrnqrLMXxh3L5',channel:'Magnet Brains'},
-{title:'Class 7 - All Subjects',icon:'📚',playlist:'PLm_MSClsnwm_u2o4Lzg_XaJBr1wq5jELp',channel:'Magnet Brains'},
-{title:'Class 8 - All Subjects',icon:'📚',playlist:'PLm_MSClsnwm8gFzKLvxHrLVECJA_Rf4C9',channel:'Magnet Brains'},
-{title:'Class 9 - All Subjects',icon:'📖',playlist:'PLm_MSClsnwm9nCXE1FYxEAF6lBSMGEuLz',channel:'Magnet Brains'},
-{title:'Class 10 - Complete',icon:'🎓',playlist:'PLm_MSClsnwm-ABk3FGj9RB7U7Dhbo-YWJ',channel:'Magnet Brains'},
-{title:'Class 11 Physics',icon:'⚛️',playlist:'PLF_7kfnwLFCFHTfto5KVT7QKOhhK2RKaA',channel:'Physics Wallah'},
-{title:'Class 11 Chemistry',icon:'⚗️',playlist:'PLbu_fGT0MPstq_DDs4GrcvXOpjKpvV8l9',channel:'Physics Wallah'},
-{title:'Class 11 Maths',icon:'📐',playlist:'PLbu_fGT0MPssLR1FcrTNDP6FNrPzNZvow',channel:'Physics Wallah'},
-{title:'Class 12 Physics',icon:'⚛️',playlist:'PLF_7kfnwLFCH6PQqQe1C_kP3W8p9Nvs2i',channel:'Physics Wallah'},
-{title:'Class 12 Chemistry',icon:'⚗️',playlist:'PLbu_fGT0MPst4wi_Hdm6QWIK5gZz9sqBT',channel:'Physics Wallah'},
-{title:'Class 12 Maths',icon:'📐',playlist:'PLbu_fGT0MPsuLQ9O6zcSEhRNxtiVhGT6T',channel:'Physics Wallah'},
-{title:'JEE Mains Physics',icon:'🔬',playlist:'PLm_MSClsnwm-vL9f9pYMHlkFNWbEUDXGE',channel:'Physics Wallah'},
-{title:'JEE Mains Chemistry',icon:'🧪',playlist:'PLm_MSClsnwm-OCiXswmMxVK0CLuL2vFYB',channel:'Physics Wallah'},
-{title:'JEE Mains Maths',icon:'🔢',playlist:'PLm_MSClsnwm_vUxEkJmF0fiMShFCl_rDW',channel:'Physics Wallah'},
-{title:'JEE Advanced Complete',icon:'🎯',playlist:'PLm_MSClsnwm8aw5mPVyL-2KRaEqQ7LM7C',channel:'Unacademy JEE'},
-{title:'NEET Biology',icon:'🧬',playlist:'PLm_MSClsnwm8Ptb0Hqo46xXI6NLkT6mzf',channel:'Physics Wallah'},
-{title:'NEET Physics',icon:'⚡',playlist:'PLm_MSClsnwm-0P8VJixNbEwWpR3t0ijWp',channel:'Physics Wallah'},
-{title:'NEET Chemistry',icon:'💊',playlist:'PLm_MSClsnwm-wLxu1p0kWpkZr-qU7z1RD',channel:'Physics Wallah'},
-{title:'UPSC History Complete',icon:'📜',playlist:'PLVOgwA_DiGzoqQsGjmamTu6f_ZbRgnwji',channel:'Study IQ'},
-{title:'UPSC Geography',icon:'🌍',playlist:'PLVOgwA_DiGzrUgC-8WTHLPFbZ3XvQkRZT',channel:'Study IQ'},
-{title:'UPSC Polity',icon:'🏛️',playlist:'PLVOgwA_DiGzoGW8BLXl5d1G1dTbEfFu3L',channel:'Study IQ'},
-{title:'UPSC Economy',icon:'💰',playlist:'PLVOgwA_DiGzqiYLKiCsOTqcc1sILWylGB',channel:'Study IQ'},
-{title:'UPSC Current Affairs',icon:'📰',playlist:'PLVOgwA_DiGzq5mRqp-qxvEJrYKTZXDlEI',channel:'Study IQ'},
-{title:'SSC CGL Complete',icon:'📊',playlist:'PLm_MSClsnwm9bv_FdUXVbmqFrZ8RoXW2h',channel:'Adda247'},
-{title:'SSC Maths',icon:'🔢',playlist:'PLm_MSClsnwm-1MKlMFn7L0hDDKLSQmb7d',channel:'Adda247'},
-{title:'SSC English',icon:'📝',playlist:'PLm_MSClsnwm_tl9pYsqZnOYmI0mBOvW8H',channel:'Adda247'},
-{title:'SSC Reasoning',icon:'🧠',playlist:'PLm_MSClsnwm-2hKnv_DWWLMLKCNsKxHWP',channel:'Adda247'},
-{title:'BPSC GS Paper 1',icon:'📚',playlist:'PLm_MSClsnwm-zWjTHKjLnYdxLNX4fKZSn',channel:'Khan GS Research'},
-{title:'BPSC GS Paper 2',icon:'📖',playlist:'PLm_MSClsnwm-qE2iBZYCEUd4S9d2GmwJi',channel:'Khan GS Research'},
-{title:'BPSC Current Affairs',icon:'📰',playlist:'PLm_MSClsnwm8j5VhZzA9_gzYxdmwCkFhZ',channel:'Khan GS Research'},
-{title:'Bihar Special GK',icon:'🏛️',playlist:'PLm_MSClsnwm9BhdDJ8NWYW1mzMTp4m2qG',channel:'Khan GS Research'}
-];
-videoPlaylists.forEach(function(v){
-const card=document.createElement('div');
-card.className='subject-card';
-card.style.cssText='position:relative;overflow:hidden';
-card.innerHTML='<div style="font-size:48px;margin-bottom:15px">'+v.icon+'</div><div style="font-size:20px;font-weight:700;margin-bottom:8px">'+v.title+'</div><div style="font-size:13px;color:var(--muted)">'+v.channel+'</div><div style="position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.9);color:white;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700">PLAYLIST</div>';
-card.onclick=function(){window.open('https://www.youtube.com/playlist?list='+v.playlist,'_blank')};
-g.appendChild(card);
+['Class 10 Maths','Class 12 Physics','JEE Physics'].forEach(s=>{
+const c=document.createElement('div');
+c.className='subject-card';
+c.innerHTML=`<div style="font-size:48px;margin-bottom:15px">📺</div><div style="font-size:20px;font-weight:700">${s}</div>`;
+c.onclick=()=>window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(s)}`,'_blank');
+g.appendChild(c);
 });
 }
 
 // STUDY TIMER
-function checkAndResetDailyStudyTime(){
-const today=new Date().toDateString();
-const lastDate=localStorage.getItem('quantum-study-last-date');
-if(lastDate!==today){
-localStorage.setItem('quantum-total-study-time','0');
-localStorage.setItem('quantum-study-last-date',today);
-return 0;
-}
-return parseInt(localStorage.getItem('quantum-total-study-time')||'0');
-}
-let totalSec=checkAndResetDailyStudyTime();
+let totalSec=parseInt(localStorage.getItem('quantum-total-study-time')||'0');
 function updateStudyTime(){
 totalSec++;
 localStorage.setItem('quantum-total-study-time',totalSec);
@@ -955,281 +928,208 @@ if(timerDisplay)timerDisplay.textContent=h+'h '+m+'m '+s+'s';
 }
 setInterval(updateStudyTime,1000);
 updateStudyTime();
-setInterval(function(){
-const newTotal=checkAndResetDailyStudyTime();
-if(newTotal===0&&totalSec>0){
-totalSec=0;
-updateStudyTime();
-}
-},60000);
 
 let timerInt,timerSec=1500,timerMode='focus';
 const timerModes={focus:1500,short:300,long:900};
 function setTimerMode(m){timerMode=m;timerSec=timerModes[m];updateTimerDisplay();document.querySelectorAll('.timer-mode-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active')}
-function updateTimerDisplay(){const m=Math.floor(timerSec/60);const s=timerSec%60;document.getElementById('timer-display').textContent=m+':'+s.toString().padStart(2,'0')}
-function startTimer(){if(timerInt)return;timerInt=setInterval(function(){timerSec--;updateTimerDisplay();if(timerSec<=0){pauseTimer();alert('Time up!')}},1000)}
+function updateTimerDisplay(){const m=Math.floor(timerSec/60);const s=timerSec%60;document.getElementById('timer-display').textContent=`${m}:${s.toString().padStart(2,'0')}`}
+function startTimer(){if(timerInt)return;timerInt=setInterval(()=>{timerSec--;updateTimerDisplay();if(timerSec<=0){pauseTimer();alert('Time up!')}},1000)}
 function pauseTimer(){clearInterval(timerInt);timerInt=null}
 function resetTimer(){pauseTimer();timerSec=timerModes[timerMode];updateTimerDisplay()}
 document.getElementById('pomodoros').textContent=localStorage.getItem('pomodoros')||'0';
 
 // AI SOLVER
 const GEMINI_API_KEY='AIzaSyA6trvMHzDTSeVglC3FOygBwpzcAKdUpyE';
-function openAIModal(){document.getElementById('ai-modal').style.display='flex';document.getElementById('ai-text').focus()}
+function openAIModal(){document.getElementById('ai-modal').style.display='flex'}
 function closeAIModal(){document.getElementById('ai-modal').style.display='none'}
 async function solveAIDoubt(){
 const text=document.getElementById('ai-text').value.trim();
-const photoInput=document.getElementById('ai-photo');
 const answerDiv=document.getElementById('ai-answer');
-if(!text&&!photoInput.files[0]){
-answerDiv.innerHTML='<p style="color:#ff6666">Please enter a question or upload an image</p>';
-return;
-}
-answerDiv.innerHTML='<div style="color:var(--accent);font-weight:600;display:flex;align-items:center;gap:10px"><div style="width:20px;height:20px;border:3px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite"></div>AI is thinking...</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
-
+if(!text){answerDiv.innerHTML='<p style="color:#ff6666">Please enter a question</p>';return}
+answerDiv.innerHTML='<p style="color:var(--accent);font-weight:600">🤖 Solving...</p>';
 try{
-let bodyContent;
-if(photoInput.files[0]){
-const file=photoInput.files[0];
-const reader=new FileReader();
-reader.onload=async function(e){
-const base64Image=e.target.result.split(’,’)[1];
-const response=await fetch(‘https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=’+GEMINI_API_KEY,{
-method:‘POST’,
-headers:{‘Content-Type’:‘application/json’},
-body:JSON.stringify({
-contents:[{
-parts:[
-{text:‘You are an expert teacher. ‘+(text||‘Explain what you see in this image and solve any problems shown.’)},
-{inline_data:{mime_type:file.type,data:base64Image}}
-]
-}]
-})
+const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,{
+method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({contents:[{parts:[{text:`You are an expert teacher. Solve this:\n\n${text}`}]}]})
 });
 const data=await response.json();
-displayAnswer(data,answerDiv);
-};
-reader.readAsDataURL(file);
-}else{
-const response=await fetch(‘https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=’+GEMINI_API_KEY,{
-method:‘POST’,
-headers:{‘Content-Type’:‘application/json’},
-body:JSON.stringify({
-contents:[{
-parts:[{text:‘You are an expert teacher helping students. Explain clearly with examples and steps.\n\nQuestion: ‘+text}]
-}]
-})
-});
-const data=await response.json();
-displayAnswer(data,answerDiv);
-}
-}catch(err){
-answerDiv.innerHTML=’<div style="color:#ff6666;padding:20px;background:rgba(255,102,102,0.1);border-radius:12px;border-left:4px solid #ff6666"><strong>Error:</strong> ‘+err.message+’<br><br>Please check your internet connection or try again.</div>’;
-}
-}
-function displayAnswer(data,answerDiv){
-try{
-let answer=data.candidates[0].content.parts[0].text||“No answer received”;
-answer=answer
-.replace(/**(.*?)**/g,’<strong style="color:var(--accent)">$1</strong>’)
-.replace(/*(.*?)*/g,’<em>$1</em>’)
-.replace(/`(.*?)`/gs,’<pre style="background:rgba(59,130,246,0.1);padding:12px;border-radius:8px;overflow-x:auto;border-left:3px solid var(--accent)"><code>$1</code></pre>’)
-.replace(/`(.*?)`/g,’<code style="background:rgba(59,130,246,0.15);padding:2px 6px;border-radius:4px;font-family:monospace">$1</code>’)
-.replace(/\n\n/g,’</p><p style="margin:12px 0">’)
-.replace(/\n/g,’<br>’);
-answer=’<p style="margin:12px 0">’+answer+’</p>’;
-answerDiv.innerHTML=’<div style="line-height:1.8;font-size:15px">’+answer+’</div><div style="margin-top:20px;padding-top:20px;border-top:1px solid #30363d"><button onclick="copyAIAnswer()" style="padding:10px 24px;background:var(--card);color:var(--accent);border:1px solid var(--accent);border-radius:12px;cursor:pointer;font-weight:600;margin-right:10px">📋 Copy Answer</button><button onclick="clearAIChat()" style="padding:10px 24px;background:var(--card);color:var(--text);border:1px solid #30363d;border-radius:12px;cursor:pointer;font-weight:600">🗑️ Clear</button></div>’;
-}catch(e){
-answerDiv.innerHTML=’<div style="color:#ff6666">Error parsing response. Please try again.</div>’;
-}
-}
-function copyAIAnswer(){
-const answer=document.getElementById(‘ai-answer’).innerText;
-navigator.clipboard.writeText(answer).then(function(){
-alert(‘Answer copied to clipboard!’);
-});
-}
-function clearAIChat(){
-document.getElementById(‘ai-text’).value=’’;
-document.getElementById(‘ai-photo’).value=’’;
-document.getElementById(‘ai-answer’).innerHTML=’’;
+let answer=data.candidates[0].content.parts[0].text||"No answer";
+answer=answer.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+answerDiv.innerHTML=`<div style="line-height:1.7">${answer}</div>`;
+}catch(err){answerDiv.innerHTML=`<p style="color:#ff6666">Error: ${err.message}</p>`}
 }
 
 // SUBJECTS DATA WITH YOUTUBE INTEGRATION
 const subjectsData={
-‘class-6’:{title:‘Class 6’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘16’,chapters:[‘Knowing Our Numbers’,‘Whole Numbers’,‘Playing with Numbers’,‘Basic Geometrical Ideas’,‘Understanding Elementary Shapes’,‘Integers’,‘Fractions’,‘Decimals’]},
-{name:‘Science’,icon:‘🔬’,weightage:‘16’,chapters:[‘Food Where Does It Come From’,‘Components of Food’,‘Fibre to Fabric’,‘Sorting Materials’,‘Separation of Substances’,‘Changes Around Us’,‘Getting to Know Plants’,‘Body Movements’]},
-{name:‘History’,icon:‘📜’,weightage:‘17’,chapters:[‘What Where How When’,‘Earliest Societies’,‘First Farmers’,‘First Cities’,‘Early States’,‘Kingdoms Kings’]},
-{name:‘Geography’,icon:‘🌍’,weightage:‘17’,chapters:[‘Earth in Solar System’,‘Globe Latitudes’,‘Motions of Earth’,‘Maps’,‘Major Domains’,‘Major Landforms’,‘Our Country India’]},
-{name:‘Polity’,icon:‘🏛️’,weightage:‘17’,chapters:[‘Understanding Diversity’,‘What is Government’,‘Key Elements Democracy’,‘Panchayati Raj’,‘Rural Administration’,‘Urban Administration’]},
-{name:‘Economics’,icon:‘💰’,weightage:‘17’,chapters:[‘Rural Livelihoods’,‘Urban Livelihoods’]},
-{name:‘English’,icon:‘📖’,weightage:‘0’,chapters:[‘A Tale of Two Birds’,‘The Friendly Mongoose’,‘The Shepherds Treasure’,‘The Old Clock Shop’,‘Tansen’,‘The Monkey and Crocodile’]},
-{name:‘Hindi’,icon:‘🔤’,weightage:‘0’,chapters:[‘वह चिड़िया जो’,‘बचपन’,‘नादान दोस्त’,‘चाँद से थोड़ी सी गप्पें’,‘अक्षरों का महत्व’,‘पार नजर के’]}
+'class-6':{title:'Class 6',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'16',chapters:['Knowing Our Numbers','Whole Numbers','Playing with Numbers','Basic Geometrical Ideas','Understanding Elementary Shapes','Integers','Fractions','Decimals']},
+{name:'Science',icon:'🔬',weightage:'16',chapters:['Food Where Does It Come From','Components of Food','Fibre to Fabric','Sorting Materials','Separation of Substances','Changes Around Us','Getting to Know Plants','Body Movements']},
+{name:'History',icon:'📜',weightage:'17',chapters:['What Where How When','Earliest Societies','First Farmers','First Cities','Early States','Kingdoms Kings']},
+{name:'Geography',icon:'🌍',weightage:'17',chapters:['Earth in Solar System','Globe Latitudes','Motions of Earth','Maps','Major Domains','Major Landforms','Our Country India']},
+{name:'Polity',icon:'🏛️',weightage:'17',chapters:['Understanding Diversity','What is Government','Key Elements Democracy','Panchayati Raj','Rural Administration','Urban Administration']},
+{name:'Economics',icon:'💰',weightage:'17',chapters:['Rural Livelihoods','Urban Livelihoods']},
+{name:'English',icon:'📖',weightage:'0',chapters:['A Tale of Two Birds','The Friendly Mongoose','The Shepherds Treasure','The Old Clock Shop','Tansen','The Monkey and Crocodile']},
+{name:'Hindi',icon:'🔤',weightage:'0',chapters:['वह चिड़िया जो','बचपन','नादान दोस्त','चाँद से थोड़ी सी गप्पें','अक्षरों का महत्व','पार नजर के']}
 ]},
-‘class-7’:{title:‘Class 7’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘16’,chapters:[‘Integers’,‘Fractions and Decimals’,‘Data Handling’,‘Simple Equations’,‘Lines and Angles’,‘Triangle Properties’,‘Congruence’,‘Comparing Quantities’]},
-{name:‘Science’,icon:‘🔬’,weightage:‘16’,chapters:[‘Nutrition in Plants’,‘Nutrition in Animals’,‘Heat’,‘Acids Bases Salts’,‘Physical Chemical Changes’,‘Weather Climate’,‘Winds Storms’,‘Soil’]},
-{name:‘History’,icon:‘📜’,weightage:‘17’,chapters:[‘Tracing Changes’,‘New Kings Kingdoms’,‘Delhi Sultans’,‘Mughal Empire’,‘Rulers Buildings’,‘Towns Traders’]},
-{name:‘Geography’,icon:‘🌍’,weightage:‘17’,chapters:[‘Environment’,‘Inside Our Earth’,‘Our Changing Earth’,‘Air’,‘Water’,‘Natural Vegetation’,‘Human Settlement’]},
-{name:‘Polity’,icon:‘🏛️’,weightage:‘17’,chapters:[‘On Equality’,‘Role of Government’,‘State Government’,‘Growing Boys Girls’,‘Women Change World’,‘Understanding Media’]},
-{name:‘Economics’,icon:‘💰’,weightage:‘17’,chapters:[‘Markets Around Us’,‘Shirt in Market’]},
-{name:‘English’,icon:‘📖’,weightage:‘0’,chapters:[‘Three Questions’,‘A Gift of Chappals’,‘Gopal and Hilsa Fish’,‘The Ashes That Made Trees Bloom’,‘Quality’,‘Expert Detectives’]},
-{name:‘Hindi’,icon:‘🔤’,weightage:‘0’,chapters:[‘हम पंछी उन्मुक्त गगन के’,‘दादी माँ’,‘हिमालय की बेटियां’,‘कठपुतली’,‘मिठाईवाला’,‘रक्त और हमारा शरीर’]}
+'class-7':{title:'Class 7',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'16',chapters:['Integers','Fractions and Decimals','Data Handling','Simple Equations','Lines and Angles','Triangle Properties','Congruence','Comparing Quantities']},
+{name:'Science',icon:'🔬',weightage:'16',chapters:['Nutrition in Plants','Nutrition in Animals','Heat','Acids Bases Salts','Physical Chemical Changes','Weather Climate','Winds Storms','Soil']},
+{name:'History',icon:'📜',weightage:'17',chapters:['Tracing Changes','New Kings Kingdoms','Delhi Sultans','Mughal Empire','Rulers Buildings','Towns Traders']},
+{name:'Geography',icon:'🌍',weightage:'17',chapters:['Environment','Inside Our Earth','Our Changing Earth','Air','Water','Natural Vegetation','Human Settlement']},
+{name:'Polity',icon:'🏛️',weightage:'17',chapters:['On Equality','Role of Government','State Government','Growing Boys Girls','Women Change World','Understanding Media']},
+{name:'Economics',icon:'💰',weightage:'17',chapters:['Markets Around Us','Shirt in Market']},
+{name:'English',icon:'📖',weightage:'0',chapters:['Three Questions','A Gift of Chappals','Gopal and Hilsa Fish','The Ashes That Made Trees Bloom','Quality','Expert Detectives']},
+{name:'Hindi',icon:'🔤',weightage:'0',chapters:['हम पंछी उन्मुक्त गगन के','दादी माँ','हिमालय की बेटियां','कठपुतली','मिठाईवाला','रक्त और हमारा शरीर']}
 ]},
-‘class-8’:{title:‘Class 8’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘16’,chapters:[‘Rational Numbers’,‘Linear Equations’,‘Understanding Quadrilaterals’,‘Practical Geometry’,‘Data Handling’,‘Squares Square Roots’,‘Cubes Cube Roots’]},
-{name:‘Science’,icon:‘🔬’,weightage:‘16’,chapters:[‘Crop Production’,‘Microorganisms’,‘Synthetic Fibres Plastics’,‘Metals Non-metals’,‘Coal Petroleum’,‘Combustion Flame’,‘Conservation’]},
-{name:‘History’,icon:‘📜’,weightage:‘17’,chapters:[‘How When Where’,‘Trade to Territory’,‘Ruling Countryside’,‘Tribals Dikus’,‘When People Rebel’,‘Weavers Iron Smelters’]},
-{name:‘Geography’,icon:‘🌍’,weightage:‘17’,chapters:[‘Resources’,‘Land Soil Water’,‘Agriculture’,‘Industries’,‘Human Resources’]},
-{name:‘Polity’,icon:‘🏛️’,weightage:‘17’,chapters:[‘Indian Constitution’,‘Understanding Secularism’,‘Why Parliament’,‘Understanding Laws’,‘Judiciary’]},
-{name:‘Economics’,icon:‘💰’,weightage:‘17’,chapters:[‘Understanding Marginalization’,‘Confronting Marginalization’]},
-{name:‘English’,icon:‘📖’,weightage:‘0’,chapters:[‘Best Christmas Present’,‘The Tsunami’,‘Glimpses of Past’,‘Bepin Lapse of Memory’,‘Summit Within’,‘This is Jodys Fawn’]},
-{name:‘Hindi’,icon:‘🔤’,weightage:‘0’,chapters:[‘ध्वनि’,‘लाख की चूड़ियाँ’,‘बस की यात्रा’,‘दीवानों की हस्ती’,‘चिट्ठियों की दुनिया’,‘भगवान के डाकिए’]}
+'class-8':{title:'Class 8',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'16',chapters:['Rational Numbers','Linear Equations','Understanding Quadrilaterals','Practical Geometry','Data Handling','Squares Square Roots','Cubes Cube Roots']},
+{name:'Science',icon:'🔬',weightage:'16',chapters:['Crop Production','Microorganisms','Synthetic Fibres Plastics','Metals Non-metals','Coal Petroleum','Combustion Flame','Conservation']},
+{name:'History',icon:'📜',weightage:'17',chapters:['How When Where','Trade to Territory','Ruling Countryside','Tribals Dikus','When People Rebel','Weavers Iron Smelters']},
+{name:'Geography',icon:'🌍',weightage:'17',chapters:['Resources','Land Soil Water','Agriculture','Industries','Human Resources']},
+{name:'Polity',icon:'🏛️',weightage:'17',chapters:['Indian Constitution','Understanding Secularism','Why Parliament','Understanding Laws','Judiciary']},
+{name:'Economics',icon:'💰',weightage:'17',chapters:['Understanding Marginalization','Confronting Marginalization']},
+{name:'English',icon:'📖',weightage:'0',chapters:['Best Christmas Present','The Tsunami','Glimpses of Past','Bepin Lapse of Memory','Summit Within','This is Jodys Fawn']},
+{name:'Hindi',icon:'🔤',weightage:'0',chapters:['ध्वनि','लाख की चूड़ियाँ','बस की यात्रा','दीवानों की हस्ती','चिट्ठियों की दुनिया','भगवान के डाकिए']}
 ]},
-‘class-9’:{title:‘Class 9’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘16’,chapters:[‘Number Systems’,‘Polynomials’,‘Coordinate Geometry’,‘Linear Equations’,‘Euclid Geometry’,‘Lines Angles’,‘Triangles’,‘Quadrilaterals’]},
-{name:‘Science’,icon:‘🔬’,weightage:‘16’,chapters:[‘Matter in Surroundings’,‘Is Matter Pure’,‘Atoms Molecules’,‘Structure of Atom’,‘Fundamental Unit of Life’,‘Tissues’,‘Diversity’,‘Motion’]},
-{name:‘History’,icon:‘📜’,weightage:‘17’,chapters:[‘French Revolution’,‘Socialism Russian Revolution’,‘Nazism Hitler’,‘Forest Society’,‘Pastoralists’]},
-{name:‘Geography’,icon:‘🌍’,weightage:‘17’,chapters:[‘India Size Location’,‘Physical Features’,‘Drainage’,‘Climate’,‘Natural Vegetation’,‘Population’]},
-{name:‘Polity’,icon:‘🏛️’,weightage:‘17’,chapters:[‘What is Democracy’,‘Constitutional Design’,‘Electoral Politics’,‘Working Institutions’,‘Democratic Rights’]},
-{name:‘Economics’,icon:‘💰’,weightage:‘17’,chapters:[‘Village Palampur’,‘People as Resource’,‘Poverty Challenge’,‘Food Security’]},
-{name:‘English’,icon:‘📖’,weightage:‘0’,chapters:[‘The Fun They Had’,‘Sound of Music’,‘Little Girl’,‘Truly Beautiful Mind’,‘Snake and Mirror’,‘My Childhood’]},
-{name:‘Hindi’,icon:‘🔤’,weightage:‘0’,chapters:[‘दो बैलों की कथा’,‘ल्हासा की ओर’,‘उपभोक्तावाद’,‘साँवले सपनों की याद’,‘नाना साहब की पुत्री’,‘प्रेमचंद के फटे जूते’]}
+'class-9':{title:'Class 9',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'16',chapters:['Number Systems','Polynomials','Coordinate Geometry','Linear Equations','Euclid Geometry','Lines Angles','Triangles','Quadrilaterals']},
+{name:'Science',icon:'🔬',weightage:'16',chapters:['Matter in Surroundings','Is Matter Pure','Atoms Molecules','Structure of Atom','Fundamental Unit of Life','Tissues','Diversity','Motion']},
+{name:'History',icon:'📜',weightage:'17',chapters:['French Revolution','Socialism Russian Revolution','Nazism Hitler','Forest Society','Pastoralists']},
+{name:'Geography',icon:'🌍',weightage:'17',chapters:['India Size Location','Physical Features','Drainage','Climate','Natural Vegetation','Population']},
+{name:'Polity',icon:'🏛️',weightage:'17',chapters:['What is Democracy','Constitutional Design','Electoral Politics','Working Institutions','Democratic Rights']},
+{name:'Economics',icon:'💰',weightage:'17',chapters:['Village Palampur','People as Resource','Poverty Challenge','Food Security']},
+{name:'English',icon:'📖',weightage:'0',chapters:['The Fun They Had','Sound of Music','Little Girl','Truly Beautiful Mind','Snake and Mirror','My Childhood']},
+{name:'Hindi',icon:'🔤',weightage:'0',chapters:['दो बैलों की कथा','ल्हासा की ओर','उपभोक्तावाद','साँवले सपनों की याद','नाना साहब की पुत्री','प्रेमचंद के फटे जूते']}
 ]},
-‘class-10’:{title:‘Class 10’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘16’,chapters:[‘Real Numbers’,‘Polynomials’,‘Linear Equations’,‘Quadratic Equations’,‘Arithmetic Progressions’,‘Triangles’,‘Coordinate Geometry’,‘Trigonometry’]},
-{name:‘Science’,icon:‘🔬’,weightage:‘16’,chapters:[‘Chemical Reactions’,‘Acids Bases Salts’,‘Metals Non-metals’,‘Carbon Compounds’,‘Periodic Classification’,‘Life Processes’,‘Control Coordination’,‘Electricity’]},
-{name:‘History’,icon:‘📜’,weightage:‘17’,chapters:[‘Rise Nationalism Europe’,‘Nationalism India’,‘Making Global World’,‘Age Industrialization’,‘Print Culture’]},
-{name:‘Geography’,icon:‘🌍’,weightage:‘17’,chapters:[‘Resources Development’,‘Forest Wildlife’,‘Water Resources’,‘Agriculture’,‘Minerals Energy’,‘Manufacturing’]},
-{name:‘Polity’,icon:‘🏛️’,weightage:‘17’,chapters:[‘Power Sharing’,‘Federalism’,‘Gender Religion Caste’,‘Political Parties’,‘Outcomes Democracy’]},
-{name:‘Economics’,icon:‘💰’,weightage:‘17’,chapters:[‘Development’,‘Sectors Economy’,‘Money Credit’,‘Globalization’,‘Consumer Rights’]},
-{name:‘English’,icon:‘📖’,weightage:‘0’,chapters:[‘Letter to God’,‘Nelson Mandela’,‘Two Stories Flying’,‘Diary of Anne Frank’,‘Hundred Dresses’,‘Glimpses of India’]},
-{name:‘Hindi’,icon:‘🔤’,weightage:‘0’,chapters:[‘सूरदास के पद’,‘तुलसीदास’,‘देव’,‘जयशंकर प्रसाद’,‘सूर्यकांत निराला’,‘नागार्जुन’]}
+'class-10':{title:'Class 10',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'16',chapters:['Real Numbers','Polynomials','Linear Equations','Quadratic Equations','Arithmetic Progressions','Triangles','Coordinate Geometry','Trigonometry']},
+{name:'Science',icon:'🔬',weightage:'16',chapters:['Chemical Reactions','Acids Bases Salts','Metals Non-metals','Carbon Compounds','Periodic Classification','Life Processes','Control Coordination','Electricity']},
+{name:'History',icon:'📜',weightage:'17',chapters:['Rise Nationalism Europe','Nationalism India','Making Global World','Age Industrialization','Print Culture']},
+{name:'Geography',icon:'🌍',weightage:'17',chapters:['Resources Development','Forest Wildlife','Water Resources','Agriculture','Minerals Energy','Manufacturing']},
+{name:'Polity',icon:'🏛️',weightage:'17',chapters:['Power Sharing','Federalism','Gender Religion Caste','Political Parties','Outcomes Democracy']},
+{name:'Economics',icon:'💰',weightage:'17',chapters:['Development','Sectors Economy','Money Credit','Globalization','Consumer Rights']},
+{name:'English',icon:'📖',weightage:'0',chapters:['Letter to God','Nelson Mandela','Two Stories Flying','Diary of Anne Frank','Hundred Dresses','Glimpses of India']},
+{name:'Hindi',icon:'🔤',weightage:'0',chapters:['सूरदास के पद','तुलसीदास','देव','जयशंकर प्रसाद','सूर्यकांत निराला','नागार्जुन']}
 ]},
-‘class-11’:{title:‘Class 11’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘25’,chapters:[‘Sets’,‘Relations Functions’,‘Trigonometric Functions’,‘Mathematical Induction’,‘Complex Numbers’,‘Linear Inequalities’,‘Permutations Combinations’]},
-{name:‘Physics’,icon:‘⚛️’,weightage:‘25’,chapters:[‘Physical World’,‘Units Measurements’,‘Motion Straight Line’,‘Motion in Plane’,‘Laws of Motion’,‘Work Energy Power’,‘Gravitation’]},
-{name:‘Chemistry’,icon:‘⚗️’,weightage:‘25’,chapters:[‘Basic Concepts’,‘Structure of Atom’,‘Classification Elements’,‘Chemical Bonding’,‘States of Matter’,‘Thermodynamics’,‘Equilibrium’]},
-{name:‘Biology’,icon:‘🧬’,weightage:‘25’,chapters:[‘Living World’,‘Biological Classification’,‘Plant Kingdom’,‘Animal Kingdom’,‘Morphology Plants’,‘Anatomy Plants’,‘Cell Unit Life’]}
+'class-11':{title:'Class 11',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'25',chapters:['Sets','Relations Functions','Trigonometric Functions','Mathematical Induction','Complex Numbers','Linear Inequalities','Permutations Combinations']},
+{name:'Physics',icon:'⚛️',weightage:'25',chapters:['Physical World','Units Measurements','Motion Straight Line','Motion in Plane','Laws of Motion','Work Energy Power','Gravitation']},
+{name:'Chemistry',icon:'⚗️',weightage:'25',chapters:['Basic Concepts','Structure of Atom','Classification Elements','Chemical Bonding','States of Matter','Thermodynamics','Equilibrium']},
+{name:'Biology',icon:'🧬',weightage:'25',chapters:['Living World','Biological Classification','Plant Kingdom','Animal Kingdom','Morphology Plants','Anatomy Plants','Cell Unit Life']}
 ]},
-‘class-12’:{title:‘Class 12’,subjects:[
-{name:‘Mathematics’,icon:‘📐’,weightage:‘25’,chapters:[‘Relations Functions’,‘Inverse Trigonometric’,‘Matrices’,‘Determinants’,‘Continuity Differentiability’,‘Application Derivatives’,‘Integrals’]},
-{name:‘Physics’,icon:‘⚛️’,weightage:‘25’,chapters:[‘Electric Charges Fields’,‘Electrostatic Potential’,‘Current Electricity’,‘Moving Charges Magnetism’,‘Electromagnetic Induction’,‘Alternating Current’]},
-{name:‘Chemistry’,icon:‘⚗️’,weightage:‘25’,chapters:[‘Solid State’,‘Solutions’,‘Electrochemistry’,‘Chemical Kinetics’,‘Surface Chemistry’,‘Isolation Elements’,‘p-Block Elements’]},
-{name:‘Biology’,icon:‘🧬’,weightage:‘25’,chapters:[‘Reproduction Organisms’,‘Sexual Reproduction Plants’,‘Human Reproduction’,‘Reproductive Health’,‘Inheritance Variation’,‘Molecular Basis’]}
+'class-12':{title:'Class 12',subjects:[
+{name:'Mathematics',icon:'📐',weightage:'25',chapters:['Relations Functions','Inverse Trigonometric','Matrices','Determinants','Continuity Differentiability','Application Derivatives','Integrals']},
+{name:'Physics',icon:'⚛️',weightage:'25',chapters:['Electric Charges Fields','Electrostatic Potential','Current Electricity','Moving Charges Magnetism','Electromagnetic Induction','Alternating Current']},
+{name:'Chemistry',icon:'⚗️',weightage:'25',chapters:['Solid State','Solutions','Electrochemistry','Chemical Kinetics','Surface Chemistry','Isolation Elements','p-Block Elements']},
+{name:'Biology',icon:'🧬',weightage:'25',chapters:['Reproduction Organisms','Sexual Reproduction Plants','Human Reproduction','Reproductive Health','Inheritance Variation','Molecular Basis']}
 ]},
-‘iit-jee’:{title:‘IIT JEE’,subjects:[
-{name:‘Physics’,icon:‘⚛️’,weightage:‘33’,chapters:[‘Kinematics’,‘Laws of Motion’,‘Work Energy Power’,‘Rotational Motion’,‘Gravitation’,‘Thermodynamics’,‘Electrostatics’]},
-{name:‘Chemistry’,icon:‘⚗️’,weightage:‘33’,chapters:[‘Mole Concept’,‘Atomic Structure’,‘Chemical Bonding’,‘Thermodynamics’,‘Equilibrium’,‘Organic Chemistry’]},
-{name:‘Mathematics’,icon:‘📐’,weightage:‘34’,chapters:[‘Complex Numbers’,‘Quadratic Equations’,‘Sequences Series’,‘Permutations Combinations’,‘Matrices’,‘Calculus’]}
+'iit-jee':{title:'IIT JEE',subjects:[
+{name:'Physics',icon:'⚛️',weightage:'33',chapters:['Kinematics','Laws of Motion','Work Energy Power','Rotational Motion','Gravitation','Thermodynamics','Electrostatics']},
+{name:'Chemistry',icon:'⚗️',weightage:'33',chapters:['Mole Concept','Atomic Structure','Chemical Bonding','Thermodynamics','Equilibrium','Organic Chemistry']},
+{name:'Mathematics',icon:'📐',weightage:'34',chapters:['Complex Numbers','Quadratic Equations','Sequences Series','Permutations Combinations','Matrices','Calculus']}
 ]},
-‘neet’:{title:‘NEET’,subjects:[
-{name:‘Physics’,icon:‘⚛️’,weightage:‘33’,chapters:[‘Physical World’,‘Kinematics’,‘Laws of Motion’,‘Work Energy’,‘Thermodynamics’,‘Electrostatics’]},
-{name:‘Chemistry’,icon:‘⚗️’,weightage:‘33’,chapters:[‘Basic Concepts’,‘Atomic Structure’,‘Chemical Bonding’,‘Thermodynamics’,‘Organic Chemistry’]},
-{name:‘Biology’,icon:‘🧬’,weightage:‘34’,chapters:[‘Living World’,‘Classification’,‘Plant Kingdom’,‘Animal Kingdom’,‘Cell Biology’,‘Biomolecules’]}
+'neet':{title:'NEET',subjects:[
+{name:'Physics',icon:'⚛️',weightage:'33',chapters:['Physical World','Kinematics','Laws of Motion','Work Energy','Thermodynamics','Electrostatics']},
+{name:'Chemistry',icon:'⚗️',weightage:'33',chapters:['Basic Concepts','Atomic Structure','Chemical Bonding','Thermodynamics','Organic Chemistry']},
+{name:'Biology',icon:'🧬',weightage:'34',chapters:['Living World','Classification','Plant Kingdom','Animal Kingdom','Cell Biology','Biomolecules']}
 ]},
-‘upsc’:{title:‘UPSC Civil Services’,subjects:[
-{name:‘History’,icon:‘📜’,weightage:‘20’,chapters:[‘Ancient India Indus Valley’,‘Vedic Period’,‘Mauryan Empire’,‘Gupta Empire’,‘Medieval India Sultanate’,‘Mughal Empire’,‘Modern India British Rule’,‘Freedom Struggle’,‘Post Independence’,‘World History Wars’,‘World History Revolutions’]},
-{name:‘Geography’,icon:‘🌍’,weightage:‘20’,chapters:[‘Physical Geography Earth’,‘Landforms Mountains Rivers’,‘Climate Weather’,‘Indian Geography Resources’,‘Indian States Capitals’,‘World Geography Continents’,‘Map Reading’,‘Environmental Geography’,‘Disaster Management’]},
-{name:‘Polity’,icon:‘🏛️’,weightage:‘20’,chapters:[‘Indian Constitution’,‘Fundamental Rights Duties’,‘Union Government’,‘State Government’,‘Panchayati Raj’,‘Judiciary Supreme Court’,‘Election Commission’,‘International Relations’,‘Governance Ethics’]},
-{name:‘Economy’,icon:‘💰’,weightage:‘20’,chapters:[‘Indian Economy Overview’,‘National Income’,‘Banking Monetary Policy’,‘Fiscal Policy Budget’,‘Agriculture Economy’,‘Industrial Economy’,‘Economic Reforms’,‘International Trade’,‘Economic Planning’,‘Current Economic Issues’]},
-{name:‘Science Tech’,icon:‘🔬’,weightage:‘20’,chapters:[‘Physics Basics’,‘Chemistry Basics’,‘Biology Basics’,‘Space Technology’,‘Information Technology’,‘Biotechnology’,‘Environmental Science’,‘Recent Developments’,‘Nuclear Technology’]}
+'upsc':{title:'UPSC Civil Services',subjects:[
+{name:'History',icon:'📜',weightage:'20',chapters:['Ancient India Indus Valley','Vedic Period','Mauryan Empire','Gupta Empire','Medieval India Sultanate','Mughal Empire','Modern India British Rule','Freedom Struggle','Post Independence','World History Wars','World History Revolutions']},
+{name:'Geography',icon:'🌍',weightage:'20',chapters:['Physical Geography Earth','Landforms Mountains Rivers','Climate Weather','Indian Geography Resources','Indian States Capitals','World Geography Continents','Map Reading','Environmental Geography','Disaster Management']},
+{name:'Polity',icon:'🏛️',weightage:'20',chapters:['Indian Constitution','Fundamental Rights Duties','Union Government','State Government','Panchayati Raj','Judiciary Supreme Court','Election Commission','International Relations','Governance Ethics']},
+{name:'Economy',icon:'💰',weightage:'20',chapters:['Indian Economy Overview','National Income','Banking Monetary Policy','Fiscal Policy Budget','Agriculture Economy','Industrial Economy','Economic Reforms','International Trade','Economic Planning','Current Economic Issues']},
+{name:'Science Tech',icon:'🔬',weightage:'20',chapters:['Physics Basics','Chemistry Basics','Biology Basics','Space Technology','Information Technology','Biotechnology','Environmental Science','Recent Developments','Nuclear Technology']}
 ]},
-‘ssc’:{title:‘SSC CGL CHSL’,subjects:[
-{name:‘Quantitative Aptitude’,icon:‘📊’,weightage:‘25’,chapters:[‘Number System’,‘HCF LCM’,‘Percentage’,‘Profit Loss’,‘Ratio Proportion’,‘Average’,‘Simple Interest’,‘Compound Interest’,‘Time Work’,‘Time Distance’,‘Algebra’,‘Geometry’,‘Trigonometry’,‘Mensuration’,‘Data Interpretation’]},
-{name:‘English’,icon:‘📝’,weightage:‘25’,chapters:[‘Spotting Errors’,‘Sentence Improvement’,‘Fill Blanks’,‘Synonyms Antonyms’,‘Idioms Phrases’,‘One Word Substitution’,‘Spelling Correction’,‘Reading Comprehension’,‘Para Jumbles’,‘Cloze Test’]},
-{name:‘Reasoning’,icon:‘🧠’,weightage:‘25’,chapters:[‘Analogy’,‘Classification’,‘Series’,‘Coding Decoding’,‘Blood Relations’,‘Direction Sense’,‘Ranking Arrangement’,‘Alphabet Test’,‘Mathematical Operations’,‘Venn Diagrams’,‘Data Sufficiency’,‘Syllogism’,‘Statement Conclusion’,‘Puzzles Seating’]},
-{name:‘General Awareness’,icon:‘📰’,weightage:‘25’,chapters:[‘Indian History’,‘Indian Polity’,‘Indian Economy’,‘Indian Geography’,‘General Science’,‘Current Affairs’,‘Sports’,‘Books Authors’,‘Awards Honors’,‘Important Days’,‘World Organizations’]}
+'ssc':{title:'SSC CGL CHSL',subjects:[
+{name:'Quantitative Aptitude',icon:'📊',weightage:'25',chapters:['Number System','HCF LCM','Percentage','Profit Loss','Ratio Proportion','Average','Simple Interest','Compound Interest','Time Work','Time Distance','Algebra','Geometry','Trigonometry','Mensuration','Data Interpretation']},
+{name:'English',icon:'📝',weightage:'25',chapters:['Spotting Errors','Sentence Improvement','Fill Blanks','Synonyms Antonyms','Idioms Phrases','One Word Substitution','Spelling Correction','Reading Comprehension','Para Jumbles','Cloze Test']},
+{name:'Reasoning',icon:'🧠',weightage:'25',chapters:['Analogy','Classification','Series','Coding Decoding','Blood Relations','Direction Sense','Ranking Arrangement','Alphabet Test','Mathematical Operations','Venn Diagrams','Data Sufficiency','Syllogism','Statement Conclusion','Puzzles Seating']},
+{name:'General Awareness',icon:'📰',weightage:'25',chapters:['Indian History','Indian Polity','Indian Economy','Indian Geography','General Science','Current Affairs','Sports','Books Authors','Awards Honors','Important Days','World Organizations']}
 ]},
-‘bpsc’:{title:‘BPSC 69th Prelims Mains’,subjects:[
-{name:‘General Studies Paper 1’,icon:‘📚’,weightage:‘50’,chapters:[‘Ancient Bihar History’,‘Medieval Bihar History’,‘Modern Bihar History’,‘Freedom Movement Bihar’,‘Bihar Geography Physical’,‘Bihar Geography Resources’,‘Bihar Economy Agriculture’,‘Bihar Economy Industries’,‘Bihar Polity Administration’,‘Bihar Social Issues’,‘Bihar Culture Literature’,‘Recent Developments Bihar’]},
-{name:‘General Studies Paper 2’,icon:‘📖’,weightage:‘50’,chapters:[‘Indian National Movement’,‘Indian Polity Constitution’,‘Indian Economy Planning’,‘Indian Geography’,‘General Science Physics’,‘General Science Chemistry’,‘General Science Biology’,‘Current Affairs National’,‘Current Affairs International’,‘Environmental Issues’,‘Disaster Management’,‘Science Technology’]}
+'bpsc':{title:'BPSC 69th Prelims Mains',subjects:[
+{name:'General Studies Paper 1',icon:'📚',weightage:'50',chapters:['Ancient Bihar History','Medieval Bihar History','Modern Bihar History','Freedom Movement Bihar','Bihar Geography Physical','Bihar Geography Resources','Bihar Economy Agriculture','Bihar Economy Industries','Bihar Polity Administration','Bihar Social Issues','Bihar Culture Literature','Recent Developments Bihar']},
+{name:'General Studies Paper 2',icon:'📖',weightage:'50',chapters:['Indian National Movement','Indian Polity Constitution','Indian Economy Planning','Indian Geography','General Science Physics','General Science Chemistry','General Science Biology','Current Affairs National','Current Affairs International','Environmental Issues','Disaster Management','Science Technology']}
 ]},
-‘state-pcs’:{title:‘State PCS’,subjects:[
-{name:‘General Studies’,icon:‘📚’,weightage:‘50’,chapters:[‘Indian History’,‘Indian Geography’,‘Indian Polity’,‘Indian Economy’,‘General Science’,‘Current Affairs’]},
-{name:‘CSAT’,icon:‘🧠’,weightage:‘50’,chapters:[‘Comprehension’,‘Logical Reasoning’,‘Analytical Ability’,‘Decision Making’,‘Problem Solving’,‘Basic Numeracy’]}
+'state-pcs':{title:'State PCS',subjects:[
+{name:'General Studies',icon:'📚',weightage:'50',chapters:['Indian History','Indian Geography','Indian Polity','Indian Economy','General Science','Current Affairs']},
+{name:'CSAT',icon:'🧠',weightage:'50',chapters:['Comprehension','Logical Reasoning','Analytical Ability','Decision Making','Problem Solving','Basic Numeracy']}
 ]}
 };
 let currentKey=null;let currentData=null;let currentSubject=null;
 function showSubject(card){
-currentKey=card.getAttribute(‘data-subject’);
+currentKey=card.getAttribute('data-subject');
 currentData=subjectsData[currentKey];
 if(!currentData)return;
 hideAll();
-document.getElementById(‘subject-detail’).style.display=‘block’;
-document.getElementById(‘detail-title’).textContent=currentData.title;
+document.getElementById('subject-detail').style.display='block';
+document.getElementById('detail-title').textContent=currentData.title;
 renderSubjects();
 }
 function renderSubjects(){
-const grid=document.getElementById(‘subjects-grid’);
-grid.innerHTML=’’;
+const grid=document.getElementById('subjects-grid');
+grid.innerHTML='';
 currentData.subjects.forEach(function(sub){
-const card=document.createElement(‘div’);
-card.className=‘subject-card’;
-card.innerHTML=’<div class="subject-icon">’+sub.icon+’</div><div class="subject-name">’+sub.name+’</div><div class="weight-badge">’+sub.weightage+’%</div><div style="margin-top:20px;color:var(--muted);font-size:14px">’+sub.chapters.length+’ Chapters</div>’;
+const card=document.createElement('div');
+card.className='subject-card';
+card.innerHTML='<div class="subject-icon">'+sub.icon+'</div><div class="subject-name">'+sub.name+'</div><div class="weight-badge">'+sub.weightage+'%</div><div style="margin-top:20px;color:var(--muted);font-size:14px">'+sub.chapters.length+' Chapters</div>';
 card.onclick=function(){showChapters(sub)};
 grid.appendChild(card);
 });
-document.getElementById(‘subjects-view’).style.display=‘block’;
-document.getElementById(‘chapters-view’).style.display=‘none’;
+document.getElementById('subjects-view').style.display='block';
+document.getElementById('chapters-view').style.display='none';
 }
 function showChapters(subject){
 currentSubject=subject;
-document.getElementById(‘subject-title’).textContent=subject.name;
-const list=document.getElementById(‘chapters-list’);
-list.innerHTML=’’;
-const bookmarks=JSON.parse(localStorage.getItem(‘quantum-bookmarks’)||’[]’);
+document.getElementById('subject-title').textContent=subject.name;
+const list=document.getElementById('chapters-list');
+list.innerHTML='';
+const bookmarks=JSON.parse(localStorage.getItem('quantum-bookmarks')||'[]');
 subject.chapters.forEach(function(ch,i){
-const li=document.createElement(‘li’);
-const searchQuery=encodeURIComponent(currentData.title+’ ‘+subject.name+’ ‘+ch);
-const chapterId=currentKey+’-’+subject.name+’-’+ch;
+const li=document.createElement('li');
+const searchQuery=encodeURIComponent(currentData.title+' '+subject.name+' '+ch);
+const chapterId=currentKey+'-'+subject.name+'-'+ch;
 const isBookmarked=bookmarks.some(function(b){return b.id===chapterId});
-li.innerHTML=’<div style="display:flex;align-items:center;justify-content:space-between;width:100%"><div style="flex:1"><div style="font-size:16px;font-weight:600;margin-bottom:6px">’+(i+1)+’. ‘+ch+’</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px" onclick="event.stopPropagation()">📺 Watch on YouTube →</a></div><button onclick=“toggleBookmark('’+chapterId.replace(/’/g,”\’”)+’','’+currentData.title.replace(/’/g,”\’”)+’','’+subject.name.replace(/’/g,”\’”)+’','’+ch.replace(/’/g,”\’”)+’')” class=“bookmark-ribbon ‘+(isBookmarked?‘active’:’’)+’” data-id=”’+chapterId+’” title=”’+(isBookmarked?‘Remove bookmark’:‘Bookmark this chapter’)+’”></button></div>’;
+li.innerHTML='<div style="display:flex;align-items:center;gap:12px;flex:1"><button onclick="toggleBookmark(\''+chapterId.replace(/'/g,"\\'")+'\',\''+currentData.title.replace(/'/g,"\\'")+'\',\''+subject.name.replace(/'/g,"\\'")+'\',\''+ch.replace(/'/g,"\\'")+'\')" style="background:none;border:none;font-size:22px;cursor:pointer;color:'+(isBookmarked?'var(--accent)':'#666')+';transition:0.3s;padding:0" class="bookmark-btn" data-id="'+chapterId+'" title="Bookmark this chapter">'+(isBookmarked?'🔖':'📑')+'</button><div style="flex:1"><div style="font-size:16px;font-weight:600;margin-bottom:6px">'+(i+1)+'. '+ch+'</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px" onclick="event.stopPropagation()">📺 Watch on YouTube →</a></div></div>';
 list.appendChild(li);
 });
-document.getElementById(‘subjects-view’).style.display=‘none’;
-document.getElementById(‘chapters-view’).style.display=‘block’;
+document.getElementById('subjects-view').style.display='none';
+document.getElementById('chapters-view').style.display='block';
 }
 
 function toggleBookmark(id,classTitle,subjectName,chapterName){
-const bookmarks=JSON.parse(localStorage.getItem(‘quantum-bookmarks’)||’[]’);
+const bookmarks=JSON.parse(localStorage.getItem('quantum-bookmarks')||'[]');
 const existingIndex=bookmarks.findIndex(function(b){return b.id===id});
 if(existingIndex>-1){
 bookmarks.splice(existingIndex,1);
 }else{
 bookmarks.push({id:id,class:classTitle,subject:subjectName,chapter:chapterName,timestamp:Date.now()});
 }
-localStorage.setItem(‘quantum-bookmarks’,JSON.stringify(bookmarks));
-const btn=document.querySelector(’.bookmark-ribbon[data-id=”’+id+’”]’);
+localStorage.setItem('quantum-bookmarks',JSON.stringify(bookmarks));
+const btn=document.querySelector('.bookmark-btn[data-id="'+id+'"]');
 if(btn){
-if(existingIndex>-1){
-btn.classList.remove(‘active’);
-btn.title=‘Bookmark this chapter’;
-}else{
-btn.classList.add(‘active’);
-btn.title=‘Remove bookmark’;
-}
+btn.textContent=existingIndex>-1?'📑':'🔖';
+btn.style.color=existingIndex>-1?'#666':'var(--accent)';
 }
 renderBookmarks();
 }
 
 function renderBookmarks(){
-const bookmarks=JSON.parse(localStorage.getItem(‘quantum-bookmarks’)||’[]’);
-const section=document.getElementById(‘bookmarks-section’);
-const list=document.getElementById(‘bookmarks-list’);
+const bookmarks=JSON.parse(localStorage.getItem('quantum-bookmarks')||'[]');
+const section=document.getElementById('bookmarks-section');
+const list=document.getElementById('bookmarks-list');
 if(bookmarks.length===0){
-section.style.display=‘none’;
+section.style.display='none';
 return;
 }
-section.style.display=‘block’;
-list.innerHTML=’’;
+section.style.display='block';
+list.innerHTML='';
 bookmarks.reverse().forEach(function(b){
-const card=document.createElement(‘div’);
-card.style.cssText=‘background:var(–card);padding:20px;border-radius:16px;border:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;transition:0.3s’;
-card.onmouseenter=function(){this.style.transform=‘translateX(8px)’;this.style.borderColor=‘var(–accent)’};
-card.onmouseleave=function(){this.style.transform=‘translateX(0)’;this.style.borderColor=’#30363d’};
-const searchQuery=encodeURIComponent(b.class+’ ‘+b.subject+’ ‘+b.chapter);
-card.innerHTML=’<div><div style="font-size:14px;color:var(--muted);margin-bottom:4px">’+b.class+’ • ‘+b.subject+’</div><div style="font-size:16px;font-weight:600;margin-bottom:8px">’+b.chapter+’</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none">📺 Watch on YouTube →</a></div><button onclick=“toggleBookmark('’+b.id.replace(/’/g,”\’”)+’','’+b.class.replace(/’/g,”\’”)+’','’+b.subject.replace(/’/g,”\’”)+’','’+b.chapter.replace(/’/g,”\’”)+’')” class=“bookmark-ribbon active” title=“Remove bookmark”></button>’;
+const card=document.createElement('div');
+card.style.cssText='background:var(--card);padding:20px;border-radius:16px;border:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;transition:0.3s';
+card.onmouseenter=function(){this.style.transform='translateX(8px)';this.style.borderColor='var(--accent)'};
+card.onmouseleave=function(){this.style.transform='translateX(0)';this.style.borderColor='#30363d'};
+const searchQuery=encodeURIComponent(b.class+' '+b.subject+' '+b.chapter);
+card.innerHTML='<div><div style="font-size:14px;color:var(--muted);margin-bottom:4px">'+b.class+' • '+b.subject+'</div><div style="font-size:16px;font-weight:600;margin-bottom:8px">'+b.chapter+'</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none">📺 Watch on YouTube →</a></div><button onclick="toggleBookmark(\''+b.id.replace(/'/g,"\\'")+'\',\''+b.class.replace(/'/g,"\\'")+'\',\''+b.subject.replace(/'/g,"\\'")+'\',\''+b.chapter.replace(/'/g,"\\'")+'\')" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--accent)" title="Remove bookmark">🔖</button>';
 list.appendChild(card);
 });
 }
@@ -1245,161 +1145,161 @@ let userAnswers=[];
 let mcqScore=0;
 
 const mcqDatabase={
-‘upsc-History’:[
-{q:‘Who founded the Mauryan Empire?’,options:[‘Chandragupta Maurya’,‘Ashoka’,‘Bindusara’,‘Chanakya’],correct:0},
-{q:‘The Battle of Plassey was fought in which year?’,options:[‘1757’,‘1764’,‘1857’,‘1947’],correct:0},
-{q:‘Who was the first Mughal Emperor?’,options:[‘Akbar’,‘Babur’,‘Humayun’,‘Aurangzeb’],correct:1},
-{q:‘The Indian National Congress was founded in:’,options:[‘1885’,‘1905’,‘1920’,‘1947’],correct:0},
-{q:‘Who gave the slogan “Jai Hind”?’,options:[‘Subhash Chandra Bose’,‘Bhagat Singh’,‘Gandhi’,‘Nehru’],correct:0},
-{q:‘The Quit India Movement was launched in:’,options:[‘1942’,‘1940’,‘1945’,‘1947’],correct:0},
-{q:‘Who built the Qutub Minar?’,options:[‘Qutub-ud-din Aibak’,‘Iltutmish’,‘Alauddin Khilji’,‘Mohammad Tughlaq’],correct:0},
-{q:‘The Indus Valley Civilization belonged to:’,options:[‘Bronze Age’,‘Iron Age’,‘Stone Age’,‘Medieval Period’],correct:0},
-{q:‘Ashoka was the emperor of which dynasty?’,options:[‘Maurya’,‘Gupta’,‘Chola’,‘Mughal’],correct:0},
-{q:‘Who wrote “Discovery of India”?’,options:[‘Jawaharlal Nehru’,‘Gandhi’,‘Tagore’,‘Ambedkar’],correct:0}
+'upsc-History':[
+{q:'Who founded the Mauryan Empire?',options:['Chandragupta Maurya','Ashoka','Bindusara','Chanakya'],correct:0},
+{q:'The Battle of Plassey was fought in which year?',options:['1757','1764','1857','1947'],correct:0},
+{q:'Who was the first Mughal Emperor?',options:['Akbar','Babur','Humayun','Aurangzeb'],correct:1},
+{q:'The Indian National Congress was founded in:',options:['1885','1905','1920','1947'],correct:0},
+{q:'Who gave the slogan "Jai Hind"?',options:['Subhash Chandra Bose','Bhagat Singh','Gandhi','Nehru'],correct:0},
+{q:'The Quit India Movement was launched in:',options:['1942','1940','1945','1947'],correct:0},
+{q:'Who built the Qutub Minar?',options:['Qutub-ud-din Aibak','Iltutmish','Alauddin Khilji','Mohammad Tughlaq'],correct:0},
+{q:'The Indus Valley Civilization belonged to:',options:['Bronze Age','Iron Age','Stone Age','Medieval Period'],correct:0},
+{q:'Ashoka was the emperor of which dynasty?',options:['Maurya','Gupta','Chola','Mughal'],correct:0},
+{q:'Who wrote "Discovery of India"?',options:['Jawaharlal Nehru','Gandhi','Tagore','Ambedkar'],correct:0}
 ],
-‘upsc-Geography’:[
-{q:‘Which is the longest river in India?’,options:[‘Ganges’,‘Brahmaputra’,‘Godavari’,‘Yamuna’],correct:0},
-{q:‘The Tropic of Cancer passes through how many Indian states?’,options:[‘8’,‘6’,‘10’,‘12’],correct:0},
-{q:‘Which state has the longest coastline in India?’,options:[‘Gujarat’,‘Tamil Nadu’,‘Andhra Pradesh’,‘Maharashtra’],correct:0},
-{q:‘The Western Ghats are also known as:’,options:[‘Sahyadri’,‘Vindhyas’,‘Aravallis’,‘Nilgiris’],correct:0},
-{q:‘Which is the highest peak in India?’,options:[‘Kanchenjunga’,‘K2’,‘Nanda Devi’,‘Mt.Everest’],correct:0},
-{q:‘Chilika Lake is located in:’,options:[‘Odisha’,‘Kerala’,‘West Bengal’,‘Assam’],correct:0},
-{q:‘The Indian Standard Time is ahead of GMT by:’,options:[‘5:30 hours’,‘6:30 hours’,‘4:30 hours’,‘5 hours’],correct:0},
-{q:‘Which river is known as the “Sorrow of Bihar”?’,options:[‘Kosi’,‘Ganga’,‘Gandak’,‘Sone’],correct:0},
-{q:‘The Great Indian Desert is also called:’,options:[‘Thar’,‘Gobi’,‘Sahara’,‘Atacama’],correct:0},
-{q:‘Which plateau is known as the “Deccan Plateau”?’,options:[‘Southern Plateau’,‘Malwa Plateau’,‘Chotanagpur’,‘Ladakh’],correct:0}
+'upsc-Geography':[
+{q:'Which is the longest river in India?',options:['Ganges','Brahmaputra','Godavari','Yamuna'],correct:0},
+{q:'The Tropic of Cancer passes through how many Indian states?',options:['8','6','10','12'],correct:0},
+{q:'Which state has the longest coastline in India?',options:['Gujarat','Tamil Nadu','Andhra Pradesh','Maharashtra'],correct:0},
+{q:'The Western Ghats are also known as:',options:['Sahyadri','Vindhyas','Aravallis','Nilgiris'],correct:0},
+{q:'Which is the highest peak in India?',options:['Kanchenjunga','K2','Nanda Devi','Mt.Everest'],correct:0},
+{q:'Chilika Lake is located in:',options:['Odisha','Kerala','West Bengal','Assam'],correct:0},
+{q:'The Indian Standard Time is ahead of GMT by:',options:['5:30 hours','6:30 hours','4:30 hours','5 hours'],correct:0},
+{q:'Which river is known as the "Sorrow of Bihar"?',options:['Kosi','Ganga','Gandak','Sone'],correct:0},
+{q:'The Great Indian Desert is also called:',options:['Thar','Gobi','Sahara','Atacama'],correct:0},
+{q:'Which plateau is known as the "Deccan Plateau"?',options:['Southern Plateau','Malwa Plateau','Chotanagpur','Ladakh'],correct:0}
 ],
-‘ssc-Quantitative’:[
-{q:‘What is 15% of 200?’,options:[‘30’,‘25’,‘35’,‘20’],correct:0},
-{q:‘If a:b=2:3 and b:c=4:5, then a:c=?’,options:[‘8:15’,‘2:5’,‘3:5’,‘4:15’],correct:0},
-{q:‘The HCF of 12 and 18 is:’,options:[‘6’,‘12’,‘18’,‘3’],correct:0},
-{q:‘Simple Interest on Rs.1000 at 10% p.a. for 2 years:’,options:[‘Rs.200’,‘Rs.100’,‘Rs.150’,‘Rs.250’],correct:0},
-{q:‘The average of 5, 10, 15, 20 is:’,options:[‘12.5’,‘10’,‘15’,‘13’],correct:0},
-{q:‘If x+y=10 and x-y=2, then x=?’,options:[‘6’,‘5’,‘7’,‘8’],correct:0},
-{q:‘The square root of 144 is:’,options:[‘12’,‘14’,‘10’,‘16’],correct:0},
-{q:‘30% of 150 is:’,options:[‘45’,‘40’,‘50’,‘35’],correct:0},
-{q:‘The LCM of 4 and 6 is:’,options:[‘12’,‘24’,‘8’,‘6’],correct:0},
-{q:‘If a train covers 60 km in 1 hour, its speed in m/s:’,options:[‘16.67’,‘60’,‘100’,‘20’],correct:0}
+'ssc-Quantitative':[
+{q:'What is 15% of 200?',options:['30','25','35','20'],correct:0},
+{q:'If a:b=2:3 and b:c=4:5, then a:c=?',options:['8:15','2:5','3:5','4:15'],correct:0},
+{q:'The HCF of 12 and 18 is:',options:['6','12','18','3'],correct:0},
+{q:'Simple Interest on Rs.1000 at 10% p.a. for 2 years:',options:['Rs.200','Rs.100','Rs.150','Rs.250'],correct:0},
+{q:'The average of 5, 10, 15, 20 is:',options:['12.5','10','15','13'],correct:0},
+{q:'If x+y=10 and x-y=2, then x=?',options:['6','5','7','8'],correct:0},
+{q:'The square root of 144 is:',options:['12','14','10','16'],correct:0},
+{q:'30% of 150 is:',options:['45','40','50','35'],correct:0},
+{q:'The LCM of 4 and 6 is:',options:['12','24','8','6'],correct:0},
+{q:'If a train covers 60 km in 1 hour, its speed in m/s:',options:['16.67','60','100','20'],correct:0}
 ],
-‘ssc-English’:[
-{q:‘Choose the correctly spelled word:’,options:[‘Accommodate’,‘Acommodate’,‘Accomodate’,‘Acomodate’],correct:0},
-{q:‘Synonym of “abundant”:’,options:[‘Plentiful’,‘Scarce’,‘Rare’,‘Limited’],correct:0},
-{q:‘Antonym of “ancient”:’,options:[‘Modern’,‘Old’,‘Historic’,‘Past’],correct:0},
-{q:‘Fill in: He is good ___ mathematics.’,options:[‘at’,‘in’,‘on’,‘by’],correct:0},
-{q:‘One word for “a person who loves books”:’,options:[‘Bibliophile’,‘Scholar’,‘Reader’,‘Literate’],correct:0},
-{q:‘Past tense of “go”:’,options:[‘Went’,‘Gone’,‘Going’,‘Goes’],correct:0},
-{q:‘Choose the correct sentence:’,options:[‘She writes well.’,‘She write well.’,‘She writing well.’,‘She written well.’],correct:0},
-{q:‘Idiom: “A piece of cake” means:’,options:[‘Very easy’,‘Delicious’,‘Expensive’,‘Difficult’],correct:0},
-{q:‘Passive voice of “I know him”:’,options:[‘He is known to me.’,‘He known by me.’,‘He knows me.’,‘I am known to him.’],correct:0},
-{q:‘Identify the noun: She sings beautifully.’,options:[‘She’,‘Sings’,‘Beautifully’,‘None’],correct:0}
+'ssc-English':[
+{q:'Choose the correctly spelled word:',options:['Accommodate','Acommodate','Accomodate','Acomodate'],correct:0},
+{q:'Synonym of "abundant":',options:['Plentiful','Scarce','Rare','Limited'],correct:0},
+{q:'Antonym of "ancient":',options:['Modern','Old','Historic','Past'],correct:0},
+{q:'Fill in: He is good ___ mathematics.',options:['at','in','on','by'],correct:0},
+{q:'One word for "a person who loves books":',options:['Bibliophile','Scholar','Reader','Literate'],correct:0},
+{q:'Past tense of "go":',options:['Went','Gone','Going','Goes'],correct:0},
+{q:'Choose the correct sentence:',options:['She writes well.','She write well.','She writing well.','She written well.'],correct:0},
+{q:'Idiom: "A piece of cake" means:',options:['Very easy','Delicious','Expensive','Difficult'],correct:0},
+{q:'Passive voice of "I know him":',options:['He is known to me.','He known by me.','He knows me.','I am known to him.'],correct:0},
+{q:'Identify the noun: She sings beautifully.',options:['She','Sings','Beautifully','None'],correct:0}
 ],
-‘bpsc-General’:[
-{q:‘The capital of Bihar is:’,options:[‘Patna’,‘Gaya’,‘Bhagalpur’,‘Muzaffarpur’],correct:0},
-{q:‘Nalanda University was established in which period?’,options:[‘Gupta Period’,‘Mauryan’,‘Mughal’,‘British’],correct:0},
-{q:‘Which river flows through Patna?’,options:[‘Ganges’,‘Kosi’,‘Gandak’,‘Sone’],correct:0},
-{q:‘Bihar Day is celebrated on:’,options:[‘22 March’,‘26 January’,‘15 August’,‘2 October’],correct:0},
-{q:‘The first Chief Minister of Bihar was:’,options:[‘Sri Krishna Sinha’,‘Lalu Prasad’,‘Nitish Kumar’,‘Jagannath Mishra’],correct:0},
-{q:‘Mahabodhi Temple is located in:’,options:[‘Bodh Gaya’,‘Nalanda’,‘Rajgir’,‘Vaishali’],correct:0},
-{q:‘The official language of Bihar is:’,options:[‘Hindi’,‘Urdu’,‘Maithili’,‘English’],correct:0},
-{q:‘Bihar shares its border with how many states?’,options:[‘5’,‘3’,‘4’,‘6’],correct:0},
-{q:‘The largest city in Bihar by population:’,options:[‘Patna’,‘Gaya’,‘Bhagalpur’,‘Muzaffarpur’],correct:0},
-{q:‘Sher Shah Suri was born in:’,options:[‘Sasaram’,‘Patna’,‘Nalanda’,‘Gaya’],correct:0}
+'bpsc-General':[
+{q:'The capital of Bihar is:',options:['Patna','Gaya','Bhagalpur','Muzaffarpur'],correct:0},
+{q:'Nalanda University was established in which period?',options:['Gupta Period','Mauryan','Mughal','British'],correct:0},
+{q:'Which river flows through Patna?',options:['Ganges','Kosi','Gandak','Sone'],correct:0},
+{q:'Bihar Day is celebrated on:',options:['22 March','26 January','15 August','2 October'],correct:0},
+{q:'The first Chief Minister of Bihar was:',options:['Sri Krishna Sinha','Lalu Prasad','Nitish Kumar','Jagannath Mishra'],correct:0},
+{q:'Mahabodhi Temple is located in:',options:['Bodh Gaya','Nalanda','Rajgir','Vaishali'],correct:0},
+{q:'The official language of Bihar is:',options:['Hindi','Urdu','Maithili','English'],correct:0},
+{q:'Bihar shares its border with how many states?',options:['5','3','4','6'],correct:0},
+{q:'The largest city in Bihar by population:',options:['Patna','Gaya','Bhagalpur','Muzaffarpur'],correct:0},
+{q:'Sher Shah Suri was born in:',options:['Sasaram','Patna','Nalanda','Gaya'],correct:0}
 ],
-‘iit-jee-Physics’:[
-{q:‘SI unit of Force is:’,options:[‘Newton’,‘Joule’,‘Watt’,‘Pascal’],correct:0},
-{q:‘Acceleration due to gravity (g) is approximately:’,options:[‘9.8 m/s²’,‘10 m/s²’,‘9 m/s²’,‘8 m/s²’],correct:0},
-{q:‘The first law of thermodynamics is related to:’,options:[‘Energy conservation’,‘Entropy’,‘Temperature’,‘Pressure’],correct:0},
-{q:‘Ohm's Law states:’,options:[‘V=IR’,‘V=I/R’,‘V=R/I’,‘I=VR’],correct:0},
-{q:‘Speed of light in vacuum:’,options:[‘3×10⁸ m/s’,‘3×10⁶ m/s’,‘3×10⁷ m/s’,‘3×10⁹ m/s’],correct:0},
-{q:‘SI unit of Power:’,options:[‘Watt’,‘Joule’,‘Newton’,‘Pascal’],correct:0},
-{q:‘Kinetic Energy formula:’,options:[‘½mv²’,‘mv’,‘m/v’,‘2mv’],correct:0},
-{q:‘Which is a vector quantity?’,options:[‘Velocity’,‘Speed’,‘Distance’,‘Time’],correct:0},
-{q:‘Newton's third law:’,options:[‘Action-Reaction’,‘F=ma’,‘Inertia’,‘Momentum’],correct:0},
-{q:‘SI unit of Electric Current:’,options:[‘Ampere’,‘Volt’,‘Ohm’,‘Coulomb’],correct:0}
+'iit-jee-Physics':[
+{q:'SI unit of Force is:',options:['Newton','Joule','Watt','Pascal'],correct:0},
+{q:'Acceleration due to gravity (g) is approximately:',options:['9.8 m/s²','10 m/s²','9 m/s²','8 m/s²'],correct:0},
+{q:'The first law of thermodynamics is related to:',options:['Energy conservation','Entropy','Temperature','Pressure'],correct:0},
+{q:'Ohm\'s Law states:',options:['V=IR','V=I/R','V=R/I','I=VR'],correct:0},
+{q:'Speed of light in vacuum:',options:['3×10⁸ m/s','3×10⁶ m/s','3×10⁷ m/s','3×10⁹ m/s'],correct:0},
+{q:'SI unit of Power:',options:['Watt','Joule','Newton','Pascal'],correct:0},
+{q:'Kinetic Energy formula:',options:['½mv²','mv','m/v','2mv'],correct:0},
+{q:'Which is a vector quantity?',options:['Velocity','Speed','Distance','Time'],correct:0},
+{q:'Newton\'s third law:',options:['Action-Reaction','F=ma','Inertia','Momentum'],correct:0},
+{q:'SI unit of Electric Current:',options:['Ampere','Volt','Ohm','Coulomb'],correct:0}
 ],
-‘neet-Biology’:[
-{q:‘The powerhouse of the cell:’,options:[‘Mitochondria’,‘Nucleus’,‘Ribosome’,‘Golgi’],correct:0},
-{q:‘DNA stands for:’,options:[‘Deoxyribonucleic Acid’,‘Deoxyribose Acid’,‘Deoxy Acid’,‘None’],correct:0},
-{q:‘The process by which plants make food:’,options:[‘Photosynthesis’,‘Respiration’,‘Transpiration’,‘Digestion’],correct:0},
-{q:‘The largest organ in human body:’,options:[‘Skin’,‘Liver’,‘Heart’,‘Brain’],correct:0},
-{q:‘Blood group with universal donor:’,options:[‘O negative’,‘AB positive’,‘A positive’,‘B negative’],correct:0},
-{q:‘The functional unit of kidney:’,options:[‘Nephron’,‘Neuron’,‘Alveoli’,‘Villus’],correct:0},
-{q:‘Number of chromosomes in human:’,options:[‘46’,‘23’,‘92’,‘48’],correct:0},
-{q:‘Father of Biology:’,options:[‘Aristotle’,‘Darwin’,‘Mendel’,‘Linnaeus’],correct:0},
-{q:‘The study of fungi is called:’,options:[‘Mycology’,‘Zoology’,‘Botany’,‘Ecology’],correct:0},
-{q:‘Insulin is produced by:’,options:[‘Pancreas’,‘Liver’,‘Kidney’,‘Thyroid’],correct:0}
+'neet-Biology':[
+{q:'The powerhouse of the cell:',options:['Mitochondria','Nucleus','Ribosome','Golgi'],correct:0},
+{q:'DNA stands for:',options:['Deoxyribonucleic Acid','Deoxyribose Acid','Deoxy Acid','None'],correct:0},
+{q:'The process by which plants make food:',options:['Photosynthesis','Respiration','Transpiration','Digestion'],correct:0},
+{q:'The largest organ in human body:',options:['Skin','Liver','Heart','Brain'],correct:0},
+{q:'Blood group with universal donor:',options:['O negative','AB positive','A positive','B negative'],correct:0},
+{q:'The functional unit of kidney:',options:['Nephron','Neuron','Alveoli','Villus'],correct:0},
+{q:'Number of chromosomes in human:',options:['46','23','92','48'],correct:0},
+{q:'Father of Biology:',options:['Aristotle','Darwin','Mendel','Linnaeus'],correct:0},
+{q:'The study of fungi is called:',options:['Mycology','Zoology','Botany','Ecology'],correct:0},
+{q:'Insulin is produced by:',options:['Pancreas','Liver','Kidney','Thyroid'],correct:0}
 ]
 };
 
 function resetMCQView(){
-document.getElementById(‘mcq-selection’).style.display=‘block’;
-document.getElementById(‘mcq-subjects-view’).style.display=‘none’;
-document.getElementById(‘mcq-quiz-view’).style.display=‘none’;
+document.getElementById('mcq-selection').style.display='block';
+document.getElementById('mcq-subjects-view').style.display='none';
+document.getElementById('mcq-quiz-view').style.display='none';
 }
 
 function showMCQSubjects(exam){
 currentMCQExam=exam;
 const data=subjectsData[exam];
 if(!data)return;
-document.getElementById(‘mcq-exam-title’).textContent=data.title+’ - Select Subject’;
-const grid=document.getElementById(‘mcq-subjects-grid’);
-grid.innerHTML=’’;
+document.getElementById('mcq-exam-title').textContent=data.title+' - Select Subject';
+const grid=document.getElementById('mcq-subjects-grid');
+grid.innerHTML='';
 data.subjects.forEach(function(sub){
-const card=document.createElement(‘div’);
-card.className=‘card’;
-card.innerHTML=’<span>’+sub.icon+’ ‘+sub.name+’</span><span class="arrow">→</span>’;
+const card=document.createElement('div');
+card.className='card';
+card.innerHTML='<span>'+sub.icon+' '+sub.name+'</span><span class="arrow">→</span>';
 card.onclick=function(){startMCQQuiz(exam,sub.name)};
 grid.appendChild(card);
 });
-document.getElementById(‘mcq-selection’).style.display=‘none’;
-document.getElementById(‘mcq-subjects-view’).style.display=‘block’;
+document.getElementById('mcq-selection').style.display='none';
+document.getElementById('mcq-subjects-view').style.display='block';
 }
 
 function backToMCQExams(){
-document.getElementById(‘mcq-selection’).style.display=‘block’;
-document.getElementById(‘mcq-subjects-view’).style.display=‘none’;
+document.getElementById('mcq-selection').style.display='block';
+document.getElementById('mcq-subjects-view').style.display='none';
 }
 
 function backToMCQSubjects(){
-document.getElementById(‘mcq-subjects-view’).style.display=‘block’;
-document.getElementById(‘mcq-quiz-view’).style.display=‘none’;
+document.getElementById('mcq-subjects-view').style.display='block';
+document.getElementById('mcq-quiz-view').style.display='none';
 }
 
 function startMCQQuiz(exam,subject){
-const key=exam+’-’+subject.split(’ ’)[0];
-currentQuestions=mcqDatabase[key]||mcqDatabase[‘upsc-History’];
+const key=exam+'-'+subject.split(' ')[0];
+currentQuestions=mcqDatabase[key]||mcqDatabase['upsc-History'];
 currentQuestionIndex=0;
 userAnswers=new Array(currentQuestions.length).fill(null);
 mcqScore=0;
-document.getElementById(‘mcq-subject-name’).textContent=subject;
-document.getElementById(‘total-q’).textContent=currentQuestions.length;
-document.getElementById(‘mcq-subjects-view’).style.display=‘none’;
-document.getElementById(‘mcq-quiz-view’).style.display=‘block’;
-document.getElementById(‘mcq-result’).style.display=‘none’;
+document.getElementById('mcq-subject-name').textContent=subject;
+document.getElementById('total-q').textContent=currentQuestions.length;
+document.getElementById('mcq-subjects-view').style.display='none';
+document.getElementById('mcq-quiz-view').style.display='block';
+document.getElementById('mcq-result').style.display='none';
 loadQuestion();
 }
 
 function loadQuestion(){
 const q=currentQuestions[currentQuestionIndex];
-document.getElementById(‘current-q’).textContent=currentQuestionIndex+1;
-document.getElementById(‘mcq-question’).textContent=q.q;
-const optionsDiv=document.getElementById(‘mcq-options’);
-optionsDiv.innerHTML=’’;
+document.getElementById('current-q').textContent=currentQuestionIndex+1;
+document.getElementById('mcq-question').textContent=q.q;
+const optionsDiv=document.getElementById('mcq-options');
+optionsDiv.innerHTML='';
 q.options.forEach(function(opt,i){
-const optBtn=document.createElement(‘button’);
-optBtn.className=‘btn’;
-optBtn.style.cssText=‘padding:20px;text-align:left;font-size:16px;border:1px solid #30363d’;
-optBtn.textContent=(String.fromCharCode(65+i))+’. ’+opt;
+const optBtn=document.createElement('button');
+optBtn.className='btn';
+optBtn.style.cssText='padding:20px;text-align:left;font-size:16px;border:1px solid #30363d';
+optBtn.textContent=(String.fromCharCode(65+i))+'. '+opt;
 if(userAnswers[currentQuestionIndex]===i){
-optBtn.style.borderColor=‘var(–accent)’;
-optBtn.style.background=‘rgba(47,129,247,0.1)’;
+optBtn.style.borderColor='var(--accent)';
+optBtn.style.background='rgba(47,129,247,0.1)';
 }
 optBtn.onclick=function(){selectAnswer(i)};
 optionsDiv.appendChild(optBtn);
 });
-document.getElementById(‘prev-btn’).disabled=currentQuestionIndex===0;
-document.getElementById(‘prev-btn’).style.opacity=currentQuestionIndex===0?‘0.5’:‘1’;
-document.getElementById(‘next-btn’).textContent=currentQuestionIndex===currentQuestions.length-1?‘Finish’:‘Next →’;
+document.getElementById('prev-btn').disabled=currentQuestionIndex===0;
+document.getElementById('prev-btn').style.opacity=currentQuestionIndex===0?'0.5':'1';
+document.getElementById('next-btn').textContent=currentQuestionIndex===currentQuestions.length-1?'Finish':'Next →';
 }
 
 function selectAnswer(index){
@@ -1409,7 +1309,7 @@ loadQuestion();
 
 function prevQuestion(){
 if(currentQuestionIndex>0){
-currentQuestionIndex–;
+currentQuestionIndex--;
 loadQuestion();
 }
 }
@@ -1428,22 +1328,22 @@ mcqScore=0;
 currentQuestions.forEach(function(q,i){
 if(userAnswers[i]===q.correct)mcqScore++;
 });
-document.getElementById(‘final-score’).textContent=mcqScore+’/’+currentQuestions.length;
-document.getElementById(‘mcq-quiz-view’).querySelector(‘div:nth-child(2)’).style.display=‘none’;
-document.getElementById(‘mcq-result’).style.display=‘block’;
-localStorage.setItem(‘quantum-quiz-score’,mcqScore);
-document.getElementById(‘quiz-score’).textContent=mcqScore;
+document.getElementById('final-score').textContent=mcqScore+'/'+currentQuestions.length;
+document.getElementById('mcq-quiz-view').querySelector('div:nth-child(2)').style.display='none';
+document.getElementById('mcq-result').style.display='block';
+localStorage.setItem('quantum-quiz-score',mcqScore);
+document.getElementById('quiz-score').textContent=mcqScore;
 }
 
 function restartMCQ(){
 currentQuestionIndex=0;
 userAnswers=new Array(currentQuestions.length).fill(null);
-document.getElementById(‘mcq-quiz-view’).querySelector(‘div:nth-child(2)’).style.display=‘block’;
-document.getElementById(‘mcq-result’).style.display=‘none’;
+document.getElementById('mcq-quiz-view').querySelector('div:nth-child(2)').style.display='block';
+document.getElementById('mcq-result').style.display='none';
 loadQuestion();
 }
 
-console.log(‘✨ QUANTUM READY!’);
+console.log('✨ QUANTUM WORKING: All 118 Elements + Complete Subjects + YouTube!');
 </script>
 
 </body>
