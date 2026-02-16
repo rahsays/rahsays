@@ -188,6 +188,7 @@ main,#subject-detail{padding:130px 24px 100px}
 <a href="#" onclick="showLibrary()">📚 PDF Library</a>
 <a href="#" onclick="showNotes()">📝 Notes</a>
 <a href="#" onclick="showQuiz()">🎯 Practice & Tests</a>
+<a href="#" onclick="showMCQPractice()">📝 MCQ Practice</a>
 <a href="#" onclick="showVideoLibrary()">📺 Video Library</a>
 <a href="#" onclick="showStudyTimer()">⏲️ Study Timer</a>
 </div>
@@ -201,6 +202,11 @@ main,#subject-detail{padding:130px 24px 100px}
 </div>
 
 <div class="section" id="recent-section" style="display:none"><h2>Recently Viewed 📖</h2><div class="grid" id="recent-grid"></div></div>
+
+<div class="section" id="bookmarks-section" style="display:none">
+<h2>Bookmarked Chapters ⭐</h2>
+<div id="bookmarks-list" style="display:grid;gap:16px;margin-top:20px"></div>
+</div>
 
 <div class="section">
 <h2>School Classes (CBSE 2025-26) 🎓</h2>
@@ -424,6 +430,53 @@ main,#subject-detail{padding:130px 24px 100px}
 </div>
 </section>
 
+<section id="mcq-practice" style="display:none">
+<button class="back-btn" onclick="showHome()">← Back</button>
+<div style="max-width:900px;margin:0 auto">
+<h1 style="font-size:42px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:40px">🎯 MCQ Practice</h1>
+
+<div id="mcq-selection" style="display:block">
+<h3 style="margin-bottom:20px;font-size:24px">Select Exam</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px">
+<div class="card" onclick="showMCQSubjects('upsc')"><span>UPSC Civil Services</span><span class="arrow">→</span></div>
+<div class="card" onclick="showMCQSubjects('ssc')"><span>SSC CGL/CHSL</span><span class="arrow">→</span></div>
+<div class="card" onclick="showMCQSubjects('bpsc')"><span>BPSC</span><span class="arrow">→</span></div>
+<div class="card" onclick="showMCQSubjects('iit-jee')"><span>IIT JEE</span><span class="arrow">→</span></div>
+<div class="card" onclick="showMCQSubjects('neet')"><span>NEET</span><span class="arrow">→</span></div>
+</div>
+</div>
+
+<div id="mcq-subjects-view" style="display:none">
+<button class="btn" onclick="backToMCQExams()" style="margin-bottom:20px;padding:12px 24px">← Back to Exams</button>
+<h3 id="mcq-exam-title" style="margin-bottom:20px;font-size:24px"></h3>
+<div id="mcq-subjects-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px"></div>
+</div>
+
+<div id="mcq-quiz-view" style="display:none">
+<button class="btn" onclick="backToMCQSubjects()" style="margin-bottom:20px;padding:12px 24px">← Back to Subjects</button>
+<div style="background:var(--card);padding:30px;border-radius:20px;border:1px solid #30363d;margin-bottom:30px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+<div><span style="font-size:18px;font-weight:700" id="mcq-subject-name"></span></div>
+<div style="font-size:16px;color:var(--accent)">Question <span id="current-q">1</span>/<span id="total-q">10</span></div>
+</div>
+<div id="mcq-question" style="font-size:20px;font-weight:600;margin-bottom:30px;line-height:1.6"></div>
+<div id="mcq-options" style="display:grid;gap:16px"></div>
+<div style="margin-top:30px;display:flex;justify-content:space-between">
+<button class="btn" onclick="prevQuestion()" id="prev-btn" disabled style="opacity:0.5">← Previous</button>
+<button class="btn yellow" onclick="nextQuestion()" id="next-btn">Next →</button>
+</div>
+</div>
+<div id="mcq-result" style="display:none;background:var(--card);padding:40px;border-radius:20px;border:1px solid #30363d;text-align:center">
+<h2 style="font-size:48px;margin-bottom:20px">🎉</h2>
+<h3 style="font-size:32px;margin-bottom:10px">Quiz Completed!</h3>
+<div style="font-size:64px;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:30px 0" id="final-score">0/10</div>
+<div style="font-size:18px;color:var(--muted);margin-bottom:30px">Keep practicing to improve!</div>
+<button class="btn yellow" onclick="restartMCQ()" style="padding:16px 40px">Try Again</button>
+</div>
+</div>
+</div>
+</section>
+
 <div id="ai-float-btn" onclick="openAIModal()">AI</div>
 
 <div class="modal" id="ai-modal">
@@ -461,7 +514,7 @@ document.addEventListener('click',e=>{const sidebar=document.getElementById('sid
 
 // NAVIGATION
 function hideAll(){
-['home','subject-detail','calculator','periodic-table','library','notes-app','quiz-app','video-library','study-timer'].forEach(function(id){document.getElementById(id).style.display='none'});
+['home','subject-detail','calculator','periodic-table','library','notes-app','quiz-app','video-library','study-timer','mcq-practice'].forEach(function(id){document.getElementById(id).style.display='none'});
 document.getElementById('sidebar').classList.remove('open');
 }
 function showHome(){hideAll();document.getElementById('home').style.display='block'}
@@ -470,6 +523,7 @@ function showPeriodicTable(){hideAll();document.getElementById('periodic-table')
 function showLibrary(){hideAll();document.getElementById('library').style.display='block'}
 function showNotes(){hideAll();document.getElementById('notes-app').style.display='block';renderNotes()}
 function showQuiz(){hideAll();document.getElementById('quiz-app').style.display='block'}
+function showMCQPractice(){hideAll();document.getElementById('mcq-practice').style.display='block';resetMCQView()}
 function showVideoLibrary(){hideAll();document.getElementById('video-library').style.display='block';loadVideoLibrary()}
 function showStudyTimer(){hideAll();document.getElementById('study-timer').style.display='block'}
 function backToHome(){showHome()}
@@ -763,6 +817,32 @@ document.getElementById('fullscreen-bar').style.display='none';
 
 // NOTES
 let notes=JSON.parse(localStorage.getItem('quantum_notes')||'[]');
+
+// Initialize BPSC Notes if empty
+function initializeBPSCNotes(){
+if(notes.length>0)return;
+const bpscNotes=[
+{title:'BPSC: Ancient Bihar History',content:'ANCIENT BIHAR - KEY POINTS:\n\n1. MAGADHA EMPIRE:\n• Capital: Rajgriha (Girivraj)\n• Dynasty: Haryanka, Shishunaga, Nanda, Maurya\n• Bimbisara (544-492 BCE) - First powerful ruler\n• Built Rajgriha as fortified capital\n\n2. RAJGIR (Ancient Rajagriha):\n• First capital of Magadha\n• Buddhist Council (First) held here\n• Nalanda nearby\n• Hot springs and caves\n\n3. PATALIPUTRA:\n• Founded by Udayin (son of Ajatashatru)\n• Capital of Mauryan & Gupta empires\n• Modern day Patna\n• Strategic location at Ganga-Son confluence\n\n4. VAISHALI:\n• World\'s first republic (Lichhavi)\n• Buddha\'s last sermon\n• Second Buddhist Council\n• Birthplace of Lord Mahavira\n\n5. NALANDA UNIVERSITY:\n• Established: 5th century CE (Gupta period)\n• International Buddhist learning center\n• Destroyed by Bakhtiyar Khilji (1193 CE)\n• Had 10,000+ students, 2,000+ teachers\n\n6. VIKRAMASHILA:\n• Founded by Dharmapala (Pala dynasty)\n• Second most important after Nalanda\n• Specialized in Tantric Buddhism\n\nIMPORTANT DYNASTIES:\n✓ Maurya (Chandragupta, Ashoka)\n✓ Gupta (Golden Age)\n✓ Pala (Buddhist patrons)\n✓ Sena Dynasty',date:'Pre-loaded'},
+
+{title:'BPSC: Medieval Bihar History',content:'MEDIEVAL BIHAR - COMPREHENSIVE NOTES:\n\n1. TURKISH INVASIONS:\n• Muhammad Bakhtiyar Khilji (1200 CE)\n• Conquered Bihar & Bengal\n• Destroyed Nalanda University\n• Established Muslim rule\n\n2. DELHI SULTANATE PERIOD:\n• Bihar under Delhi Sultanate (1206-1526)\n• Tughlaq dynasty controlled Bihar\n• Jaunpur Sultanate also ruled parts\n• Administrative center: Tirhut\n\n3. SHER SHAH SURI (1486-1545):\n• Born in Sasaram, Bihar\n• Founder of Sur Empire\n• Defeated Humayun at Chausa (1539)\n• Great Administrator:\n  - Grand Trunk Road (GT Road)\n  - Rupee currency system\n  - Land revenue reforms\n  - Postal system\n• Tomb: Sasaram (architectural marvel)\n\n4. MUGHAL PERIOD:\n• Akbar conquered Bihar (1574)\n• Part of Bengal Subah\n• Battle of Buxar (1764) - turning point\n• British East India Company gained control\n\n5. SUFI SAINTS:\n• Khwaja Chishti influence\n• Maner Sharif (famous Sufi shrine)\n• Religious harmony promoted\n\nKEY BATTLES:\n✓ Battle of Chausa (1539)\n✓ Battle of Kannauj (1540)\n✓ Battle of Buxar (1764)\n\nARCHITECTURE:\n✓ Sher Shah\'s Tomb (Sasaram)\n✓ Jama Masjid (various cities)\n✓ Forts and monuments',date:'Pre-loaded'},
+
+{title:'BPSC: Modern Bihar & Freedom Movement',content:'MODERN BIHAR & FREEDOM STRUGGLE:\n\n1. BRITISH RULE:\n• Bengal Presidency included Bihar\n• Permanent Settlement (1793)\n• Zamindari system exploitation\n• Indigo cultivation forced\n\n2. CHAMPARAN SATYAGRAHA (1917):\n• Gandhi\'s first major movement in India\n• Against Tinkathia system (indigo)\n• Farmers forced to grow indigo\n• Success: Champaran Agrarian Act\n• Made Gandhi "Bapu"\n\n3. BIHAR IN FREEDOM STRUGGLE:\n\nKEY LEADERS:\n• Dr. Rajendra Prasad - First President of India\n• Jayaprakash Narayan - Socialist leader\n• Sri Krishna Sinha - First CM\n• Anugrah Narayan Sinha - First Deputy CM\n• Dr. Zakir Hussain - President\n• Satyendra Narayan Sinha\n\n4. IMPORTANT MOVEMENTS:\n• Non-Cooperation (1920-22)\n• Civil Disobedience (1930)\n• Quit India Movement (1942)\n  - Patna, Gaya, Ara centers\n  - Students\' active participation\n\n5. BIFURCATION:\n• Bihar separate from Bengal: 1912\n• First capital: Patna\n• Jharkhand separated: 2000 (15 Nov)\n\n6. POST-INDEPENDENCE:\n• Formation: 26 Jan 1950\n• First election: 1952\n• Land reforms\n• Green Revolution impact\n\nKEY DATES:\n✓ 22 March - Bihar Day (1912)\n✓ 15 November - Jharkhand Formation Day\n\nFREEDOM FIGHTERS FROM BIHAR:\n✓ Veer Kunwar Singh (1857 Revolt)\n✓ Swami Sahajanand Saraswati\n✓ Dr. Rajendra Prasad\n✓ Jayaprakash Narayan',date:'Pre-loaded'},
+
+{title:'BPSC: Bihar Geography - Physical Features',content:'BIHAR GEOGRAPHY - PHYSICAL FEATURES:\n\n1. LOCATION:\n• Northern India\n• Landlocked state\n• Area: 94,163 sq km (12th largest)\n• Between 24°20\'N to 27°31\'N\n• Longitude: 83°19\'E to 88°17\'E\n\n2. BOUNDARIES:\n• North: Nepal\n• South: Jharkhand\n• East: West Bengal\n• West: Uttar Pradesh\n\n3. PHYSIOGRAPHIC DIVISIONS:\n\nA) NORTHERN PLAINS:\n• Gangetic alluvial plains\n• Most fertile region\n• Rice cultivation\n\nB) SOUTHERN PLATEAU:\n• Extension of Chhotanagpur plateau\n• Kaimur, Rohtas hills\n• Mineral rich\n\nC) CENTRAL PLAINS:\n• Between Ganga and Son\n• Highly productive\n\n4. MAJOR RIVERS:\n\nGANGA SYSTEM:\n• Ganga (main river)\n• Ghaghra, Gandak, Kosi (tributaries)\n• Son, Punpun (from south)\n\nKOSI RIVER:\n• "Sorrow of Bihar"\n• Frequent floods\n• Changes course often\n• Originates: Nepal\n\nGANDAK:\n• Nepal origin\n• Major tributary\n• Irrigation source\n\n5. CLIMATE:\n• Tropical monsoon\n• Summer: 35-45°C\n• Winter: 5-15°C\n• Rainfall: 1000-1200 mm\n• Monsoon: June-September\n\n6. SOIL TYPES:\n• Alluvial (majority)\n• Red soil (southern)\n• Black soil (some areas)\n\n7. DISTRICTS: 38\n• Largest: West Champaran\n• Smallest: Sheikhpura\n\n8. IMPORTANT CITIES:\n• Patna (capital)\n• Gaya\n• Bhagalpur\n• Muzaffarpur\n• Darbhanga',date:'Pre-loaded'},
+
+{title:'BPSC: Bihar Economy & Resources',content:'BIHAR ECONOMY & RESOURCES:\n\n1. AGRICULTURE (Primary Sector):\n• 80% population depends on agriculture\n• Main crops:\n  - Rice (largest producer)\n  - Wheat\n  - Maize\n  - Pulses (arhar, gram)\n\nCASH CROPS:\n• Sugarcane\n• Jute\n• Tobacco\n• Oilseeds\n\nFRUITS & VEGETABLES:\n• Makhana (fox nut) - 90% India production\n• Litchi (Muzaffarpur famous)\n• Mango\n• Banana\n\n2. IRRIGATION:\n• Canal irrigation\n• Tube wells\n• Major projects:\n  - Gandak Project\n  - Kosi Project\n  - Sone Command Area\n\n3. INDUSTRIES:\n\nMAJOR INDUSTRIES:\n• Sugar mills\n• Jute mills\n• Cement plants\n• Dairy (Sudha)\n• Silk (Bhagalpur)\n\nPUBLIC SECTOR:\n• Barauni Refinery (IOC)\n• Heavy Engineering Corp (Ranchi border)\n• Fertilizer plants\n\n4. MINERALS:\n• Limestone\n• Coal (small reserves)\n• Pyrite\n• Bauxite\n\n5. POWER:\n• Thermal: Barauni, Kanti\n• Hydro: Kosi, Gandak\n• Solar projects expanding\n\n6. TRANSPORT:\n\nRAILWAYS:\n• Well connected\n• East Central Railway HQ: Hajipur\n• Major junctions: Patna, Gaya, Mughalsarai\n\nROADS:\n• NH-31, NH-28, NH-30\n• Total: 3,68,000 km roads\n\nAIRPORTS:\n• Jay Prakash Narayan (Patna)\n• Gaya (international)\n\n7. PER CAPITA INCOME:\n• One of lowest in India\n• Improving gradually\n• Service sector growing\n\n8. ECONOMIC CHALLENGES:\n• Poverty\n• Unemployment\n• Migration to other states\n• Infrastructure gaps\n\n9. RECENT INITIATIVES:\n• Skill development\n• Startup Bihar\n• Investment promotion',date:'Pre-loaded'},
+
+{title:'BPSC: Bihar Polity & Administration',content:'BIHAR POLITY & ADMINISTRATION:\n\n1. CONSTITUTIONAL STATUS:\n• State of Indian Union\n• Bicameral legislature\n• Chief Minister: Head of government\n• Governor: Constitutional head\n\n2. LEGISLATURE:\n\nVIDHAN SABHA (Lower House):\n• Members: 243\n• Term: 5 years\n• Speaker presides\n• Current: 17th Assembly\n\nVIDHAN PARISHAD (Upper House):\n• Members: 75\n• 1/3 retire every 2 years\n• Permanent body\n• Chairman presides\n\n3. EXECUTIVE:\n\nGOVERNOR:\n• Appointed by President\n• 5-year term\n• Powers: Executive, Legislative, Judicial\n\nCHIEF MINISTER:\n• Leader of majority party\n• Real executive head\n• Council of Ministers\n\nCOUNCIL OF MINISTERS:\n• Cabinet ministers\n• Ministers of State\n• Collectively responsible to Assembly\n\n4. JUDICIARY:\n\nPATNA HIGH COURT:\n• Established: 1916\n• Chief Justice\n• Original & Appellate jurisdiction\n• Circuit benches\n\nDISTRICT COURTS:\n• Civil & Criminal\n• District Judge heads\n\n5. LOCAL GOVERNMENT:\n\nPANCHAYATI RAJ (3-tier):\n• Gram Panchayat (village)\n• Panchayat Samiti (block)\n• Zila Parishad (district)\n• Elections: State Election Commission\n\nURBAN LOCAL BODIES:\n• Municipal Corporations: 12\n• Municipalities\n• Nagar Panchayats\n\n6. ADMINISTRATIVE DIVISIONS:\n\nDIVISIONS: 9\n• Patna\n• Magadh\n• Tirhut\n• Darbhanga\n• Kosi\n• Purnia\n• Bhagalpur\n• Munger\n• Saran\n\nDISTRICTS: 38\n• Each headed by District Magistrate\n• Sub-divisions: 101\n• Blocks: 534\n\n7. POLICE ADMINISTRATION:\n• DGP (Director General)\n• Zonal IGs\n• District SPs\n• Bihar Police Act\n\n8. BIHAR PUBLIC SERVICE COMMISSION:\n• Conducts exams for state services\n• Chairman + members\n• HQ: Patna\n\n9. IMPORTANT POSTS:\n• Chief Secretary\n• DGP\n• Principal Secretary (various depts)\n• Divisional Commissioners',date:'Pre-loaded'}
+];
+bpscNotes.forEach(function(note){
+if(!notes.some(function(n){return n.title===note.title})){
+notes.push(note);
+}
+});
+localStorage.setItem('quantum_notes',JSON.stringify(notes));
+}
+initializeBPSCNotes();
+
 function renderNotes(){
 const grid=document.getElementById('notes-grid');
 grid.innerHTML='';
@@ -1003,14 +1083,264 @@ currentSubject=subject;
 document.getElementById('subject-title').textContent=subject.name;
 const list=document.getElementById('chapters-list');
 list.innerHTML='';
+const bookmarks=JSON.parse(localStorage.getItem('quantum-bookmarks')||'[]');
 subject.chapters.forEach(function(ch,i){
 const li=document.createElement('li');
 const searchQuery=encodeURIComponent(currentData.title+' '+subject.name+' '+ch);
-li.innerHTML='<div><div style="font-size:16px;font-weight:600;margin-bottom:6px">'+(i+1)+'. '+ch+'</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px" onclick="event.stopPropagation()">📺 Watch on YouTube →</a></div>';
+const chapterId=currentKey+'-'+subject.name+'-'+ch;
+const isBookmarked=bookmarks.some(function(b){return b.id===chapterId});
+li.innerHTML='<div style="display:flex;align-items:center;gap:12px;flex:1"><button onclick="toggleBookmark(\''+chapterId.replace(/'/g,"\\'")+'\',\''+currentData.title.replace(/'/g,"\\'")+'\',\''+subject.name.replace(/'/g,"\\'")+'\',\''+ch.replace(/'/g,"\\'")+'\')" style="background:none;border:none;font-size:22px;cursor:pointer;color:'+(isBookmarked?'var(--accent)':'#666')+';transition:0.3s;padding:0" class="bookmark-btn" data-id="'+chapterId+'" title="Bookmark this chapter">'+(isBookmarked?'🔖':'📑')+'</button><div style="flex:1"><div style="font-size:16px;font-weight:600;margin-bottom:6px">'+(i+1)+'. '+ch+'</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px" onclick="event.stopPropagation()">📺 Watch on YouTube →</a></div></div>';
 list.appendChild(li);
 });
 document.getElementById('subjects-view').style.display='none';
 document.getElementById('chapters-view').style.display='block';
+}
+
+function toggleBookmark(id,classTitle,subjectName,chapterName){
+const bookmarks=JSON.parse(localStorage.getItem('quantum-bookmarks')||'[]');
+const existingIndex=bookmarks.findIndex(function(b){return b.id===id});
+if(existingIndex>-1){
+bookmarks.splice(existingIndex,1);
+}else{
+bookmarks.push({id:id,class:classTitle,subject:subjectName,chapter:chapterName,timestamp:Date.now()});
+}
+localStorage.setItem('quantum-bookmarks',JSON.stringify(bookmarks));
+const btn=document.querySelector('.bookmark-btn[data-id="'+id+'"]');
+if(btn){
+btn.textContent=existingIndex>-1?'📑':'🔖';
+btn.style.color=existingIndex>-1?'#666':'var(--accent)';
+}
+renderBookmarks();
+}
+
+function renderBookmarks(){
+const bookmarks=JSON.parse(localStorage.getItem('quantum-bookmarks')||'[]');
+const section=document.getElementById('bookmarks-section');
+const list=document.getElementById('bookmarks-list');
+if(bookmarks.length===0){
+section.style.display='none';
+return;
+}
+section.style.display='block';
+list.innerHTML='';
+bookmarks.reverse().forEach(function(b){
+const card=document.createElement('div');
+card.style.cssText='background:var(--card);padding:20px;border-radius:16px;border:1px solid #30363d;display:flex;justify-content:space-between;align-items:center;transition:0.3s';
+card.onmouseenter=function(){this.style.transform='translateX(8px)';this.style.borderColor='var(--accent)'};
+card.onmouseleave=function(){this.style.transform='translateX(0)';this.style.borderColor='#30363d'};
+const searchQuery=encodeURIComponent(b.class+' '+b.subject+' '+b.chapter);
+card.innerHTML='<div><div style="font-size:14px;color:var(--muted);margin-bottom:4px">'+b.class+' • '+b.subject+'</div><div style="font-size:16px;font-weight:600;margin-bottom:8px">'+b.chapter+'</div><a href="https://www.youtube.com/results?search_query='+searchQuery+'" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none">📺 Watch on YouTube →</a></div><button onclick="toggleBookmark(\''+b.id.replace(/'/g,"\\'")+'\',\''+b.class.replace(/'/g,"\\'")+'\',\''+b.subject.replace(/'/g,"\\'")+'\',\''+b.chapter.replace(/'/g,"\\'")+'\')" style="background:none;border:none;font-size:28px;cursor:pointer;color:var(--accent)" title="Remove bookmark">🔖</button>';
+list.appendChild(card);
+});
+}
+
+setTimeout(renderBookmarks,100);
+
+// MCQ PRACTICE SYSTEM
+let currentMCQExam=null;
+let currentMCQSubject=null;
+let currentQuestions=[];
+let currentQuestionIndex=0;
+let userAnswers=[];
+let mcqScore=0;
+
+const mcqDatabase={
+'upsc-History':[
+{q:'Who founded the Mauryan Empire?',options:['Chandragupta Maurya','Ashoka','Bindusara','Chanakya'],correct:0},
+{q:'The Battle of Plassey was fought in which year?',options:['1757','1764','1857','1947'],correct:0},
+{q:'Who was the first Mughal Emperor?',options:['Akbar','Babur','Humayun','Aurangzeb'],correct:1},
+{q:'The Indian National Congress was founded in:',options:['1885','1905','1920','1947'],correct:0},
+{q:'Who gave the slogan "Jai Hind"?',options:['Subhash Chandra Bose','Bhagat Singh','Gandhi','Nehru'],correct:0},
+{q:'The Quit India Movement was launched in:',options:['1942','1940','1945','1947'],correct:0},
+{q:'Who built the Qutub Minar?',options:['Qutub-ud-din Aibak','Iltutmish','Alauddin Khilji','Mohammad Tughlaq'],correct:0},
+{q:'The Indus Valley Civilization belonged to:',options:['Bronze Age','Iron Age','Stone Age','Medieval Period'],correct:0},
+{q:'Ashoka was the emperor of which dynasty?',options:['Maurya','Gupta','Chola','Mughal'],correct:0},
+{q:'Who wrote "Discovery of India"?',options:['Jawaharlal Nehru','Gandhi','Tagore','Ambedkar'],correct:0}
+],
+'upsc-Geography':[
+{q:'Which is the longest river in India?',options:['Ganges','Brahmaputra','Godavari','Yamuna'],correct:0},
+{q:'The Tropic of Cancer passes through how many Indian states?',options:['8','6','10','12'],correct:0},
+{q:'Which state has the longest coastline in India?',options:['Gujarat','Tamil Nadu','Andhra Pradesh','Maharashtra'],correct:0},
+{q:'The Western Ghats are also known as:',options:['Sahyadri','Vindhyas','Aravallis','Nilgiris'],correct:0},
+{q:'Which is the highest peak in India?',options:['Kanchenjunga','K2','Nanda Devi','Mt.Everest'],correct:0},
+{q:'Chilika Lake is located in:',options:['Odisha','Kerala','West Bengal','Assam'],correct:0},
+{q:'The Indian Standard Time is ahead of GMT by:',options:['5:30 hours','6:30 hours','4:30 hours','5 hours'],correct:0},
+{q:'Which river is known as the "Sorrow of Bihar"?',options:['Kosi','Ganga','Gandak','Sone'],correct:0},
+{q:'The Great Indian Desert is also called:',options:['Thar','Gobi','Sahara','Atacama'],correct:0},
+{q:'Which plateau is known as the "Deccan Plateau"?',options:['Southern Plateau','Malwa Plateau','Chotanagpur','Ladakh'],correct:0}
+],
+'ssc-Quantitative':[
+{q:'What is 15% of 200?',options:['30','25','35','20'],correct:0},
+{q:'If a:b=2:3 and b:c=4:5, then a:c=?',options:['8:15','2:5','3:5','4:15'],correct:0},
+{q:'The HCF of 12 and 18 is:',options:['6','12','18','3'],correct:0},
+{q:'Simple Interest on Rs.1000 at 10% p.a. for 2 years:',options:['Rs.200','Rs.100','Rs.150','Rs.250'],correct:0},
+{q:'The average of 5, 10, 15, 20 is:',options:['12.5','10','15','13'],correct:0},
+{q:'If x+y=10 and x-y=2, then x=?',options:['6','5','7','8'],correct:0},
+{q:'The square root of 144 is:',options:['12','14','10','16'],correct:0},
+{q:'30% of 150 is:',options:['45','40','50','35'],correct:0},
+{q:'The LCM of 4 and 6 is:',options:['12','24','8','6'],correct:0},
+{q:'If a train covers 60 km in 1 hour, its speed in m/s:',options:['16.67','60','100','20'],correct:0}
+],
+'ssc-English':[
+{q:'Choose the correctly spelled word:',options:['Accommodate','Acommodate','Accomodate','Acomodate'],correct:0},
+{q:'Synonym of "abundant":',options:['Plentiful','Scarce','Rare','Limited'],correct:0},
+{q:'Antonym of "ancient":',options:['Modern','Old','Historic','Past'],correct:0},
+{q:'Fill in: He is good ___ mathematics.',options:['at','in','on','by'],correct:0},
+{q:'One word for "a person who loves books":',options:['Bibliophile','Scholar','Reader','Literate'],correct:0},
+{q:'Past tense of "go":',options:['Went','Gone','Going','Goes'],correct:0},
+{q:'Choose the correct sentence:',options:['She writes well.','She write well.','She writing well.','She written well.'],correct:0},
+{q:'Idiom: "A piece of cake" means:',options:['Very easy','Delicious','Expensive','Difficult'],correct:0},
+{q:'Passive voice of "I know him":',options:['He is known to me.','He known by me.','He knows me.','I am known to him.'],correct:0},
+{q:'Identify the noun: She sings beautifully.',options:['She','Sings','Beautifully','None'],correct:0}
+],
+'bpsc-General':[
+{q:'The capital of Bihar is:',options:['Patna','Gaya','Bhagalpur','Muzaffarpur'],correct:0},
+{q:'Nalanda University was established in which period?',options:['Gupta Period','Mauryan','Mughal','British'],correct:0},
+{q:'Which river flows through Patna?',options:['Ganges','Kosi','Gandak','Sone'],correct:0},
+{q:'Bihar Day is celebrated on:',options:['22 March','26 January','15 August','2 October'],correct:0},
+{q:'The first Chief Minister of Bihar was:',options:['Sri Krishna Sinha','Lalu Prasad','Nitish Kumar','Jagannath Mishra'],correct:0},
+{q:'Mahabodhi Temple is located in:',options:['Bodh Gaya','Nalanda','Rajgir','Vaishali'],correct:0},
+{q:'The official language of Bihar is:',options:['Hindi','Urdu','Maithili','English'],correct:0},
+{q:'Bihar shares its border with how many states?',options:['5','3','4','6'],correct:0},
+{q:'The largest city in Bihar by population:',options:['Patna','Gaya','Bhagalpur','Muzaffarpur'],correct:0},
+{q:'Sher Shah Suri was born in:',options:['Sasaram','Patna','Nalanda','Gaya'],correct:0}
+],
+'iit-jee-Physics':[
+{q:'SI unit of Force is:',options:['Newton','Joule','Watt','Pascal'],correct:0},
+{q:'Acceleration due to gravity (g) is approximately:',options:['9.8 m/s²','10 m/s²','9 m/s²','8 m/s²'],correct:0},
+{q:'The first law of thermodynamics is related to:',options:['Energy conservation','Entropy','Temperature','Pressure'],correct:0},
+{q:'Ohm\'s Law states:',options:['V=IR','V=I/R','V=R/I','I=VR'],correct:0},
+{q:'Speed of light in vacuum:',options:['3×10⁸ m/s','3×10⁶ m/s','3×10⁷ m/s','3×10⁹ m/s'],correct:0},
+{q:'SI unit of Power:',options:['Watt','Joule','Newton','Pascal'],correct:0},
+{q:'Kinetic Energy formula:',options:['½mv²','mv','m/v','2mv'],correct:0},
+{q:'Which is a vector quantity?',options:['Velocity','Speed','Distance','Time'],correct:0},
+{q:'Newton\'s third law:',options:['Action-Reaction','F=ma','Inertia','Momentum'],correct:0},
+{q:'SI unit of Electric Current:',options:['Ampere','Volt','Ohm','Coulomb'],correct:0}
+],
+'neet-Biology':[
+{q:'The powerhouse of the cell:',options:['Mitochondria','Nucleus','Ribosome','Golgi'],correct:0},
+{q:'DNA stands for:',options:['Deoxyribonucleic Acid','Deoxyribose Acid','Deoxy Acid','None'],correct:0},
+{q:'The process by which plants make food:',options:['Photosynthesis','Respiration','Transpiration','Digestion'],correct:0},
+{q:'The largest organ in human body:',options:['Skin','Liver','Heart','Brain'],correct:0},
+{q:'Blood group with universal donor:',options:['O negative','AB positive','A positive','B negative'],correct:0},
+{q:'The functional unit of kidney:',options:['Nephron','Neuron','Alveoli','Villus'],correct:0},
+{q:'Number of chromosomes in human:',options:['46','23','92','48'],correct:0},
+{q:'Father of Biology:',options:['Aristotle','Darwin','Mendel','Linnaeus'],correct:0},
+{q:'The study of fungi is called:',options:['Mycology','Zoology','Botany','Ecology'],correct:0},
+{q:'Insulin is produced by:',options:['Pancreas','Liver','Kidney','Thyroid'],correct:0}
+]
+};
+
+function resetMCQView(){
+document.getElementById('mcq-selection').style.display='block';
+document.getElementById('mcq-subjects-view').style.display='none';
+document.getElementById('mcq-quiz-view').style.display='none';
+}
+
+function showMCQSubjects(exam){
+currentMCQExam=exam;
+const data=subjectsData[exam];
+if(!data)return;
+document.getElementById('mcq-exam-title').textContent=data.title+' - Select Subject';
+const grid=document.getElementById('mcq-subjects-grid');
+grid.innerHTML='';
+data.subjects.forEach(function(sub){
+const card=document.createElement('div');
+card.className='card';
+card.innerHTML='<span>'+sub.icon+' '+sub.name+'</span><span class="arrow">→</span>';
+card.onclick=function(){startMCQQuiz(exam,sub.name)};
+grid.appendChild(card);
+});
+document.getElementById('mcq-selection').style.display='none';
+document.getElementById('mcq-subjects-view').style.display='block';
+}
+
+function backToMCQExams(){
+document.getElementById('mcq-selection').style.display='block';
+document.getElementById('mcq-subjects-view').style.display='none';
+}
+
+function backToMCQSubjects(){
+document.getElementById('mcq-subjects-view').style.display='block';
+document.getElementById('mcq-quiz-view').style.display='none';
+}
+
+function startMCQQuiz(exam,subject){
+const key=exam+'-'+subject.split(' ')[0];
+currentQuestions=mcqDatabase[key]||mcqDatabase['upsc-History'];
+currentQuestionIndex=0;
+userAnswers=new Array(currentQuestions.length).fill(null);
+mcqScore=0;
+document.getElementById('mcq-subject-name').textContent=subject;
+document.getElementById('total-q').textContent=currentQuestions.length;
+document.getElementById('mcq-subjects-view').style.display='none';
+document.getElementById('mcq-quiz-view').style.display='block';
+document.getElementById('mcq-result').style.display='none';
+loadQuestion();
+}
+
+function loadQuestion(){
+const q=currentQuestions[currentQuestionIndex];
+document.getElementById('current-q').textContent=currentQuestionIndex+1;
+document.getElementById('mcq-question').textContent=q.q;
+const optionsDiv=document.getElementById('mcq-options');
+optionsDiv.innerHTML='';
+q.options.forEach(function(opt,i){
+const optBtn=document.createElement('button');
+optBtn.className='btn';
+optBtn.style.cssText='padding:20px;text-align:left;font-size:16px;border:1px solid #30363d';
+optBtn.textContent=(String.fromCharCode(65+i))+'. '+opt;
+if(userAnswers[currentQuestionIndex]===i){
+optBtn.style.borderColor='var(--accent)';
+optBtn.style.background='rgba(47,129,247,0.1)';
+}
+optBtn.onclick=function(){selectAnswer(i)};
+optionsDiv.appendChild(optBtn);
+});
+document.getElementById('prev-btn').disabled=currentQuestionIndex===0;
+document.getElementById('prev-btn').style.opacity=currentQuestionIndex===0?'0.5':'1';
+document.getElementById('next-btn').textContent=currentQuestionIndex===currentQuestions.length-1?'Finish':'Next →';
+}
+
+function selectAnswer(index){
+userAnswers[currentQuestionIndex]=index;
+loadQuestion();
+}
+
+function prevQuestion(){
+if(currentQuestionIndex>0){
+currentQuestionIndex--;
+loadQuestion();
+}
+}
+
+function nextQuestion(){
+if(currentQuestionIndex<currentQuestions.length-1){
+currentQuestionIndex++;
+loadQuestion();
+}else{
+finishMCQ();
+}
+}
+
+function finishMCQ(){
+mcqScore=0;
+currentQuestions.forEach(function(q,i){
+if(userAnswers[i]===q.correct)mcqScore++;
+});
+document.getElementById('final-score').textContent=mcqScore+'/'+currentQuestions.length;
+document.getElementById('mcq-quiz-view').querySelector('div:nth-child(2)').style.display='none';
+document.getElementById('mcq-result').style.display='block';
+localStorage.setItem('quantum-quiz-score',mcqScore);
+document.getElementById('quiz-score').textContent=mcqScore;
+}
+
+function restartMCQ(){
+currentQuestionIndex=0;
+userAnswers=new Array(currentQuestions.length).fill(null);
+document.getElementById('mcq-quiz-view').querySelector('div:nth-child(2)').style.display='block';
+document.getElementById('mcq-result').style.display='none';
+loadQuestion();
 }
 
 console.log('✨ QUANTUM WORKING: All 118 Elements + Complete Subjects + YouTube!');
