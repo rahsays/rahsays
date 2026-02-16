@@ -13,7 +13,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:var(--bg);color:var(--text);transition:background 0.3s,color 0.3s;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;will-change:scroll-position}
 html{scroll-behavior:smooth}
-#loader{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.8s}
+#loader{position:fixed;inset:0;background:#000;display:none;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.8s}
 .infinity-svg{width:260px;height:120px;margin-bottom:30px}
 .infinity-path{fill:none;stroke:#ffffff;stroke-width:16;stroke-linecap:round;stroke-dasharray:800;stroke-dashoffset:800;animation:draw 2.5s ease forwards;filter:drop-shadow(0 0 15px rgba(255,255,255,0.3))}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -511,8 +511,17 @@ pointer-events:none;
 </div>
 
 <script>
-// LOADER
-setTimeout(function(){document.getElementById('loader').style.opacity='0';setTimeout(function(){document.getElementById('loader').style.display='none'},800)},2800);
+// CRITICAL: Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', function() {
+
+// LOADER - SHORT TIMEOUT
+setTimeout(function(){
+var loader = document.getElementById('loader');
+if(loader) {
+loader.style.opacity='0';
+setTimeout(function(){loader.style.display='none'},300);
+}
+},500);
 
 // FILE INPUT HANDLER
 setTimeout(function(){
@@ -723,7 +732,10 @@ document.getElementById('element-details').innerHTML='<div class="element-detail
 }
 
 function closeElementModal(){document.getElementById('element-modal').style.display='none'}
-document.getElementById('element-modal').onclick=closeElementModal;
+setTimeout(function(){
+var modal=document.getElementById('element-modal');
+if(modal)modal.onclick=closeElementModal;
+},100);
 
 function filterElements(cat){
 document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
@@ -1434,7 +1446,10 @@ document.getElementById(‘mcq-result’).style.display=‘none’;
 loadQuestion();
 }
 
-console.log(‘✨ QUANTUM WORKING: All 118 Elements + Complete Subjects + YouTube!’);
+// END OF DOMContentLoaded
+});
+
+console.log(‘✨ QUANTUM LOADING…’);
 </script>
 
 </body>
