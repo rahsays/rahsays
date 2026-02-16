@@ -511,17 +511,14 @@ pointer-events:none;
 </div>
 
 <script>
-// CRITICAL: Wait for DOM to be ready
-document.addEventListener('DOMContentLoaded', function() {
-
-// LOADER - SHORT TIMEOUT
+// LOADER - DISABLED
 setTimeout(function(){
 var loader = document.getElementById('loader');
 if(loader) {
 loader.style.opacity='0';
 setTimeout(function(){loader.style.display='none'},300);
 }
-},500);
+},100);
 
 // FILE INPUT HANDLER
 setTimeout(function(){
@@ -1446,10 +1443,7 @@ document.getElementById(‘mcq-result’).style.display=‘none’;
 loadQuestion();
 }
 
-// END OF DOMContentLoaded
-});
-
-console.log(‘✨ QUANTUM LOADING…’);
+console.log(‘✨ QUANTUM READY!’);
 </script>
 
 </body>
